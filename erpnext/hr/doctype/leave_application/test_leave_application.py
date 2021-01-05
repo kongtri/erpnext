@@ -411,12 +411,15 @@ class TestLeaveApplication(unittest.TestCase):
 		self.assertEqual(get_leave_balance_on(employee.name, leave_type.name, nowdate(), add_days(nowdate(), 8)), 21)
 
 	def test_earned_leaves_creation(self):
+<<<<<<< HEAD
 
 		frappe.db.sql('''delete from `tabLeave Period`''')
 		frappe.db.sql('''delete from `tabLeave Policy Assignment`''')
 		frappe.db.sql('''delete from `tabLeave Allocation`''')
 		frappe.db.sql('''delete from `tabLeave Ledger Entry`''')
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		leave_period = get_leave_period()
 		employee = get_employee()
 		leave_type = 'Test Earned Leave Type'

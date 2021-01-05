@@ -119,8 +119,12 @@
  "idx": 1,
  "index_web_pages_for_search": 1,
  "istable": 1,
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-10-13 18:14:10.018774",
+=======
+ "modified": "2020-06-16 17:01:11.128420",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Manufacturing",
  "name": "BOM Operation",

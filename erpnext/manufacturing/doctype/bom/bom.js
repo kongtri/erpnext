@@ -149,7 +149,11 @@ frappe.ui.form.on("BOM", {
 				method: "erpnext.manufacturing.doctype.work_order.work_order.make_work_order",
 				args: {
 					bom_no: frm.doc.name,
+<<<<<<< HEAD
 					item: item,
+=======
+					item: frm.doc.item,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 					qty: data.qty || 0.0,
 					project: frm.doc.project,
 					variant_items: variant_items

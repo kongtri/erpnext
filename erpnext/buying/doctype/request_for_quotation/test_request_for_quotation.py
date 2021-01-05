@@ -9,10 +9,15 @@ import frappe
 from frappe.utils import nowdate
 from erpnext.stock.doctype.item.test_item import make_item
 from erpnext.templates.pages.rfq import check_supplier_has_docname_access
+<<<<<<< HEAD
 from erpnext.buying.doctype.request_for_quotation.request_for_quotation import make_supplier_quotation_from_rfq
 from erpnext.buying.doctype.request_for_quotation.request_for_quotation import create_supplier_quotation
 from erpnext.crm.doctype.opportunity.test_opportunity import make_opportunity
 from erpnext.crm.doctype.opportunity.opportunity import make_request_for_quotation as make_rfq
+=======
+from erpnext.buying.doctype.request_for_quotation.request_for_quotation import make_supplier_quotation
+from erpnext.buying.doctype.request_for_quotation.request_for_quotation import create_supplier_quotation
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 class TestRequestforQuotation(unittest.TestCase):
 	def test_quote_status(self):
@@ -107,6 +112,7 @@ class TestRequestforQuotation(unittest.TestCase):
 
 		self.assertEqual(supplier_quotation.items[0].qty, 5)
 		self.assertEqual(supplier_quotation.items[0].stock_qty, 10)
+<<<<<<< HEAD
 
 	def test_make_rfq_from_opportunity(self):
 		opportunity = make_opportunity(with_items=1)
@@ -124,6 +130,8 @@ class TestRequestforQuotation(unittest.TestCase):
 
 		rfq.status = 'Draft'
 		rfq.submit()
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 def make_request_for_quotation(**args):
 	"""

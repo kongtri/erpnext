@@ -1,4 +1,8 @@
 {
+<<<<<<< HEAD
+=======
+ "actions": [],
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "autoname": "field:hsn_code",
  "creation": "2017-06-21 10:48:56.422086",
  "doctype": "DocType",
@@ -31,7 +35,12 @@
    "options": "Item Tax"
   }
  ],
+<<<<<<< HEAD
  "modified": "2019-11-01 11:18:59.556931",
+=======
+ "links": [],
+ "modified": "2019-12-29 11:32:06.849631",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Regional",
  "name": "GST HSN Code",

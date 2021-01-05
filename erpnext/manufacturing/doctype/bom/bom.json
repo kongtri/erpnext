@@ -499,6 +499,7 @@
    "options": "Currency",
    "print_hide": 1,
    "read_only": 1
+<<<<<<< HEAD
   },
   {
    "default": "0",
@@ -510,6 +511,8 @@
    "no_copy": 1,
    "print_hide": 1,
    "read_only": 1
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "icon": "fa fa-sitemap",
@@ -517,7 +520,11 @@
  "image_field": "image",
  "is_submittable": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-05-21 12:29:32.634952",
+=======
+ "modified": "2020-05-05 14:29:32.634952",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Manufacturing",
  "name": "BOM",

@@ -42,7 +42,11 @@ erpnext.taxes_and_totals = erpnext.payments.extend({
 			this.calculate_total_advance(update_paid_amount);
 		}
 
+<<<<<<< HEAD
 		if (in_list(["Sales Invoice", "POS Invoice"], this.frm.doc.doctype) && this.frm.doc.is_pos &&
+=======
+		if (this.frm.doc.doctype == "Sales Invoice" && this.frm.doc.is_pos &&
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			this.frm.doc.is_return) {
 			this.update_paid_amount_for_return();
 		}
@@ -682,6 +686,7 @@ erpnext.taxes_and_totals = erpnext.payments.extend({
 			);
 		}
 
+<<<<<<< HEAD
 		this.frm.doc.payments.find(pay => {
 			if (pay.default) {
 				pay.amount = total_amount_to_pay;
@@ -692,6 +697,35 @@ erpnext.taxes_and_totals = erpnext.payments.extend({
 		this.frm.refresh_fields();
 
 		this.calculate_paid_amount();
+=======
+		let existing_amount = 0
+		$.each(this.frm.doc.payments || [], function(i, row) {
+			existing_amount += row.amount;
+		})
+
+		if (existing_amount != total_amount_to_pay) {
+			frappe.db.get_value('Sales Invoice Payment', {'parent': this.frm.doc.pos_profile, 'default': 1},
+				['mode_of_payment', 'account', 'type'], (value) => {
+					if (this.frm.is_dirty()) {
+						frappe.model.clear_table(this.frm.doc, 'payments');
+						if (value) {
+							let row = frappe.model.add_child(this.frm.doc, 'Sales Invoice Payment', 'payments');
+							row.mode_of_payment = value.mode_of_payment;
+							row.type = value.type;
+							row.account = value.account;
+							row.default = 1;
+							row.amount = total_amount_to_pay;
+						} else {
+							this.frm.set_value('is_pos', 1);
+						}
+						this.frm.refresh_fields();
+						this.calculate_paid_amount();
+					}
+				}, 'Sales Invoice');
+		} else {
+			this.calculate_paid_amount();
+		}
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	},
 
 	set_default_payment: function(total_amount_to_pay, update_paid_amount) {
@@ -706,7 +740,11 @@ erpnext.taxes_and_totals = erpnext.payments.extend({
 					frappe.model.set_value(data.doctype, data.name, "amount", amount);
 					payment_status = false;
 				} else if(me.frm.doc.paid_amount) {
+<<<<<<< HEAD
 					frappe.model.set_value(data.doctype, data.name, "amount", 0.0);
+=======
+					data.amount = 0.0;
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				}
 			});
 		}

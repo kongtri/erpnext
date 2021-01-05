@@ -144,23 +144,28 @@ class PaymentRequest(Document):
 
 		return controller.get_payment_url(**{
 			"amount": flt(self.grand_total, self.precision("grand_total")),
-			"title": data.company.encode("utf-8"),
-			"description": self.subject.encode("utf-8"),
+			"title": frappe.as_unicode(data.company),
+			"description": frappe.as_unicode(self.subject),
 			"reference_doctype": "Payment Request",
 			"reference_docname": self.name,
 			"payer_email": self.email_to or frappe.session.user,
-			"payer_name": frappe.safe_encode(data.customer_name),
+			"payer_name": frappe.as_unicode(data.customer_name),
 			"order_id": self.name,
 			"currency": self.currency
 		})
 
 	def set_as_paid(self):
+<<<<<<< HEAD
 		if self.payment_channel == "Phone":
 			self.db_set("status", "Paid")
 
 		else:
 			payment_entry = self.create_payment_entry()
 			self.make_invoice()
+=======
+		payment_entry = self.create_payment_entry()
+		self.make_invoice()
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 			return payment_entry
 
@@ -337,7 +342,10 @@ def make_payment_request(**args):
 			"payment_request_type": args.get("payment_request_type"),
 			"currency": ref_doc.currency,
 			"grand_total": grand_total,
+<<<<<<< HEAD
 			"mode_of_payment": args.mode_of_payment,
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			"email_to": args.recipient_id or ref_doc.owner,
 			"subject": _("Payment Request for {0}").format(args.dn),
 			"message": gateway_account.get("message") or get_dummy_message(ref_doc),
@@ -377,12 +385,15 @@ def get_amount(ref_doc, payment_account=None):
 		else:
 			grand_total = flt(ref_doc.outstanding_amount) / ref_doc.conversion_rate
 
+<<<<<<< HEAD
 	elif dt == "POS Invoice":
 		for pay in ref_doc.payments:
 			if pay.type == "Phone" and pay.account == payment_account:
 				grand_total = pay.amount
 				break
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	elif dt == "Fees":
 		grand_total = ref_doc.outstanding_amount
 
@@ -404,9 +415,13 @@ def get_existing_payment_request_amount(ref_dt, ref_dn):
 			reference_doctype = %s
 			and reference_name = %s
 			and docstatus = 1
+<<<<<<< HEAD
 			and (status != 'Paid'
 			or (payment_channel = 'Phone'
 				and status = 'Paid'))
+=======
+			and status != 'Paid'
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	""", (ref_dt, ref_dn))
 	return flt(existing_payment_request_amount[0][0]) if existing_payment_request_amount else 0
 

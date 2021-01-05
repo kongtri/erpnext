@@ -1,5 +1,8 @@
 {
+<<<<<<< HEAD
  "actions": [],
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "creation": "2013-06-19 15:57:32",
  "description": "Default settings for Shopping Cart",
  "doctype": "DocType",
@@ -12,7 +15,10 @@
   "show_price",
   "show_stock_availability",
   "enable_variants",
+<<<<<<< HEAD
   "column_break_7",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "show_contact_us_button",
   "show_quantity_in_website",
   "show_apply_coupon_code_in_website",
@@ -27,7 +33,10 @@
   "enable_checkout",
   "payment_success_url",
   "column_break_11",
+<<<<<<< HEAD
   "save_quotations_as_draft",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "payment_gateway_account"
  ],
  "fields": [
@@ -96,7 +105,10 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Company",
+<<<<<<< HEAD
    "mandatory_depends_on": "eval: doc.enabled === 1",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "options": "Company",
    "remember_last_selected_value": 1
   },
@@ -105,7 +117,10 @@
    "fieldname": "price_list",
    "fieldtype": "Link",
    "label": "Price List",
+<<<<<<< HEAD
    "mandatory_depends_on": "eval: doc.enabled === 1",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "options": "Price List"
   },
   {
@@ -117,14 +132,21 @@
    "fieldtype": "Link",
    "ignore_user_permissions": 1,
    "label": "Default Customer Group",
+<<<<<<< HEAD
    "mandatory_depends_on": "eval: doc.enabled === 1",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "options": "Customer Group"
   },
   {
    "fieldname": "quotation_series",
    "fieldtype": "Select",
+<<<<<<< HEAD
    "label": "Quotation Series",
    "mandatory_depends_on": "eval: doc.enabled === 1"
+=======
+   "label": "Quotation Series"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "collapsible": 1,
@@ -159,14 +181,18 @@
    "options": "Payment Gateway Account"
   },
   {
+<<<<<<< HEAD
    "fieldname": "column_break_7",
    "fieldtype": "Column Break"
   },
   {
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "default": "0",
    "fieldname": "enable_variants",
    "fieldtype": "Check",
    "label": "Enable Variants"
+<<<<<<< HEAD
   },
   {
    "default": "0",
@@ -174,13 +200,19 @@
    "fieldname": "save_quotations_as_draft",
    "fieldtype": "Check",
    "label": "Save Quotations as Draft"
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "icon": "fa fa-shopping-cart",
  "idx": 1,
  "issingle": 1,
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-09-24 16:28:07.192525",
+=======
+ "modified": "2020-07-07 02:13:23.175604",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Shopping Cart",
  "name": "Shopping Cart Settings",

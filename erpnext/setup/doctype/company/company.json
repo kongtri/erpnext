@@ -740,7 +740,11 @@
  "image_field": "company_logo",
  "is_tree": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-12-03 12:27:27.085094",
+=======
+ "modified": "2020-03-22 18:26:03.145312",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Company",

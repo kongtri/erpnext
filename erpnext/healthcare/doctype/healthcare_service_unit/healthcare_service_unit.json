@@ -12,17 +12,26 @@
  "engine": "InnoDB",
  "field_order": [
   "healthcare_service_unit_name",
+<<<<<<< HEAD
+=======
+  "parent_healthcare_service_unit",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "is_group",
   "service_unit_type",
   "allow_appointments",
   "overlap_appointments",
   "inpatient_occupancy",
   "occupancy_status",
+<<<<<<< HEAD
   "column_break_9",
   "company",
   "warehouse",
   "tree_details_section",
   "parent_healthcare_service_unit",
+=======
+  "warehouse",
+  "company",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "lft",
   "rgt",
   "old_parent"
@@ -52,6 +61,10 @@
    "depends_on": "eval:doc.inpatient_occupancy != 1 && doc.allow_appointments != 1",
    "fieldname": "is_group",
    "fieldtype": "Check",
+<<<<<<< HEAD
+=======
+   "in_list_view": 1,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "label": "Is Group"
   },
   {
@@ -63,12 +76,19 @@
    "options": "Healthcare Service Unit Type"
   },
   {
+<<<<<<< HEAD
+=======
+   "bold": 1,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "default": "0",
    "depends_on": "eval:doc.is_group != 1 && doc.inpatient_occupancy != 1",
    "fetch_from": "service_unit_type.allow_appointments",
    "fieldname": "allow_appointments",
    "fieldtype": "Check",
+<<<<<<< HEAD
    "in_list_view": 1,
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "label": "Allow Appointments",
    "no_copy": 1,
    "read_only": 1
@@ -90,7 +110,10 @@
    "fetch_from": "service_unit_type.inpatient_occupancy",
    "fieldname": "inpatient_occupancy",
    "fieldtype": "Check",
+<<<<<<< HEAD
    "in_list_view": 1,
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "label": "Inpatient Occupancy",
    "no_copy": 1,
    "read_only": 1,
@@ -104,10 +127,13 @@
    "no_copy": 1,
    "options": "Vacant\nOccupied",
    "read_only": 1
+<<<<<<< HEAD
   },
   {
    "fieldname": "column_break_9",
    "fieldtype": "Column Break"
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "bold": 1,
@@ -158,6 +184,7 @@
    "options": "Healthcare Service Unit",
    "print_hide": 1,
    "report_hide": 1
+<<<<<<< HEAD
   },
   {
    "collapsible": 1,
@@ -171,6 +198,17 @@
  "modified_by": "Administrator",
  "module": "Healthcare",
  "name": "Healthcare Service Unit",
+=======
+  }
+ ],
+ "is_tree": 1,
+ "links": [],
+ "modified": "2020-03-18 18:26:06.360941",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Healthcare Service Unit",
+ "nsm_parent_field": "parent_healthcare_service_unit",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "owner": "Administrator",
  "permissions": [
   {

@@ -20,6 +20,7 @@ def execute(filters=None):
 
 		fifo_queue = sorted(filter(_func, item_dict["fifo_queue"]), key=_func)
 		details = item_dict["details"]
+<<<<<<< HEAD
 
 		if not fifo_queue: continue
 
@@ -27,6 +28,15 @@ def execute(filters=None):
 		earliest_age = date_diff(to_date, fifo_queue[0][1])
 		latest_age = date_diff(to_date, fifo_queue[-1][1])
 		range1, range2, range3, above_range3 = get_range_age(filters, fifo_queue, to_date)
+=======
+		if not fifo_queue: continue
+
+		average_age = get_average_age(fifo_queue, to_date)
+
+		if fifo_queue:
+			earliest_age = date_diff(to_date, fifo_queue[0][1])
+			latest_age = date_diff(to_date, fifo_queue[-1][1])
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		row = [details.name, details.item_name,
 			details.description, details.item_group, details.brand]

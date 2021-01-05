@@ -152,9 +152,16 @@ def build_forest(data):
 				return [parent_account]
 			elif account_name == child:
 				parent_account_list = return_parent(data, parent_account)
+<<<<<<< HEAD
 				if not parent_account_list and parent_account:
 					frappe.throw(_("The parent account {0} does not exists in the uploaded template").format(
 						frappe.bold(parent_account)))
+=======
+				if not parent_account_list:
+					frappe.throw(_("The parent account {0} does not exists in the uploaded template").format(
+						frappe.bold(parent_account)))
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				return [child] + parent_account_list
 
 	charts_map, paths = {}, []
@@ -195,7 +202,11 @@ def build_response_as_excel(writer):
 	reader = csv.reader(f)
 
 	from frappe.utils.xlsxutils import make_xlsx
+<<<<<<< HEAD
 	xlsx_file = make_xlsx(reader, "Chart of Accounts Importer Template")
+=======
+	xlsx_file = make_xlsx(reader, "Chart Of Accounts Importer Template")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	f.close()
 	os.remove(filename)

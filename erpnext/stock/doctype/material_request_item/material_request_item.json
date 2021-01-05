@@ -192,13 +192,21 @@
    "fieldname": "rate",
    "fieldtype": "Currency",
    "label": "Rate",
+<<<<<<< HEAD
    "print_hide": 1
+=======
+   "no_copy": 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "amount",
    "fieldtype": "Currency",
    "label": "Amount",
+<<<<<<< HEAD
    "print_hide": 1,
+=======
+   "no_copy": 1,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "read_only": 1
   },
   {
@@ -367,7 +375,11 @@
    "depends_on": "eval:doc.docstatus==1",
    "fieldname": "received_qty",
    "fieldtype": "Float",
+<<<<<<< HEAD
    "label": "Received Qty",
+=======
+   "label": "Received Quantity",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "no_copy": 1,
    "print_hide": 1,
    "read_only": 1
@@ -402,6 +414,7 @@
   {
    "fieldname": "manufacturer_part_no",
    "fieldtype": "Data",
+<<<<<<< HEAD
    "label": "Manufacturer Part Number",
    "read_only": 1
   },
@@ -444,13 +457,20 @@
   {
    "fieldname": "qty_info_col_break",
    "fieldtype": "Column Break"
+=======
+   "label": "Manufacturer Part Number"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "idx": 1,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-10-02 11:44:36.553064",
+=======
+ "modified": "2020-04-16 09:00:00.992835",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Material Request Item",

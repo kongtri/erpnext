@@ -112,7 +112,13 @@ class Patient(Document):
 		return age_str
 
 	def invoice_patient_registration(self):
+<<<<<<< HEAD
 		if frappe.db.get_single_value('Healthcare Settings', 'registration_fee'):
+=======
+		frappe.db.set_value("Patient", self.name, "status", "Active")
+		send_registration_sms(self)
+		if(flt(frappe.get_value("Healthcare Settings", None, "registration_fee"))>0):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			company = frappe.defaults.get_user_default('company')
 			if not company:
 				company = frappe.db.get_single_value('Global Defaults', 'default_company')

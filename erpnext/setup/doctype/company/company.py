@@ -16,7 +16,10 @@ from frappe.utils.nestedset import NestedSet
 
 from past.builtins import cmp
 import functools
+<<<<<<< HEAD
 from erpnext.accounts.doctype.account.account import get_account_currency
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 class Company(NestedSet):
 	nsm_parent_field = 'parent_company'
@@ -394,7 +397,7 @@ class Company(NestedSet):
 
 @frappe.whitelist()
 def enqueue_replace_abbr(company, old, new):
-	kwargs = dict(company=company, old=old, new=new)
+	kwargs = dict(queue='long', company=company, old=old, new=new)
 	frappe.enqueue('erpnext.setup.doctype.company.company.replace_abbr', **kwargs)
 
 
@@ -422,8 +425,6 @@ def replace_abbr(company, old, new):
 	for dt in ["Warehouse", "Account", "Cost Center", "Department",
 			"Sales Taxes and Charges Template", "Purchase Taxes and Charges Template"]:
 		_rename_records(dt)
-		frappe.db.commit()
-
 
 def get_name_with_abbr(name, company):
 	company_abbr = frappe.get_cached_value('Company',  company,  "abbr")
@@ -442,7 +443,11 @@ def install_country_fixtures(company):
 			module_name = "erpnext.regional.{0}.setup.setup".format(frappe.scrub(company_doc.country))
 			frappe.get_attr(module_name)(company_doc, False)
 		except Exception as e:
+<<<<<<< HEAD
 			frappe.log_error()
+=======
+			frappe.log_error(title=str(e), message=frappe.get_traceback())
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			frappe.throw(_("Failed to setup defaults for country {0}. Please contact support@erpnext.com").format(frappe.bold(company_doc.country)))
 
 
@@ -612,4 +617,8 @@ def get_default_company_address(name, sort_key='is_primary_address', existing_ad
 	if out:
 		return sorted(out, key = functools.cmp_to_key(lambda x,y: cmp(y[1], x[1])))[0][0]
 	else:
+<<<<<<< HEAD
 		return None
+=======
+		return None
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

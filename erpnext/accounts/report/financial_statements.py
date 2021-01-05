@@ -384,6 +384,7 @@ def set_gl_entries_by_account(
 					key: value
 				})
 
+<<<<<<< HEAD
 		distributed_cost_center_query = ""
 		if filters and filters.get('cost_center'):
 			distributed_cost_center_query = """
@@ -412,10 +413,13 @@ def set_gl_entries_by_account(
 			AND cost_center = DCC_allocation.parent
 			""".format(additional_conditions=additional_conditions.replace("and cost_center in %(cost_center)s ", ''))
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		gl_entries = frappe.db.sql("""select posting_date, account, debit, credit, is_opening, fiscal_year, debit_in_account_currency, credit_in_account_currency, account_currency from `tabGL Entry`
 			where company=%(company)s
 			{additional_conditions}
 			and posting_date <= %(to_date)s
+<<<<<<< HEAD
 			and is_cancelled = 0
 			{distributed_cost_center_query}
 			order by account, posting_date""".format(
@@ -424,6 +428,12 @@ def set_gl_entries_by_account(
 
 		if filters and filters.get('presentation_currency'):
 			convert_to_presentation_currency(gl_entries, get_currency(filters), filters.get('company'))
+=======
+			order by account, posting_date""".format(additional_conditions=additional_conditions), gl_filters, as_dict=True) #nosec
+
+		if filters and filters.get('presentation_currency'):
+			convert_to_presentation_currency(gl_entries, get_currency(filters))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		for entry in gl_entries:
 			gl_entries_by_account.setdefault(entry.account, []).append(entry)

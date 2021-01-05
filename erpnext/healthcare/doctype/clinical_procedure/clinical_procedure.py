@@ -189,11 +189,18 @@ def get_items(table, parent, parenttype):
 	return items
 
 
+<<<<<<< HEAD
 @frappe.whitelist()
 def make_stock_entry(doc):
 	stock_entry = frappe.new_doc('Stock Entry')
 	stock_entry = set_stock_items(stock_entry, doc.name, 'Clinical Procedure')
 	stock_entry.stock_entry_type = 'Material Issue'
+=======
+def create_stock_entry(doc):
+	stock_entry = frappe.new_doc("Stock Entry")
+	stock_entry = set_stock_items(stock_entry, doc.name, "Clinical Procedure")
+	stock_entry.stock_entry_type = "Material Issue"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	stock_entry.from_warehouse = doc.warehouse
 	stock_entry.company = doc.company
 	expense_account = get_account(None, 'expense_account', 'Healthcare Settings', doc.company)

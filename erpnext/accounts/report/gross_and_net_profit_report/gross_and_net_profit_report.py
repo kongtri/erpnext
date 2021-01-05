@@ -35,6 +35,10 @@ def execute(filters=None):
 		})
 		return columns, data
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	# to avoid error eg: gross_income[0] : list index out of range
 	if not gross_income:
 		gross_income = [{}]

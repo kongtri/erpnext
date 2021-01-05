@@ -37,7 +37,15 @@ class PricingRule(Document):
 
 	def validate_duplicate_apply_on(self):
 		field = apply_on_dict.get(self.apply_on)
+<<<<<<< HEAD
 		values = [d.get(frappe.scrub(self.apply_on)) for d in self.get(field) if field]
+=======
+		if not field:
+			return False
+
+		values = [d.get(frappe.scrub(self.apply_on)) for d in self.get(field)]
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		if len(values) != len(set(values)):
 			frappe.throw(_("Duplicate {0} found in the table").format(self.apply_on))
 
@@ -46,9 +54,20 @@ class PricingRule(Document):
 			if self.apply_on == apply_on and len(self.get(field) or []) < 1:
 				throw(_("{0} is not added in the table").format(apply_on), frappe.MandatoryError)
 
-		tocheck = frappe.scrub(self.get("applicable_for", ""))
-		if tocheck and not self.get(tocheck):
-			throw(_("{0} is required").format(self.meta.get_label(tocheck)), frappe.MandatoryError)
+		if self.get("applicable_for", "") is not None:
+			tocheck = frappe.scrub(self.get("applicable_for", ""))
+			if tocheck and not self.get(tocheck):
+				throw(_("{0} is required").format(self.meta.get_label(tocheck)), frappe.MandatoryError)
+
+		if self.apply_rule_on_other:
+			o_field = 'other_' + frappe.scrub(self.apply_rule_on_other)
+			if not self.get(o_field) and o_field in other_fields:
+				frappe.throw(_("For the 'Apply Rule On Other' condition the field {0} is mandatory")
+					.format(frappe.bold(self.apply_rule_on_other)))
+
+
+		if self.price_or_product_discount == 'Price' and not self.rate_or_discount:
+			throw(_("Rate or Discount is required for the price discount."), frappe.MandatoryError)
 
 		if self.apply_rule_on_other:
 			o_field = 'other_' + frappe.scrub(self.apply_rule_on_other)
@@ -222,7 +241,11 @@ def get_serial_no_for_item(args):
 
 def get_pricing_rule_for_item(args, price_list_rate=0, doc=None, for_validate=False):
 	from erpnext.accounts.doctype.pricing_rule.utils import (get_pricing_rules,
+<<<<<<< HEAD
 			get_applied_pricing_rules, get_pricing_rule_items, get_product_discount_rule)
+=======
+		get_applied_pricing_rules, get_pricing_rule_items, get_product_discount_rule)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	if isinstance(doc, string_types):
 		doc = json.loads(doc)
@@ -286,10 +309,13 @@ def get_pricing_rule_for_item(args, price_list_rate=0, doc=None, for_validate=Fa
 					apply_price_discount_rule(pricing_rule, item_details, args)
 				else:
 					get_product_discount_rule(pricing_rule, item_details, args, doc)
+<<<<<<< HEAD
 
 		if not item_details.get("has_margin"):
 			item_details.margin_type = None
 			item_details.margin_rate_or_amount = 0.0
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		item_details.has_pricing_rule = 1
 
@@ -384,6 +410,10 @@ def apply_price_discount_rule(pricing_rule, item_details, args):
 def remove_pricing_rule_for_item(pricing_rules, item_details, item_code=None):
 	from erpnext.accounts.doctype.pricing_rule.utils import (get_applied_pricing_rules,
 		get_pricing_rule_items)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	for d in get_applied_pricing_rules(pricing_rules):
 		if not d or not frappe.db.exists("Pricing Rule", d): continue
 		pricing_rule = frappe.get_cached_doc('Pricing Rule', d)
@@ -407,7 +437,8 @@ def remove_pricing_rule_for_item(pricing_rules, item_details, item_code=None):
 			items = get_pricing_rule_items(pricing_rule)
 			item_details.apply_on = (frappe.scrub(pricing_rule.apply_rule_on_other)
 				if pricing_rule.apply_rule_on_other else frappe.scrub(pricing_rule.get('apply_on')))
-			item_details.applied_on_items = ','.join(items)
+			item_details.applied_on_items = json.dumps(items)
+			item_details.price_or_product_discount = pricing_rule.price_or_product_discount
 
 	item_details.pricing_rules = ''
 

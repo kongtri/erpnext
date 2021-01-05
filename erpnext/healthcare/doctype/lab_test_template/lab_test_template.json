@@ -15,6 +15,7 @@
   "lab_test_group",
   "department",
   "column_break_3",
+<<<<<<< HEAD
   "disabled",
   "lab_test_template_type",
   "is_billable",
@@ -27,10 +28,21 @@
   "conversion_factor",
   "column_break_10",
   "lab_test_normal_range",
+=======
+  "lab_test_template_type",
+  "disabled",
+  "is_billable",
+  "lab_test_rate",
+  "section_break_normal",
+  "lab_test_uom",
+  "lab_test_normal_range",
+  "column_break_10",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "section_break_compound",
   "normal_test_templates",
   "section_break_special",
   "sensitivity",
+<<<<<<< HEAD
   "descriptive_test_templates",
   "section_break_group",
   "lab_test_groups",
@@ -48,6 +60,18 @@
   "result_legend_section",
   "legend_print_position",
   "result_legend",
+=======
+  "special_test_template",
+  "section_break_group",
+  "lab_test_groups",
+  "section_break_description",
+  "lab_test_description",
+  "sb_sample_collection",
+  "sample",
+  "sample_uom",
+  "sample_quantity",
+  "sample_collection_details",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "change_in_item"
  ],
  "fields": [
@@ -103,7 +127,11 @@
    "fieldtype": "Column Break"
   },
   {
+<<<<<<< HEAD
    "description": "<b>Single</b>: Results which require only a single input.\n<br>\n<b>Compound</b>: Results which require multiple event inputs.\n<br>\n<b>Descriptive</b>: Tests which have multiple result components with manual result entry.\n<br>\n<b>Grouped</b>: Test templates which are a group of other test templates.\n<br>\n<b>No Result</b>: Tests with no results, can be ordered and billed but no Lab Test will be created. e.g.. Sub Tests for Grouped results",
+=======
+   "description": "Single for results which require only a single input, result UOM and normal value \n<br>\nCompound for results which require multiple input fields with corresponding event names, result UOMs and normal values\n<br>\nDescriptive for tests which have multiple result components and corresponding result entry fields. \n<br>\nGrouped for test templates which are a group of other test templates.\n<br>\nNo Result for tests with no results. Also, no Lab Test is created. e.g.. Sub Tests for Grouped results.",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "lab_test_template_type",
    "fieldtype": "Select",
    "in_standard_filter": 1,
@@ -113,10 +141,17 @@
   {
    "default": "1",
    "depends_on": "eval:doc.lab_test_template_type != 'Grouped'",
+<<<<<<< HEAD
    "description": "If unchecked, the item will not be available in Sales Invoices for billing but can be used in group test creation. ",
    "fieldname": "is_billable",
    "fieldtype": "Check",
    "label": "Is Billable",
+=======
+   "description": "If unchecked, the item wont be appear in Sales Invoice, but can be used in group test creation. ",
+   "fieldname": "is_billable",
+   "fieldtype": "Check",
+   "label": "Is billable",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "search_index": 1
   },
   {
@@ -125,6 +160,7 @@
    "fieldname": "lab_test_rate",
    "fieldtype": "Currency",
    "in_list_view": 1,
+<<<<<<< HEAD
    "label": "Rate",
    "mandatory_depends_on": "eval:doc.is_billable == 1"
   },
@@ -236,6 +272,114 @@
    "fieldtype": "Data",
    "label": "UOM",
    "read_only": 1
+=======
+   "label": "Standard Selling Rate"
+  },
+  {
+   "depends_on": "eval:doc.lab_test_template_type == 'Single'",
+   "fieldname": "section_break_normal",
+   "fieldtype": "Section Break",
+   "label": "Lab Routine"
+  },
+  {
+   "fieldname": "lab_test_uom",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "in_list_view": 1,
+   "label": "UOM",
+   "options": "Lab Test UOM"
+  },
+  {
+   "fieldname": "lab_test_normal_range",
+   "fieldtype": "Long Text",
+   "ignore_xss_filter": 1,
+   "label": "Normal Range"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.lab_test_template_type == 'Compound'",
+   "fieldname": "section_break_compound",
+   "fieldtype": "Section Break",
+   "label": "Compound"
+  },
+  {
+   "fieldname": "normal_test_templates",
+   "fieldtype": "Table",
+   "options": "Normal Test Template"
+  },
+  {
+   "depends_on": "eval:doc.lab_test_template_type == 'Descriptive'",
+   "fieldname": "section_break_special",
+   "fieldtype": "Section Break",
+   "label": "Special"
+  },
+  {
+   "default": "0",
+   "fieldname": "sensitivity",
+   "fieldtype": "Check",
+   "label": "Sensitivity"
+  },
+  {
+   "fieldname": "special_test_template",
+   "fieldtype": "Table",
+   "options": "Special Test Template"
+  },
+  {
+   "depends_on": "eval:doc.lab_test_template_type == 'Grouped'",
+   "fieldname": "section_break_group",
+   "fieldtype": "Section Break",
+   "label": "Group"
+  },
+  {
+   "fieldname": "lab_test_groups",
+   "fieldtype": "Table",
+   "options": "Lab Test Groups"
+  },
+  {
+   "fieldname": "section_break_description",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "lab_test_description",
+   "fieldtype": "Text",
+   "ignore_xss_filter": 1,
+   "label": "Description",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "sb_sample_collection",
+   "fieldtype": "Section Break",
+   "label": "Sample Collection"
+  },
+  {
+   "fieldname": "sample",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Sample",
+   "options": "Lab Test Sample"
+  },
+  {
+   "fetch_from": "sample.sample_uom",
+   "fieldname": "sample_uom",
+   "fieldtype": "Data",
+   "label": "UOM",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "sample_quantity",
+   "fieldtype": "Float",
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "sample_collection_details",
+   "fieldtype": "Text",
+   "ignore_xss_filter": 1,
+   "label": "Collection Details"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "default": "0",
@@ -252,6 +396,7 @@
    "fieldname": "disabled",
    "fieldtype": "Check",
    "label": "Disabled"
+<<<<<<< HEAD
   },
   {
    "default": "0",
@@ -321,6 +466,13 @@
  "links": [],
  "modified": "2020-07-30 14:32:40.449818",
  "modified_by": "Administrator",
+=======
+  }
+ ],
+ "links": [],
+ "modified": "2020-01-21 21:02:16.108347",
+ "modified_by": "ruchamahabal2@gmail.com",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "module": "Healthcare",
  "name": "Lab Test Template",
  "owner": "Administrator",

@@ -149,11 +149,14 @@ erpnext.selling.SalesOrderController = erpnext.selling.SellingController.extend(
 
 					this.frm.add_custom_button(__('Pick List'), () => this.create_pick_list(), __('Create'));
 
+<<<<<<< HEAD
 					const order_is_a_sale = ["Sales", "Shopping Cart"].indexOf(doc.order_type) !== -1;
 					const order_is_maintenance = ["Maintenance"].indexOf(doc.order_type) !== -1;
 					// order type has been customised then show all the action buttons
 					const order_is_a_custom_sale = ["Sales", "Shopping Cart", "Maintenance"].indexOf(doc.order_type) === -1;
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 					// delivery note
 					if(flt(doc.per_delivered, 6) < 100 && (order_is_a_sale || order_is_a_custom_sale) && allow_delivery) {
 						this.frm.add_custom_button(__('Delivery Note'), () => this.make_delivery_note_based_on_delivery_date(), __('Create'));

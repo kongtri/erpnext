@@ -15,7 +15,11 @@ frappe.treeview_settings["Quality Procedure"] = {
 			}
 		},
 	],
+<<<<<<< HEAD
 	breadcrumb: "Quality Management",
+=======
+	breadcrumb: "Setup",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	disable_add_node: true,
 	root_label: "All Quality Procedures",
 	get_tree_root: false,

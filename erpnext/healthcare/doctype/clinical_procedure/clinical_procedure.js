@@ -4,7 +4,11 @@
 frappe.ui.form.on('Clinical Procedure', {
 	setup: function(frm) {
 		frm.set_query('batch_no', 'items', function(doc, cdt, cdn) {
+<<<<<<< HEAD
 			let item = locals[cdt][cdn];
+=======
+			var item = locals[cdt][cdn];
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			if (!item.item_code) {
 				frappe.throw(__('Please enter Item Code to get Batch Number'));
 			} else {
@@ -26,7 +30,11 @@ frappe.ui.form.on('Clinical Procedure', {
 	refresh: function(frm) {
 		frm.set_query('patient', function () {
 			return {
+<<<<<<< HEAD
 				filters: {'status': ['!=', 'Disabled']}
+=======
+				filters: {"status": "Active"}
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			};
 		});
 

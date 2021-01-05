@@ -157,8 +157,20 @@ frappe.ui.form.on("Expense Claim", {
 				}
 			};
 		});
+<<<<<<< HEAD
 
 		frm.set_query("account_head", "taxes", function() {
+=======
+		frm.set_query("cost_center", "expenses", function() {
+			return {
+				filters: {
+					"company": frm.doc.company,
+					"is_group": 0
+				}
+			};
+		});
+		frm.set_query("account_head", "taxes", function(doc) {
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			return {
 				filters: [
 					['company', '=', frm.doc.company],
@@ -259,7 +271,11 @@ frappe.ui.form.on("Expense Claim", {
 			if (amount_to_be_allocated >= advance.unclaimed_amount){
 				advance.allocated_amount = frm.doc.advances[i].unclaimed_amount;
 				amount_to_be_allocated -= advance.allocated_amount;
+<<<<<<< HEAD
 			} else {
+=======
+			} else{
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				advance.allocated_amount = amount_to_be_allocated;
 				amount_to_be_allocated = 0;
 			}
@@ -370,9 +386,12 @@ frappe.ui.form.on("Expense Claim Detail", {
 	sanctioned_amount: function(frm, cdt, cdn) {
 		cur_frm.cscript.calculate_total(frm.doc, cdt, cdn);
 		frm.trigger("get_taxes");
+<<<<<<< HEAD
 	},
 	cost_center: function(frm, cdt, cdn) {
 		erpnext.utils.copy_value_in_all_rows(frm.doc, cdt, cdn, "expenses", "cost_center");
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	}
 });
 

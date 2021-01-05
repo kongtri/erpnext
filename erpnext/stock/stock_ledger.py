@@ -260,12 +260,24 @@ class update_entries_after(object):
 
 			self.wh_data.stock_value = flt(self.wh_data.qty_after_transaction) * flt(self.wh_data.valuation_rate)
 		else:
+<<<<<<< HEAD
 			if sle.voucher_type=="Stock Reconciliation" and not sle.batch_no:
 				# assert
 				self.wh_data.valuation_rate = sle.valuation_rate
 				self.wh_data.qty_after_transaction = sle.qty_after_transaction
 				self.wh_data.stock_queue = [[self.wh_data.qty_after_transaction, self.wh_data.valuation_rate]]
 				self.wh_data.stock_value = flt(self.wh_data.qty_after_transaction) * flt(self.wh_data.valuation_rate)
+=======
+			if sle.voucher_type=="Stock Reconciliation":
+				if sle.batch_no:
+					self.qty_after_transaction += flt(sle.actual_qty)
+				else:
+					self.qty_after_transaction = sle.qty_after_transaction
+
+				self.valuation_rate = sle.valuation_rate
+				self.stock_queue = [[self.qty_after_transaction, self.valuation_rate]]
+				self.stock_value = flt(self.qty_after_transaction) * flt(self.valuation_rate)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			else:
 				if self.valuation_method == "Moving Average":
 					self.get_moving_average_values(sle)
@@ -414,11 +426,16 @@ class update_entries_after(object):
 		elif actual_qty < 0:
 			# In case of delivery/stock issue, get average purchase rate
 			# of serial nos of current entry
+<<<<<<< HEAD
 			if not sle.is_cancelled:
 				outgoing_value = self.get_incoming_value_for_serial_nos(sle, serial_nos)
 				stock_value_change = -1 * outgoing_value
 			else:
 				stock_value_change = actual_qty * sle.outgoing_rate
+=======
+			outgoing_value = self.get_incoming_value_for_serial_nos(sle, serial_nos)
+			stock_value_change = -1 * outgoing_value
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		new_stock_qty = self.wh_data.qty_after_transaction + actual_qty
 
@@ -612,6 +629,7 @@ class update_entries_after(object):
 			if ((exceptions[0]["voucher_type"], exceptions[0]["voucher_no"]) in
 				frappe.local.flags.currently_saving):
 
+<<<<<<< HEAD
 				msg = _("{0} units of {1} needed in {2} to complete this transaction.").format(
 					abs(deficiency), frappe.get_desk_link('Item', self.item_code),
 					frappe.get_desk_link('Warehouse', warehouse))
@@ -644,6 +662,22 @@ class update_entries_after(object):
 			})
 			bin_doc.flags.via_stock_ledger_entry = True
 			bin_doc.save(ignore_permissions=True)
+=======
+			msg = _("{0} units of {1} needed in {2} to complete this transaction.").format(
+				abs(deficiency), frappe.get_desk_link('Item', self.item_code),
+				frappe.get_desk_link('Warehouse', self.warehouse))
+		else:
+			msg = _("{0} units of {1} needed in {2} on {3} {4} for {5} to complete this transaction.").format(
+				abs(deficiency), frappe.get_desk_link('Item', self.item_code),
+				frappe.get_desk_link('Warehouse', self.warehouse),
+				self.exceptions[0]["posting_date"], self.exceptions[0]["posting_time"],
+				frappe.get_desk_link(self.exceptions[0]["voucher_type"], self.exceptions[0]["voucher_no"]))
+
+		if self.verbose:
+			frappe.throw(msg, NegativeStockError, title='Insufficient Stock')
+		else:
+			raise NegativeStockError(msg)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 def get_previous_sle(args, for_update=False):
 	"""
@@ -673,7 +707,13 @@ def get_stock_ledger_entries(previous_sle, operator=None,
 		conditions += " and " + previous_sle.get("warehouse_condition")
 
 	if check_serial_no and previous_sle.get("serial_no"):
-		conditions += " and serial_no like {}".format(frappe.db.escape('%{0}%'.format(previous_sle.get("serial_no"))))
+		serial_no = previous_sle.get("serial_no")
+		conditions += """ and (
+				serial_no = '{0}'
+				OR serial_no like '{0}\n%%'
+				OR serial_no like '%%\n{0}'
+				OR serial_no like '%%\n{0}\n%%'
+			) and actual_qty > 0""".format(serial_no)
 
 	if not previous_sle.get("posting_date"):
 		previous_sle["posting_date"] = "1900-01-01"

@@ -4,8 +4,12 @@
 from __future__ import unicode_literals
 import frappe
 from frappe import _
+<<<<<<< HEAD
 from frappe.utils import cstr, today, flt, add_years, formatdate, getdate
 from erpnext.accounts.report.financial_statements import get_period_list, get_fiscal_year_data, validate_fiscal_year
+=======
+from frappe.utils import cstr, today, flt
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 def execute(filters=None):
 	filters = frappe._dict(filters or {})
@@ -13,11 +17,107 @@ def execute(filters=None):
 	data = get_data(filters)
 	chart = prepare_chart_data(data, filters) if filters.get("group_by") not in ("Asset Category", "Location") else {}
 
+<<<<<<< HEAD
 	return columns, data, None, chart
+=======
+def get_columns(filters):
+	return [
+		{
+			"label": _("Asset Id"),
+			"fieldtype": "Link",
+			"fieldname": "asset_id",
+			"options": "Asset",
+			"width": 100
+		},
+		{
+			"label": _("Asset Name"),
+			"fieldtype": "Data",
+			"fieldname": "asset_name",
+			"width": 140
+		},
+		{
+			"label": _("Asset Category"),
+			"fieldtype": "Link",
+			"fieldname": "asset_category",
+			"options": "Asset Category",
+			"width": 100
+		},
+		{
+			"label": _("Status"),
+			"fieldtype": "Data",
+			"fieldname": "status",
+			"width": 90
+		},
+		{
+			"label": _("Purchase Date"),
+			"fieldtype": "Date",
+			"fieldname": "purchase_date",
+			"width": 90
+		},
+		{
+			"label": _("Available For Use Date"),
+			"fieldtype": "Date",
+			"fieldname": "available_for_use_date",
+			"width": 90
+		},
+		{
+			"label": _("Gross Purchase Amount"),
+			"fieldname": "gross_purchase_amount",
+			"options": "Currency",
+			"width": 90
+		},
+		{
+			"label": _("Asset Value"),
+			"fieldname": "asset_value",
+			"options": "Currency",
+			"width": 90
+		},
+		{
+			"label": _("Opening Accumulated Depreciation"),
+			"fieldname": "opening_accumulated_depreciation",
+			"options": "Currency",
+			"width": 90
+		},
+		{
+			"label": _("Depreciated Amount"),
+			"fieldname": "depreciated_amount",
+			"options": "Currency",
+			"width": 90
+		},
+		{
+			"label": _("Cost Center"),
+			"fieldtype": "Link",
+			"fieldname": "cost_center",
+			"options": "Cost Center",
+			"width": 100
+		},
+		{
+			"label": _("Department"),
+			"fieldtype": "Link",
+			"fieldname": "department",
+			"options": "Department",
+			"width": 100
+		},
+		{
+			"label": _("Vendor Name"),
+			"fieldtype": "Data",
+			"fieldname": "vendor_name",
+			"width": 100
+		},
+		{
+			"label": _("Location"),
+			"fieldtype": "Link",
+			"fieldname": "location",
+			"options": "Location",
+			"width": 100
+		},
+	]
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 def get_conditions(filters):
 	conditions = { 'docstatus': 1 }
 	status = filters.status
+<<<<<<< HEAD
 	date_field = frappe.scrub(filters.date_based_on or "Purchase Date")
 
 	if filters.get('company'):
@@ -31,12 +131,25 @@ def get_conditions(filters):
 		filters.year_end_date = getdate(fiscal_year.year_end_date)
 
 		conditions[date_field] = ["between", [filters.year_start_date, filters.year_end_date]]
+=======
+	date = filters.date
+
+	if filters.get('company'):
+		conditions["company"] = filters.company
+	if filters.get('purchase_date'):
+		conditions["purchase_date"] = ('<=', filters.get('purchase_date'))
+	if filters.get('available_for_use_date'):
+		conditions["available_for_use_date"] = ('<=', filters.get('available_for_use_date'))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	if filters.get('is_existing_asset'):
 		conditions["is_existing_asset"] = filters.get('is_existing_asset')
 	if filters.get('asset_category'):
 		conditions["asset_category"] = filters.get('asset_category')
+<<<<<<< HEAD
 	if filters.get('cost_center'):
 		conditions["cost_center"] = filters.get('cost_center')
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	# In Store assets are those that are not sold or scrapped
 	operand = 'not in'
@@ -69,8 +182,12 @@ def get_data(filters):
 	else:
 		fields = ["name as asset_id", "asset_name", "status", "department", "cost_center", "purchase_receipt",
 			"asset_category", "purchase_date", "gross_purchase_amount", "location",
+<<<<<<< HEAD
 			"available_for_use_date", "purchase_invoice", "opening_accumulated_depreciation"]
 		assets_record = frappe.db.get_all("Asset", filters=conditions, fields=fields)
+=======
+			"available_for_use_date", "status", "purchase_invoice", "opening_accumulated_depreciation"])
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	for asset in assets_record:
 		asset_value = asset.gross_purchase_amount - flt(asset.opening_accumulated_depreciation) \
@@ -95,6 +212,7 @@ def get_data(filters):
 
 	return data
 
+<<<<<<< HEAD
 def prepare_chart_data(data, filters):
 	labels_values_map = {}
 	date_field = frappe.scrub(filters.date_based_on)
@@ -128,6 +246,10 @@ def prepare_chart_data(data, filters):
 
 def get_finance_book_value_map(filters):
 	date = filters.to_date if filters.filter_based_on == "Date Range" else filters.year_end_date
+=======
+def get_finance_book_value_map(filters):
+	date = filters.get('purchase_date') or filters.get('available_for_use_date') or today()
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	return frappe._dict(frappe.db.sql(''' Select
 		parent, SUM(depreciation_amount)

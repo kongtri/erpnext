@@ -222,6 +222,10 @@ def get_benefit_amount_based_on_pro_rata(sal_struct, component_max_benefit):
 
 	return benefit_amount
 
+<<<<<<< HEAD:erpnext/payroll/doctype/employee_benefit_application/employee_benefit_application.py
+=======
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/employee_benefit_application/employee_benefit_application.py
 @frappe.whitelist()
 @frappe.validate_and_sanitize_search_inputs
 def get_earning_components(doctype, txt, searchfield, start, page_len, filters):
@@ -240,6 +244,7 @@ def get_earning_components(doctype, txt, searchfield, start, page_len, filters):
 	else:
 		frappe.throw(_("Salary Structure not found for employee {0} and date {1}")
 			.format(filters['employee'], filters['date']))
+<<<<<<< HEAD:erpnext/payroll/doctype/employee_benefit_application/employee_benefit_application.py
 
 @frappe.whitelist()
 def get_earning_components_max_benefits(employee, date, earning_component):
@@ -253,3 +258,5 @@ def get_earning_components_max_benefits(employee, date, earning_component):
 		""", salary_structure, earning_component)
 
 	return amount if amount else 0
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/employee_benefit_application/employee_benefit_application.py

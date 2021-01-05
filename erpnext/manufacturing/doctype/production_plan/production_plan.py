@@ -431,6 +431,7 @@ class ProductionPlan(Document):
 
 @frappe.whitelist()
 def download_raw_materials(doc):
+<<<<<<< HEAD
 	if isinstance(doc, string_types):
 		doc = frappe._dict(json.loads(doc))
 
@@ -438,6 +439,15 @@ def download_raw_materials(doc):
 		'projected Qty', 'Actual Qty']]
 
 	for d in get_items_for_material_requests(doc):
+=======
+	item_list = [['Item Code', 'Description', 'Stock UOM', 'Required Qty', 'Warehouse',
+		'projected Qty', 'Actual Qty']]
+
+	if isinstance(doc, string_types):
+		doc = frappe._dict(json.loads(doc))
+
+	for d in get_items_for_material_requests(doc, ignore_existing_ordered_qty=True):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		item_list.append([d.get('item_code'), d.get('description'), d.get('stock_uom'), d.get('quantity'),
 			d.get('warehouse'), d.get('projected_qty'), d.get('actual_qty')])
 
@@ -657,6 +667,12 @@ def get_items_for_material_requests(doc, warehouses=None):
 	if not po_items or not [row.get('item_code') for row in po_items if row.get('item_code')]:
 		frappe.throw(_("Items to Manufacture are required to pull the Raw Materials associated with it."),
 			title=_("Items Required"))
+<<<<<<< HEAD
+=======
+
+	company = doc.get('company')
+	warehouse = doc.get('for_warehouse')
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	company = doc.get('company')
 	ignore_existing_ordered_qty = doc.get('ignore_existing_ordered_qty')
@@ -665,7 +681,10 @@ def get_items_for_material_requests(doc, warehouses=None):
 	for data in po_items:
 		planned_qty = data.get('required_qty') or data.get('planned_qty')
 		ignore_existing_ordered_qty = data.get('ignore_existing_ordered_qty') or ignore_existing_ordered_qty
+<<<<<<< HEAD
 		warehouse = doc.get('for_warehouse')
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		item_details = {}
 		if data.get("bom") or data.get("bom_no"):

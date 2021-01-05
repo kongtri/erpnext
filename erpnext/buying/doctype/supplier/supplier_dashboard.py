@@ -26,6 +26,10 @@ def get_data():
 				'items': ['Payment Entry', 'Bank Account']
 			},
 			{
+				'label': _('Bank'),
+				'items': ['Bank Account']
+			},
+			{
 				'label': _('Pricing'),
 				'items': ['Pricing Rule']
 			}

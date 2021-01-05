@@ -7,21 +7,32 @@
  "engine": "InnoDB",
  "field_order": [
   "sb_op_settings",
+<<<<<<< HEAD
   "patient_name_by",
   "link_customer_to_patient",
+=======
+  "patient_master_name",
+  "manage_customer",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "default_medical_code_standard",
   "column_break_9",
   "collect_registration_fee",
   "registration_fee",
+<<<<<<< HEAD
   "automate_appointment_invoicing",
   "enable_free_follow_ups",
   "max_visits",
+=======
+  "manage_appointment_invoice_automatically",
+  "max_visit",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "valid_days",
   "healthcare_service_items",
   "inpatient_visit_charge_item",
   "op_consulting_charge_item",
   "column_break_13",
   "clinical_procedure_consumable_item",
+<<<<<<< HEAD
   "sb_in_ac",
   "income_account",
   "receivable_account",
@@ -40,6 +51,27 @@
   "create_sample_collection_for_lab_test",
   "column_break_34",
   "lab_test_approval_required",
+=======
+  "out_patient_sms_alerts",
+  "reg_sms",
+  "reg_msg",
+  "app_con",
+  "app_con_msg",
+  "no_con",
+  "column_break_16",
+  "app_rem",
+  "app_rem_msg",
+  "rem_before",
+  "sb_in_ac",
+  "income_account",
+  "sb_r_ac",
+  "receivable_account",
+  "sb_lab_settings",
+  "create_test_on_si_submit",
+  "require_sample_collection",
+  "require_test_result_approval",
+  "column_break_34",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "employee_name_and_designation_in_print",
   "custom_signature_in_print",
   "laboratory_sms_alerts",
@@ -52,6 +84,22 @@
    "fieldname": "sb_op_settings",
    "fieldtype": "Section Break",
    "label": "Out Patient Settings"
+<<<<<<< HEAD
+=======
+  },
+  {
+   "fieldname": "patient_master_name",
+   "fieldtype": "Select",
+   "label": "Patient Name By",
+   "options": "Patient Name\nNaming Series"
+  },
+  {
+   "default": "1",
+   "description": "If checked, a customer will be created, mapped to Patient.\nPatient Invoices will be created against this Customer. You can also select existing Customer while creating Patient.",
+   "fieldname": "manage_customer",
+   "fieldtype": "Check",
+   "label": "Manage Customer"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "default_medical_code_standard",
@@ -77,6 +125,7 @@
    "label": "Registration Fee",
    "mandatory_depends_on": "eval:doc.collect_registration_fee == 1",
    "options": "Currency"
+<<<<<<< HEAD
   },
   {
    "depends_on": "eval:doc.enable_free_follow_ups == 1",
@@ -92,6 +141,31 @@
    "fieldname": "healthcare_service_items",
    "fieldtype": "Section Break",
    "label": "Default Healthcare Service Items"
+=======
+  },
+  {
+   "default": "0",
+   "description": "Manage Appointment Invoice submit and cancel automatically for Patient Encounter",
+   "fieldname": "manage_appointment_invoice_automatically",
+   "fieldtype": "Check",
+   "label": "Invoice Appointments Automatically"
+  },
+  {
+   "fieldname": "max_visit",
+   "fieldtype": "Int",
+   "label": "Patient Encounters in valid days"
+  },
+  {
+   "fieldname": "valid_days",
+   "fieldtype": "Int",
+   "label": "Valid number of days"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "healthcare_service_items",
+   "fieldtype": "Section Break",
+   "label": "Healthcare Service Items"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "inpatient_visit_charge_item",
@@ -122,6 +196,7 @@
    "label": "Out Patient SMS Alerts"
   },
   {
+<<<<<<< HEAD
    "fieldname": "column_break_16",
    "fieldtype": "Column Break"
   },
@@ -302,11 +377,166 @@
    "fieldname": "enable_free_follow_ups",
    "fieldtype": "Check",
    "label": "Enable Free Follow-ups"
+=======
+   "default": "0",
+   "fieldname": "reg_sms",
+   "fieldtype": "Check",
+   "label": "Patient Registration"
+  },
+  {
+   "default": "Hello {{doc.patient}}, Thank you for registering with  {{doc.company}}. Your ID is {{doc.id}} . Please note this ID for future reference. \nThank You, Get well soon!",
+   "depends_on": "reg_sms",
+   "fieldname": "reg_msg",
+   "fieldtype": "Small Text",
+   "ignore_xss_filter": 1,
+   "label": "Registration Message"
+  },
+  {
+   "default": "0",
+   "fieldname": "app_con",
+   "fieldtype": "Check",
+   "label": "Appointment Confirmation"
+  },
+  {
+   "default": "Hello {{doc.patient}}, You have scheduled an appointment with {{doc.practitioner}} by {{doc.start_dt}} at  {{doc.company}}.\nThank you, Good day!",
+   "depends_on": "app_con",
+   "fieldname": "app_con_msg",
+   "fieldtype": "Small Text",
+   "ignore_xss_filter": 1,
+   "label": "Confirmation Message"
+  },
+  {
+   "default": "0",
+   "depends_on": "app_con",
+   "description": "Do not confirm if appointment is created for the same day",
+   "fieldname": "no_con",
+   "fieldtype": "Check",
+   "label": "Avoid Confirmation"
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "app_rem",
+   "fieldtype": "Check",
+   "label": "Appointment Reminder"
+  },
+  {
+   "default": "Hello {{doc.patient}}, You have an appointment with {{doc.practitioner}} by {{doc.appointment_time}} at  {{doc.company}}.\nThank you, Good day!\n",
+   "depends_on": "app_rem",
+   "fieldname": "app_rem_msg",
+   "fieldtype": "Small Text",
+   "ignore_xss_filter": 1,
+   "label": "Reminder Message"
+  },
+  {
+   "depends_on": "app_rem",
+   "fieldname": "rem_before",
+   "fieldtype": "Time",
+   "label": "Remind Before"
+  },
+  {
+   "collapsible": 1,
+   "description": "Default income accounts to be used if not set in Healthcare Practitioner to book Appointment charges.",
+   "fieldname": "sb_in_ac",
+   "fieldtype": "Section Break",
+   "label": "Income Account"
+  },
+  {
+   "fieldname": "income_account",
+   "fieldtype": "Table",
+   "label": "Income Account",
+   "options": "Party Account"
+  },
+  {
+   "collapsible": 1,
+   "description": "Default receivable accounts to be used if not set in Patient to book Appointment charges.",
+   "fieldname": "sb_r_ac",
+   "fieldtype": "Section Break",
+   "label": "Receivable Account"
+  },
+  {
+   "fieldname": "receivable_account",
+   "fieldtype": "Table",
+   "label": "Receivable Account",
+   "options": "Party Account"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_lab_settings",
+   "fieldtype": "Section Break",
+   "label": "Laboratory Settings"
+  },
+  {
+   "default": "0",
+   "fieldname": "create_test_on_si_submit",
+   "fieldtype": "Check",
+   "label": "Create Lab Test(s) on Sales Invoice Submit"
+  },
+  {
+   "default": "0",
+   "description": "Create documents for sample collection",
+   "fieldname": "require_sample_collection",
+   "fieldtype": "Check",
+   "label": "Manage Sample Collection"
+  },
+  {
+   "default": "0",
+   "fieldname": "require_test_result_approval",
+   "fieldtype": "Check",
+   "label": "Require Lab Test Approval"
+  },
+  {
+   "fieldname": "column_break_34",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "employee_name_and_designation_in_print",
+   "fieldtype": "Check",
+   "label": "Employee name and designation in print"
+  },
+  {
+   "depends_on": "eval:doc.employee_name_and_designation_in_print == '0'\n",
+   "fieldname": "custom_signature_in_print",
+   "fieldtype": "Small Text",
+   "label": "Custom Signature in Print"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "laboratory_sms_alerts",
+   "fieldtype": "Section Break",
+   "label": "Laboratory SMS Alerts"
+  },
+  {
+   "default": "Hello {{doc.patient}}, Your {{doc.lab_test_name}} result is ready with {{doc.company }}. \nThank You, Good day!",
+   "fieldname": "sms_printed",
+   "fieldtype": "Small Text",
+   "ignore_xss_filter": 1,
+   "label": "Result Printed"
+  },
+  {
+   "fieldname": "column_break_28",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Hello {{doc.patient}}, Your {{doc.lab_test_name}} result has been emailed to {{doc.email}}. \n{{doc.company }}. \nThank You, Good day!",
+   "fieldname": "sms_emailed",
+   "fieldtype": "Small Text",
+   "ignore_xss_filter": 1,
+   "label": "Result Emailed"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "issingle": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-07-08 15:17:21.543218",
+=======
+ "modified": "2020-01-23 13:39:06.078738",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Healthcare",
  "name": "Healthcare Settings",

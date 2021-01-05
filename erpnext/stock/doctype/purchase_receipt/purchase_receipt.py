@@ -210,8 +210,11 @@ class PurchaseReceipt(BuyingController):
 		# because updating ordered qty in bin depends upon updated ordered qty in PO
 		self.update_stock_ledger()
 		self.make_gl_entries_on_cancel()
+<<<<<<< HEAD
 		self.repost_future_sle_and_gle()
 		self.ignore_linked_doctypes = ('GL Entry', 'Stock Ledger Entry', 'Repost Item Valuation')
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		self.delete_auto_created_batches()
 
 	def get_current_stock(self):
@@ -224,6 +227,7 @@ class PurchaseReceipt(BuyingController):
 		from erpnext.accounts.general_ledger import process_gl_map
 
 		stock_rbnb = self.get_company_default("stock_received_but_not_billed")
+		stock_rbnb_currency = get_account_currency(stock_rbnb)
 		landed_cost_entries = get_item_account_wise_additional_cost(self.name)
 		expenses_included_in_valuation = self.get_company_default("expenses_included_in_valuation")
 		auto_accounting_for_non_stock_items = cint(frappe.db.get_value('Company', self.company, 'enable_perpetual_inventory_for_non_stock_items'))
@@ -258,6 +262,7 @@ class PurchaseReceipt(BuyingController):
 						"debit": stock_value_diff
 					}, warehouse_account[d.warehouse]["account_currency"], item=d))
 
+<<<<<<< HEAD
 					# GL Entry for from warehouse or Stock Received but not billed
 					# Intentionally passed negative debit amount to avoid incorrect GL Entry validation
 					credit_currency = get_account_currency(warehouse_account[d.from_warehouse]['account']) \
@@ -275,6 +280,19 @@ class PurchaseReceipt(BuyingController):
 							"debit": -1 * flt(d.base_net_amount, d.precision("base_net_amount")),
 							"debit_in_account_currency": -1 * credit_amount
 						}, credit_currency, item=d))
+=======
+					# stock received but not billed
+					if d.base_net_amount:
+						gl_entries.append(self.get_gl_dict({
+							"account": stock_rbnb,
+							"against": warehouse_account[d.warehouse]["account"],
+							"cost_center": d.cost_center,
+							"remarks": self.get("remarks") or _("Accounting Entry for Stock"),
+							"credit": flt(d.base_net_amount, d.precision("base_net_amount")),
+							"credit_in_account_currency": flt(d.base_net_amount, d.precision("base_net_amount")) \
+								if stock_rbnb_currency==self.company_currency else flt(d.net_amount, d.precision("net_amount"))
+						}, stock_rbnb_currency, item=d))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 					negative_expense_to_be_booked += flt(d.item_tax_amount)
 
@@ -311,7 +329,12 @@ class PurchaseReceipt(BuyingController):
 						if self.is_return or flt(d.item_tax_amount):
 							loss_account = expenses_included_in_valuation
 						else:
+<<<<<<< HEAD
 							loss_account = self.get_company_default("default_expense_account")
+=======
+							cogs_account = self.get_company_default("default_expense_account")
+							loss_account = cogs_account
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 						gl_entries.append(self.get_gl_dict({
 							"account": loss_account,
@@ -600,7 +623,10 @@ def make_purchase_invoice(source_name, target_doc=None):
 
 	def update_item(source_doc, target_doc, source_parent):
 		target_doc.qty, returned_qty = get_pending_qty(source_doc)
+<<<<<<< HEAD
 		target_doc.stock_qty = flt(target_doc.qty) * flt(target_doc.conversion_factor, target_doc.precision("conversion_factor"))
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		returned_qty_map[source_doc.name] = returned_qty
 
 	def get_pending_qty(item_row):

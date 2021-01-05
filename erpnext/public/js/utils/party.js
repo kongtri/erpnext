@@ -225,7 +225,11 @@ erpnext.utils.set_taxes = function(frm, triggered_from_field) {
 	}
 
 	if (!frm.doc.company) {
+<<<<<<< HEAD
 		frappe.throw(__("Kindly select the company first"));
+=======
+		frappe.throw(_("Kindly select the company first"));
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	}
 
 	frappe.call({

@@ -178,8 +178,12 @@ def get_gl_entries(filters, accounting_dimensions):
 		"""
 		select
 			name as gl_entry, posting_date, account, party_type, party,
+<<<<<<< HEAD
 			voucher_type, voucher_no, {dimension_fields}
 			cost_center, project,
+=======
+			voucher_type, voucher_no, cost_center, project,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			against_voucher_type, against_voucher, account_currency,
 			remarks, against, is_opening, creation {select_fields}
 		from `tabGL Entry`

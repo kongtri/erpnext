@@ -6,6 +6,10 @@
  "creation": "2013-01-10 16:34:24",
  "doctype": "DocType",
  "document_type": "Setup",
+<<<<<<< HEAD
+=======
+ "engine": "InnoDB",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "field_order": [
   "supplier_group_name",
   "parent_supplier_group",
@@ -106,7 +110,11 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-03-18 18:10:49.228407",
+=======
+ "modified": "2020-03-18 18:26:07.179330",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Supplier Group",
@@ -159,5 +167,9 @@
   }
  ],
  "show_name_in_global_search": 1,
+<<<<<<< HEAD
+=======
+ "sort_field": "modified",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "sort_order": "ASC"
 }

@@ -2,9 +2,14 @@ braintree==3.57.1
 frappe
 gocardless-pro==1.11.0
 googlemaps==3.1.1
+<<<<<<< HEAD
 pandas>=1.0.5
 plaid-python==6.0.0
 pycountry==19.8.18
+=======
+pandas==0.24.2
+plaid-python==6.0.0
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 PyGithub==1.44.1
 python-stdnum==1.12
 python-youtube==0.6.0

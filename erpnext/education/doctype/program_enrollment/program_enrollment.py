@@ -96,7 +96,12 @@ class ProgramEnrollment(Document):
 
 	def create_course_enrollments(self):
 		student = frappe.get_doc("Student", self.student)
+<<<<<<< HEAD
 		course_list = [course.course for course in self.courses]
+=======
+		program = frappe.get_doc("Program", self.program)
+		course_list = [course.course for course in program.courses]
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		for course_name in course_list:
 			student.enroll_in_course(course_name=course_name, program_enrollment=self.name, enrollment_date=self.enrollment_date)
 

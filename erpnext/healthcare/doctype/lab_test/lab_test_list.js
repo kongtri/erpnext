@@ -61,7 +61,11 @@ var create_multiple_dialog = function (listview) {
 					}
 				},
 				freeze: true,
+<<<<<<< HEAD
 				freeze_message: __('Creating Lab Tests...')
+=======
+				freeze_message: __("Creating Lab Test...")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			});
 			dialog.hide();
 		}

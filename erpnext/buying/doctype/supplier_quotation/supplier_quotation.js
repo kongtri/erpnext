@@ -8,7 +8,12 @@ erpnext.buying.SupplierQuotationController = erpnext.buying.BuyingController.ext
 	setup: function() {
 		this.frm.custom_make_buttons = {
 			'Purchase Order': 'Purchase Order',
+<<<<<<< HEAD
 			'Quotation': 'Quotation'
+=======
+			'Quotation': 'Quotation',
+			'Subscription': 'Subscription'
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		}
 
 		this._super();

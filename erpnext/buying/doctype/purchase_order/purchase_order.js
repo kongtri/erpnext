@@ -131,14 +131,22 @@ erpnext.buying.PurchaseOrderController = erpnext.buying.BuyingController.extend(
 			if(doc.status != "Closed") {
 				if (doc.status != "On Hold") {
 					if(flt(doc.per_received) < 100 && allow_receipt) {
+<<<<<<< HEAD
 						cur_frm.add_custom_button(__('Purchase Receipt'), this.make_purchase_receipt, __('Create'));
+=======
+						cur_frm.add_custom_button(__('Receipt'), this.make_purchase_receipt, __('Create'));
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 						if(doc.is_subcontracted==="Yes" && me.has_unsupplied_items()) {
 							cur_frm.add_custom_button(__('Material to Supplier'),
 								function() { me.make_stock_entry(); }, __("Transfer"));
 						}
 					}
 					if(flt(doc.per_billed) < 100)
+<<<<<<< HEAD
 						cur_frm.add_custom_button(__('Purchase Invoice'),
+=======
+						cur_frm.add_custom_button(__('Invoice'),
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 							this.make_purchase_invoice, __('Create'));
 
 					if(flt(doc.per_billed)==0 && doc.status != "Delivered") {

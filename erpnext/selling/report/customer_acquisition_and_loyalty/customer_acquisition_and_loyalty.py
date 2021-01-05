@@ -5,7 +5,12 @@ from __future__ import unicode_literals
 import calendar
 import frappe
 from frappe import _
+<<<<<<< HEAD
 from frappe.utils import cint, cstr, getdate
+=======
+from frappe.utils import getdate, cint, cstr
+import calendar
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 def execute(filters=None):
 	common_columns = [
@@ -124,6 +129,7 @@ def get_data_by_territory(filters, common_columns):
 			}
 		})
 
+<<<<<<< HEAD
 	depth_map = frappe._dict()
 	for name, info in territory_dict.items():
 		default = depth_map.get(info['parent']) + 1 if info['parent'] else 0
@@ -147,6 +153,22 @@ def get_data_by_territory(filters, common_columns):
 			'bold': 0 if indent else 1
 		}
 		data.append(temp)
+=======
+			out.append([cstr(year), calendar.month_name[month],
+				new[0], repeat[0], new[0] + repeat[0],
+				new[1], repeat[1], new[1] + repeat[1]])
+
+	return [
+		_("Year") + "::100",
+		_("Month") + "::100",
+		_("New Customers") + ":Int:100",
+		_("Repeat Customers") + ":Int:100",
+		_("Total") + ":Int:100",
+		_("New Customer Revenue") + ":Currency:150",
+		_("Repeat Customer Revenue") + ":Currency:150",
+		_("Total Revenue") + ":Currency:150"
+	], out
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	loop_data = sorted(data, key=lambda k: k['indent'], reverse=True)
 

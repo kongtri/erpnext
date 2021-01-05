@@ -13,6 +13,12 @@
   "supplier_name",
   "tax_id",
   "due_date",
+<<<<<<< HEAD
+=======
+  "is_paid",
+  "is_return",
+  "apply_tds",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "tax_withholding_category",
   "column_break1",
   "company",
@@ -27,6 +33,14 @@
   "cost_center",
   "dimension_col_break",
   "project",
+<<<<<<< HEAD
+=======
+  "sb_14",
+  "on_hold",
+  "release_date",
+  "cb_17",
+  "hold_comment",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "supplier_invoice_details",
   "bill_no",
   "column_break_15",
@@ -428,6 +442,7 @@
    "fieldname": "contact_email",
    "fieldtype": "Small Text",
    "label": "Contact Email",
+   "options": "Email",
    "print_hide": 1,
    "read_only": 1
   },
@@ -1300,12 +1315,19 @@
    "fieldtype": "Column Break"
   },
   {
+<<<<<<< HEAD
    "default": "0",
    "fetch_from": "supplier.is_internal_supplier",
    "fieldname": "is_internal_supplier",
    "fieldtype": "Check",
    "label": "Is Internal Supplier",
    "read_only": 1
+=======
+    "fieldname": "project",
+    "fieldtype": "Link",
+    "label": "Project",
+    "options": "Project"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "tax_withholding_category",
@@ -1314,6 +1336,7 @@
    "label": "Tax Withholding Category",
    "options": "Tax Withholding Category",
    "print_hide": 1
+<<<<<<< HEAD
   },
   {
    "fieldname": "billing_address",
@@ -1356,13 +1379,19 @@
    "fieldtype": "Link",
    "label": "Represents Company",
    "options": "Company"
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "icon": "fa fa-file-text",
  "idx": 204,
  "is_submittable": 1,
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-12-11 12:46:12.796378",
+=======
+ "modified": "2020-09-21 12:22:09.164068",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Purchase Invoice",

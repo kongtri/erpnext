@@ -146,7 +146,11 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-06-17 16:09:30.025214",
+=======
+ "modified": "2020-06-12 16:09:30.025214",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Cost Center",

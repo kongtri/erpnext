@@ -10,9 +10,13 @@ from erpnext.accounts.utils import get_balance_on, get_stock_accounts, get_stock
 	get_account_currency, check_if_stock_and_account_balance_synced
 from erpnext.accounts.party import get_party_account
 from erpnext.hr.doctype.expense_claim.expense_claim import update_reimbursed_amount
+<<<<<<< HEAD
 from erpnext.accounts.doctype.invoice_discounting.invoice_discounting \
 	import get_party_account_based_on_invoice_discounting
 from erpnext.accounts.deferred_revenue import get_deferred_booking_accounts
+=======
+from erpnext.accounts.doctype.invoice_discounting.invoice_discounting import get_party_account_based_on_invoice_discounting
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 from six import string_types, iteritems
 
@@ -637,8 +641,24 @@ class JournalEntry(AccountsController):
 		for d in self.accounts:
 			if d.reference_type=="Expense Claim" and d.reference_name:
 				doc = frappe.get_doc("Expense Claim", d.reference_name)
+<<<<<<< HEAD
 				update_reimbursed_amount(doc, jv=self.name)
 
+=======
+				update_reimbursed_amount(doc)
+
+	def update_loan(self):
+		if self.paid_loan:
+			paid_loan = json.loads(self.paid_loan)
+			value = 1 if self.docstatus < 2 else 0
+			for name in paid_loan:
+				frappe.db.set_value("Repayment Schedule", name, "paid", value)
+		for d in self.accounts:
+			if d.reference_type=="Loan" and flt(d.debit) > 0:
+				doc = frappe.get_doc("Loan", d.reference_name)
+				doc.update_total_amount_paid()
+				doc.set_status()
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def validate_expense_claim(self):
 		for d in self.accounts:
@@ -1077,4 +1097,8 @@ def make_reverse_journal_entry(source_name, target_doc=None):
 		},
 	}, target_doc)
 
+<<<<<<< HEAD
 	return doclist
+=======
+	return doclist 
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

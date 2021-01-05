@@ -26,14 +26,22 @@ async function get_global_variables() {
 function setup_timezone_selector() {
     let timezones_element = document.getElementById('appointment-timezone');
     let local_timezone = moment.tz.guess()
+<<<<<<< HEAD:erpnext/www/book_appointment/index.js
     window.timezones.forEach(timezone => {
+=======
+    window.timezones.forEach((timezone) => {
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/www/book_appointment/index.js
         let opt = document.createElement('option');
         opt.value = timezone;
         if (timezone == local_timezone) {
             opt.selected = true;
         }
         opt.innerHTML = timezone;
+<<<<<<< HEAD:erpnext/www/book_appointment/index.js
         timezones_element.appendChild(opt)
+=======
+        timezones_element.appendChild(opt);
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/www/book_appointment/index.js
     });
 }
 

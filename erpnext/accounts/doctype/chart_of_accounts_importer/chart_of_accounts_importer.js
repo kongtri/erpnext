@@ -94,7 +94,12 @@ frappe.ui.form.on('Chart of Accounts Importer', {
 				callback: function(r) {
 					if(r.message===false) {
 						frm.set_value("company", "");
+<<<<<<< HEAD
 						frappe.throw(__("Transactions against the Company already exist! Chart of Accounts can only be imported for a Company with no transactions."));
+=======
+						frappe.throw(__(`Transactions against the company already exist!
+							Chart Of accounts can be imported for company with no transactions`));
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 					} else {
 						frm.trigger("refresh");
 					}

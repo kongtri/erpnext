@@ -232,7 +232,7 @@ frappe.ui.form.on('Asset', {
 
 
 	item_code: function(frm) {
-		if(frm.doc.item_code) {
+		if(frm.doc.item_code && frm.doc.calculate_depreciation) {
 			frm.trigger('set_finance_book');
 		}
 	},
@@ -323,6 +323,10 @@ frappe.ui.form.on('Asset', {
 
 	calculate_depreciation: function(frm) {
 		frm.toggle_reqd("finance_books", frm.doc.calculate_depreciation);
+
+		if (frm.doc.calculate_depreciation) {
+			frm.trigger('set_finance_book');
+		}
 	},
 
 	gross_purchase_amount: function(frm) {
@@ -373,15 +377,24 @@ frappe.ui.form.on('Asset', {
 			doctype_field = frappe.scrub(doctype)
 			frm.set_value(doctype_field, '');
 			frappe.msgprint({
+<<<<<<< HEAD
 				title: __('Invalid {0}', [__(doctype)]),
 				message: __('The selected {0} does not contain the selected Asset Item.', [__(doctype)]),
+=======
+				title: __(`Invalid ${doctype}`),
+				message: __(`The selected ${doctype} doesn't contains selected Asset Item.`),
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				indicator: 'red'
 			});
 		}
 		frm.set_value('gross_purchase_amount', item.base_net_rate + item.item_tax_amount);
 		frm.set_value('purchase_receipt_amount', item.base_net_rate + item.item_tax_amount);
+<<<<<<< HEAD
 		item.asset_location && frm.set_value('location', item.asset_location);
 		frm.set_value('cost_center', item.cost_center || purchase_doc.cost_center);
+=======
+		frm.set_value('location', item.asset_location);
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	},
 
 	set_depreciation_rate: function(frm, row) {
@@ -436,7 +449,11 @@ frappe.ui.form.on('Asset Finance Book', {
 	depreciation_start_date: function(frm, cdt, cdn) {
 		const book = locals[cdt][cdn];
 		if (frm.doc.available_for_use_date && book.depreciation_start_date == frm.doc.available_for_use_date) {
+<<<<<<< HEAD
 			frappe.msgprint(__("Depreciation Posting Date should not be equal to Available for Use Date."));
+=======
+			frappe.msgprint(__(`Depreciation Posting Date should not be equal to Available for Use Date.`));
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			book.depreciation_start_date = "";
 			frm.refresh_field("finance_books");
 		}

@@ -43,7 +43,11 @@ def get_level():
 		"User": 5, 
 		"Work Order": 5
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	for doctype, min_count in iteritems(doctypes):
 		count = frappe.db.count(doctype)
 		if count > min_count:

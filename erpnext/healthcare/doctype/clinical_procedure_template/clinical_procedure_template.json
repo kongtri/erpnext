@@ -21,9 +21,12 @@
   "is_billable",
   "rate",
   "medical_department",
+<<<<<<< HEAD
   "medical_coding_section",
   "medical_code_standard",
   "medical_code",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "consumables",
   "consume_stock",
   "items",
@@ -49,6 +52,7 @@
    "fieldname": "item_code",
    "fieldtype": "Data",
    "label": "Item Code",
+<<<<<<< HEAD
    "read_only_depends_on": "eval: !doc.__islocal ",
    "reqd": 1
   },
@@ -141,6 +145,97 @@
    "label": "Quantity"
   },
   {
+=======
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Item Group",
+   "options": "Item Group",
+   "reqd": 1
+  },
+  {
+   "fieldname": "medical_department",
+   "fieldtype": "Link",
+   "label": "Medical Department",
+   "options": "Medical Department"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_billable",
+   "fieldtype": "Check",
+   "label": "Is Billable"
+  },
+  {
+   "depends_on": "is_billable",
+   "fieldname": "rate",
+   "fieldtype": "Float",
+   "label": "Rate",
+   "mandatory_depends_on": "is_billable"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "ignore_xss_filter": 1,
+   "label": "Description",
+   "no_copy": 1,
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "consume_stock",
+   "fieldtype": "Check",
+   "label": "Allow Stock Consumption",
+   "search_index": 1
+  },
+  {
+   "fieldname": "consumables",
+   "fieldtype": "Section Break",
+   "label": "Consumables"
+  },
+  {
+   "depends_on": "eval:doc.consume_stock == 1",
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "ignore_user_permissions": 1,
+   "label": "Items",
+   "options": "Clinical Procedure Item"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sample_collection",
+   "fieldtype": "Section Break",
+   "label": "Sample Collection"
+  },
+  {
+   "fieldname": "sample",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Sample",
+   "options": "Lab Test Sample"
+  },
+  {
+   "fetch_from": "sample.sample_uom",
+   "fieldname": "sample_uom",
+   "fieldtype": "Data",
+   "label": "UOM"
+  },
+  {
+   "fieldname": "sample_qty",
+   "fieldtype": "Float",
+   "label": "Quantity"
+  },
+  {
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "column_break_21",
    "fieldtype": "Column Break"
   },
@@ -169,12 +264,16 @@
   {
    "fieldname": "item",
    "fieldtype": "Link",
+<<<<<<< HEAD
    "in_list_view": 1,
    "in_standard_filter": 1,
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "label": "Item",
    "no_copy": 1,
    "options": "Item",
    "read_only": 1
+<<<<<<< HEAD
   },
   {
    "collapsible": 1,
@@ -198,6 +297,12 @@
  ],
  "links": [],
  "modified": "2020-06-29 14:12:27.158130",
+=======
+  }
+ ],
+ "links": [],
+ "modified": "2020-02-27 16:32:55.780893",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Healthcare",
  "name": "Clinical Procedure Template",

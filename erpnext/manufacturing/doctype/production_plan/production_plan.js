@@ -82,9 +82,13 @@ frappe.ui.form.on('Production Plan', {
 			}
 		}
 
+<<<<<<< HEAD
 		if (frm.doc.status !== "Closed") {
 			frm.page.set_inner_btn_group_as_primary(__('Create'));
 		}
+=======
+		frm.page.set_inner_btn_group_as_primary(__('Create'));
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		frm.trigger("material_requirement");
 
 		const projected_qty_formula = ` <table class="table table-bordered" style="background-color: #f9f9f9;">
@@ -184,6 +188,7 @@ frappe.ui.form.on('Production Plan', {
 	get_sales_orders: function(frm) {
 		frappe.call({
 			method: "get_open_sales_orders",
+			freeze: true,
 			doc: frm.doc,
 			callback: function(r) {
 				refresh_field("sales_orders");
@@ -194,6 +199,7 @@ frappe.ui.form.on('Production Plan', {
 	get_material_request: function(frm) {
 		frappe.call({
 			method: "get_pending_material_requests",
+			freeze: true,
 			doc: frm.doc,
 			callback: function() {
 				refresh_field('material_requests');
@@ -213,6 +219,7 @@ frappe.ui.form.on('Production Plan', {
 	},
 
 	get_items_for_mr: function(frm) {
+<<<<<<< HEAD
 		if (!frm.doc.for_warehouse) {
 			frappe.throw(__("Select warehouse for material requests"));
 		}
@@ -251,6 +258,9 @@ frappe.ui.form.on('Production Plan', {
 
 	get_items_for_material_requests: function(frm, warehouses) {
 		const set_fields = ['actual_qty', 'item_code','item_name', 'description', 'uom', 'from_warehouse',
+=======
+		const set_fields = ['actual_qty', 'item_code','item_name', 'description', 'uom',
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			'min_order_qty', 'quantity', 'sales_order', 'warehouse', 'projected_qty', 'material_request_type'];
 
 		frappe.call({

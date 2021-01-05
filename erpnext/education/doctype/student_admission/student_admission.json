@@ -51,14 +51,20 @@
    "fieldname": "admission_start_date",
    "fieldtype": "Date",
    "label": "Admission Start Date",
+<<<<<<< HEAD
    "mandatory_depends_on": "enable_admission_application",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "no_copy": 1
   },
   {
    "fieldname": "admission_end_date",
    "fieldtype": "Date",
    "label": "Admission End Date",
+<<<<<<< HEAD
    "mandatory_depends_on": "enable_admission_application",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "no_copy": 1
   },
   {
@@ -85,7 +91,10 @@
   },
   {
    "default": "0",
+<<<<<<< HEAD
    "depends_on": "published",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "enable_admission_application",
    "fieldtype": "Check",
    "label": "Enable Admission Application"
@@ -94,7 +103,11 @@
  "has_web_view": 1,
  "is_published_field": "published",
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-09-18 00:14:54.615321",
+=======
+ "modified": "2020-06-15 20:18:38.591626",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Student Admission",

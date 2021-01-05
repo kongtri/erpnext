@@ -155,8 +155,12 @@ class SerialNo(StockController):
 			FROM
 				`tabStock Ledger Entry`
 			WHERE
+<<<<<<< HEAD
 				item_code=%s AND company = %s
 				AND is_cancelled = 0
+=======
+				item_code=%s AND company = %s AND ifnull(is_cancelled, 'No')='No'
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				AND (serial_no = %s
 					OR serial_no like %s
 					OR serial_no like %s
@@ -334,14 +338,22 @@ def validate_material_transfer_entry(sle_doc):
 		"skip_serial_no_validaiton": False
 	})
 
+<<<<<<< HEAD
 	if (sle_doc.voucher_type == "Stock Entry" and not sle_doc.is_cancelled and
+=======
+	if (sle_doc.voucher_type == "Stock Entry" and sle_doc.is_cancelled == "No" and
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		frappe.get_cached_value("Stock Entry", sle_doc.voucher_no, "purpose") == "Material Transfer"):
 		if sle_doc.actual_qty < 0:
 			sle_doc.skip_update_serial_no = True
 		else:
 			sle_doc.skip_serial_no_validaiton = True
 
+<<<<<<< HEAD
 def validate_so_serial_no(sr, sales_order):
+=======
+def validate_so_serial_no(sr, sales_order,):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	if not sr.sales_order or sr.sales_order!= sales_order:
 		msg = (_("Sales Order {0} has reservation for the item {1}, you can only deliver reserved {1} against {0}.")
 			.format(sales_order, sr.item_code))
@@ -364,8 +376,13 @@ def has_serial_no_exists(sn, sle):
 			status = True
 
 		# If status is receipt then system will allow to in-ward the delivered serial no
+<<<<<<< HEAD
 		if (status and sle.voucher_type == "Stock Entry" and frappe.db.get_value("Stock Entry",
 			sle.voucher_no, "purpose") in ("Material Receipt", "Material Transfer")):
+=======
+		if (status and sle.voucher_type == 'Stock Entry' and frappe.db.get_value('Stock Entry',
+			sle.voucher_no, 'purpose') in ("Material Receipt", "Material Transfer")):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			status = False
 
 	return status
@@ -389,7 +406,11 @@ def allow_serial_nos_with_different_item(sle_serial_no, sle):
 
 def update_serial_nos(sle, item_det):
 	if sle.skip_update_serial_no: return
+<<<<<<< HEAD
 	if not sle.is_cancelled and not sle.serial_no and cint(sle.actual_qty) > 0 \
+=======
+	if sle.is_cancelled == "No" and not sle.serial_no and cint(sle.actual_qty) > 0 \
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			and item_det.has_serial_no == 1 and item_det.serial_no_series:
 		serial_nos = get_auto_serial_nos(item_det.serial_no_series, sle.actual_qty)
 		frappe.db.set(sle, "serial_no", serial_nos)
@@ -416,6 +437,7 @@ def auto_make_serial_nos(args):
 		elif args.get('actual_qty', 0) > 0:
 			sr = frappe.new_doc("Serial No")
 			is_new = True
+<<<<<<< HEAD
 
 		sr = update_args_for_serial_no(sr, serial_no, args, is_new=is_new)
 		if is_new:
@@ -430,6 +452,14 @@ def auto_make_serial_nos(args):
 	if voucher_type:
 		multiple_title = singular_title = _("{0} Created").format(voucher_type)
 
+=======
+
+		sr = update_args_for_serial_no(sr, serial_no, args, is_new=is_new)
+		if is_new:
+			created_numbers.append(sr.name)
+
+	form_links = list(map(lambda d: get_link_to_form('Serial No', d), created_numbers))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	if len(form_links) == 1:
 		frappe.msgprint(_("Serial No {0} Created").format(form_links[0]), singular_title)
 	elif len(form_links) > 0:
@@ -549,6 +579,7 @@ def get_delivery_note_serial_no(item_code, qty, delivery_note):
 	return serial_nos
 
 @frappe.whitelist()
+<<<<<<< HEAD
 def auto_fetch_serial_number(qty, item_code, warehouse, posting_date=None, batch_nos=None, for_doctype=None):
 	filters = { "item_code": item_code, "warehouse": warehouse }
 
@@ -627,3 +658,17 @@ def fetch_serial_numbers(filters, qty, do_not_include=[]):
 			), filters, as_dict=1)
 
 	return serial_numbers
+=======
+def auto_fetch_serial_number(qty, item_code, warehouse, batch_nos=None):
+	import json
+	filters = {
+		"item_code": item_code,
+		"warehouse": warehouse,
+		"delivery_document_no": "",
+		"sales_invoice": ""
+	}
+	if batch_nos: filters["batch_no"] = ["in", json.loads(batch_nos)]
+
+	serial_numbers = frappe.get_list("Serial No", filters=filters, limit=qty, order_by="creation")
+	return [item['name'] for item in serial_numbers]
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

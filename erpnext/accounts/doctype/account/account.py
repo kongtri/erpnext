@@ -101,7 +101,11 @@ class Account(NestedSet):
 				return
 			if not frappe.db.get_value("Account",
 				{'account_name': self.account_name, 'company': ancestors[0]}, 'name'):
+<<<<<<< HEAD
 				frappe.throw(_("Please add the account to root level Company - {}").format(ancestors[0]))
+=======
+				frappe.throw(_("Please add the account to root level Company - %s" % ancestors[0]))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		elif self.parent_account:
 			descendants = get_descendants_of('Company', self.company)
 			if not descendants: return
@@ -114,12 +118,16 @@ class Account(NestedSet):
 			}
 			if parent_acc_number:
 				filters["account_number"] = parent_acc_number
+<<<<<<< HEAD
 
 			for d in frappe.db.get_values('Account', filters=filters, fieldname=["company", "name"], as_dict=True):
 				parent_acc_name_map[d["company"]] = d["name"]
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
+			for d in frappe.db.get_values('Account', filters=filters, fieldname=["company", "name"], as_dict=True):
+				parent_acc_name_map[d["company"]] = d["name"]
 			if not parent_acc_name_map: return
-
 			self.create_account_for_child_company(parent_acc_name_map, descendants, parent_acc_name)
 
 	def validate_group_or_ledger(self):

@@ -58,9 +58,15 @@ let mark_change_in_item = function(frm) {
 	}
 };
 
+<<<<<<< HEAD
 let change_template_code = function(doc) {
 	let d = new frappe.ui.Dialog({
 		title:__('Change Item Code'),
+=======
+var change_template_code = function(doc){
+	var d = new frappe.ui.Dialog({
+		title:__("Change Template Code"),
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		fields:[
 			{
 				'fieldtype': 'Data',

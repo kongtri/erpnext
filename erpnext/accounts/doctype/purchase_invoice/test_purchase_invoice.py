@@ -13,9 +13,14 @@ from erpnext.stock.doctype.purchase_receipt.test_purchase_receipt import make_pu
 from erpnext.controllers.accounts_controller import get_payment_terms
 from erpnext.exceptions import InvalidCurrency
 from erpnext.stock.doctype.stock_entry.test_stock_entry import get_qty_after_transaction
+<<<<<<< HEAD
 from erpnext.projects.doctype.project.test_project import make_project
 from erpnext.accounts.doctype.account.test_account import get_inventory_account, create_account
 from erpnext.stock.doctype.item.test_item import create_item
+=======
+from erpnext.accounts.doctype.account.test_account import get_inventory_account
+from erpnext.projects.doctype.project.test_project import make_project
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 test_dependencies = ["Item", "Cost Center", "Payment Term", "Payment Terms Template"]
 test_ignore = ["Serial No"]
@@ -245,11 +250,25 @@ class TestPurchaseInvoice(unittest.TestCase):
 
 		self.assertRaises(frappe.CannotChangeConstantError, pi.save)
 
+<<<<<<< HEAD
 	def test_gl_entries_for_non_stock_items_with_perpetual_inventory(self):
 		pi = make_purchase_invoice(item_code = "_Test Non Stock Item",
 			company = "_Test Company with perpetual inventory", warehouse= "Stores - TCP1",
 			cost_center = "Main - TCP1", expense_account ="_Test Account Cost for Goods Sold - TCP1")
 
+=======
+	def test_gl_entries_with_aia_for_non_stock_items(self):
+		pi = frappe.copy_doc(test_records[1])
+		set_perpetual_inventory(1, pi.company)
+		self.assertTrue(cint(erpnext.is_perpetual_inventory_enabled(pi.company)), 1)
+		pi.get("items")[0].item_code = "_Test Non Stock Item"
+		pi.get("items")[0].expense_account = "_Test Account Cost for Goods Sold - _TC"
+		pi.get("taxes").pop(0)
+		pi.get("taxes").pop(1)
+		pi.insert()
+		pi.submit()
+		pi.load_from_db()
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		self.assertTrue(pi.status, "Unpaid")
 
 		gl_entries = frappe.db.sql("""select account, debit, credit
@@ -883,6 +902,7 @@ class TestPurchaseInvoice(unittest.TestCase):
 
 		for gle in gl_entries:
 			self.assertEqual(expected_values[gle.account]["project"], gle.project)
+<<<<<<< HEAD
 
 	def test_deferred_expense_via_journal_entry(self):
 		deferred_account = create_account(account_name="Deferred Expense",
@@ -945,6 +965,8 @@ class TestPurchaseInvoice(unittest.TestCase):
 		acc_settings.submit_journal_entriessubmit_journal_entries = 0
 		acc_settings.save()
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 def unlink_payment_on_cancel_of_invoice(enable=1):
 	accounts_settings = frappe.get_doc("Accounts Settings")

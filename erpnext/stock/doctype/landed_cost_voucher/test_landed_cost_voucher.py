@@ -166,7 +166,11 @@ class TestLandedCostVoucher(unittest.TestCase):
 		self.assertEqual(lcv.items[2].applicable_charges, 41.08)
 
 	def test_multiple_landed_cost_voucher_against_pr(self):
+<<<<<<< HEAD
 		pr = make_purchase_receipt(company="_Test Company with perpetual inventory", warehouse = "Stores - TCP1",
+=======
+		pr = make_purchase_receipt(company="_Test Company with perpetual inventory", warehouse = "Stores - TCP1", 
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			supplier_warehouse = "Stores - TCP1", do_not_save=True)
 
 		pr.append("items", {
@@ -179,7 +183,11 @@ class TestLandedCostVoucher(unittest.TestCase):
 
 		pr.submit()
 
+<<<<<<< HEAD
 		lcv1 = make_landed_cost_voucher(company = pr.company, receipt_document_type = 'Purchase Receipt',
+=======
+		lcv1 = make_landed_cost_voucher(receipt_document_type = 'Purchase Receipt', 
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			receipt_document=pr.name, charges=100, do_not_save=True)
 
 		lcv1.insert()
@@ -190,7 +198,11 @@ class TestLandedCostVoucher(unittest.TestCase):
 
 		lcv1.submit()
 
+<<<<<<< HEAD
 		lcv2 = make_landed_cost_voucher(company = pr.company, receipt_document_type = 'Purchase Receipt',
+=======
+		lcv2 = make_landed_cost_voucher(receipt_document_type = 'Purchase Receipt', 
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			receipt_document=pr.name, charges=100, do_not_save=True)
 
 		lcv2.insert()
@@ -211,7 +223,11 @@ def make_landed_cost_voucher(** args):
 	ref_doc = frappe.get_doc(args.receipt_document_type, args.receipt_document)
 
 	lcv = frappe.new_doc('Landed Cost Voucher')
+<<<<<<< HEAD
 	lcv.company = args.company or '_Test Company'
+=======
+	lcv.company = '_Test Company'
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	lcv.distribute_charges_based_on = 'Amount'
 
 	lcv.set('purchase_receipts', [{

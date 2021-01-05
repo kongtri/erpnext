@@ -68,8 +68,12 @@
    "reqd": 1
   }
  ],
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-11-05 17:52:11.674329",
+=======
+ "modified": "2020-10-03 16:52:35.903867",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Regional",
  "name": "DATEV Settings",

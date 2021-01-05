@@ -188,7 +188,11 @@
  "is_tree": 1,
  "links": [],
  "max_attachments": 3,
+<<<<<<< HEAD
  "modified": "2020-03-18 18:10:34.383363",
+=======
+ "modified": "2020-03-18 18:25:59.979083",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Item Group",

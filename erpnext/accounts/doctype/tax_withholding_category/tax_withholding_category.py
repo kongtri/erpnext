@@ -227,4 +227,8 @@ def is_valid_certificate(valid_from, valid_upto, posting_date, deducted_amount, 
 			certificate_limit > deducted_amount):
 		valid = True
 
+<<<<<<< HEAD
 	return valid
+=======
+	return valid
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

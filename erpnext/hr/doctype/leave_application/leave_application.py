@@ -59,6 +59,10 @@ class LeaveApplication(Document):
 
 	def on_cancel(self):
 		self.create_leave_ledger_entry(submit=False)
+<<<<<<< HEAD
+=======
+		self.db_set("status", "Cancelled")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		# notify leave applier about cancellation
 		self.notify_employee()
 		self.cancel_attendance()
@@ -130,7 +134,12 @@ class LeaveApplication(Document):
 		if self.status == "Approved":
 			for dt in daterange(getdate(self.from_date), getdate(self.to_date)):
 				date = dt.strftime("%Y-%m-%d")
+<<<<<<< HEAD
 				status = "Half Day" if self.half_day_date and getdate(date) == getdate(self.half_day_date) else "On Leave"
+=======
+				status = "Half Day" if getdate(date) == getdate(self.half_day_date) else "On Leave"
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				attendance_name = frappe.db.exists('Attendance', dict(employee = self.employee,
 					attendance_date = date, docstatus = ('!=', 2)))
 
@@ -385,7 +394,11 @@ class LeaveApplication(Document):
 				from_date=self.from_date,
 				to_date=self.to_date,
 				is_lwp=lwp,
+<<<<<<< HEAD
 				holiday_list=get_holiday_list_for_employee(self.employee, raise_exception=raise_exception) or ''
+=======
+				holiday_list=get_holiday_list_for_employee(self.employee)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			)
 			create_leave_ledger_entry(self, args, submit)
 
@@ -401,7 +414,12 @@ class LeaveApplication(Document):
 			to_date=expiry_date,
 			leaves=(date_diff(expiry_date, self.from_date) + 1) * -1,
 			is_lwp=lwp,
+<<<<<<< HEAD
 			holiday_list=get_holiday_list_for_employee(self.employee, raise_exception=raise_exception) or ''
+=======
+			holiday_list=get_holiday_list_for_employee(self.employee),
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		)
 		create_leave_ledger_entry(self, args, submit)
 
@@ -454,8 +472,14 @@ def get_leave_details(employee, date):
 		total_allocated_leaves = frappe.db.get_value('Leave Allocation', {
 			'from_date': ('<=', date),
 			'to_date': ('>=', date),
+<<<<<<< HEAD
 			'employee': employee,
 			'leave_type': allocation.leave_type,
+=======
+			'leave_type': allocation.leave_type,
+			'employee': employee,
+			'docstatus': 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		}, 'SUM(total_leaves_allocated)') or 0
 
 		remaining_leaves = get_leave_balance_on(employee, d, date, to_date = allocation.to_date,
@@ -467,7 +491,11 @@ def get_leave_details(employee, date):
 
 		leave_allocation[d] = {
 			"total_leaves": total_allocated_leaves,
+<<<<<<< HEAD
 			"expired_leaves": total_allocated_leaves - (remaining_leaves + leaves_taken),
+=======
+			"expired_leaves": max(total_allocated_leaves - (remaining_leaves + leaves_taken), 0),
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			"leaves_taken": leaves_taken,
 			"pending_leaves": leaves_pending,
 			"remaining_leaves": remaining_leaves}

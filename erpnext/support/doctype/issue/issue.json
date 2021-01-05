@@ -410,7 +410,11 @@
  "icon": "fa fa-ticket",
  "idx": 7,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-08-11 18:49:07.574769",
+=======
+ "modified": "2020-02-26 02:19:49.477928",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Support",
  "name": "Issue",
@@ -433,7 +437,10 @@
  "sender_field": "raised_by",
  "sort_field": "modified",
  "sort_order": "DESC",
+<<<<<<< HEAD
  "subject_field": "subject",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "timeline_field": "customer",
  "title_field": "subject",
  "track_changes": 1,

@@ -802,6 +802,7 @@
    "no_copy": 1,
    "print_hide": 1,
    "read_only": 1
+<<<<<<< HEAD
   },
   {
    "fieldname": "incoming_rate",
@@ -810,12 +811,18 @@
    "no_copy": 1,
    "print_hide": 1,
    "read_only": 1
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "idx": 1,
  "istable": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-09-23 19:59:04.879322",
+=======
+ "modified": "2020-08-20 11:24:41.749986",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice Item",

@@ -15,7 +15,11 @@ from frappe import _, bold
 from pyqrcode import create as qrcreate
 from frappe.integrations.utils import make_post_request, make_get_request
 from erpnext.regional.india.utils import get_gst_accounts, get_place_of_supply
+<<<<<<< HEAD
 from frappe.utils.data import cstr, cint, format_date, flt, time_diff_in_seconds, now_datetime, add_to_date
+=======
+from frappe.utils.data import cstr, cint, formatdate as format_date, flt, time_diff_in_seconds, now_datetime, add_to_date
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 def validate_einvoice_fields(doc):
 	einvoicing_enabled = cint(frappe.db.get_value('E Invoice Settings', 'E Invoice Settings', 'enable'))
@@ -88,7 +92,11 @@ def get_party_details(address_name):
 	gstin = address.get('gstin')
 
 	gstin_details = get_gstin_details(gstin)
+<<<<<<< HEAD
 	legal_name = gstin_details.get('LegalName') or gstin_details.get('TradeName')
+=======
+	legal_name = gstin_details.get('LegalName')
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	location = gstin_details.get('AddrLoc') or address.get('city')
 	state_code = gstin_details.get('StateCode')
 	pincode = gstin_details.get('AddrPncd')
@@ -196,9 +204,15 @@ def update_item_taxes(invoice, item):
 					item.cess_amount += abs(item_tax_amount_after_discount)
 
 			for tax_type in ['igst', 'cgst', 'sgst']:
+<<<<<<< HEAD
 				if t.account_head in gst_accounts[f'{tax_type}_account']:
 					item.tax_rate += item_tax_rate
 					item[f'{tax_type}_amount'] += abs(item_tax_amount)
+=======
+				if t.account_head in gst_accounts['{}_account'.format(tax_type)]:
+					item.tax_rate += item_tax_rate
+					item['{}_amount'.format(tax_type)] += abs(item_tax_amount)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	return item
 
@@ -230,8 +244,13 @@ def update_invoice_taxes(invoice, invoice_value_details):
 				invoice_value_details.total_cess_amt += abs(t.base_tax_amount_after_discount_amount)
 			
 			for tax_type in ['igst', 'cgst', 'sgst']:
+<<<<<<< HEAD
 				if t.account_head in gst_accounts[f'{tax_type}_account']:
 					invoice_value_details[f'total_{tax_type}_amt'] += abs(t.base_tax_amount)
+=======
+				if t.account_head in gst_accounts['{}_account'.format(tax_type)]:
+					invoice_value_details['total_{}_amt'.format(tax_type)] += abs(t.base_tax_amount)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		else:
 			invoice_value_details.total_other_charges += abs(t.base_tax_amount)
 	
@@ -323,10 +342,24 @@ def make_einvoice(invoice):
 			"Errors: ", json.dumps(errors, indent=4)
 		])
 		frappe.log_error(title="E Invoice Validation Failed", message=message)
+<<<<<<< HEAD
 		frappe.throw(errors, title=_('E Invoice Validation Failed'), as_list=1)
 
 	return einvoice
 
+=======
+		throw_error_list(errors, _('E Invoice Validation Failed'))
+
+	return einvoice
+
+def throw_error_list(errors, title):
+	if len(errors) > 1:
+		li = ['<li>'+ d +'</li>' for d in errors]
+		frappe.throw("<ul style='padding-left: 20px'>{}</ul>".format(''.join(li)), title=title)
+	else:
+		frappe.throw(errors[0], title=title)
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 def validate_einvoice(validations, einvoice, errors=[]):
 	for fieldname, field_validation in validations.items():
 		value = einvoice.get(fieldname, None)
@@ -692,7 +725,11 @@ class GSPConnector():
 	def raise_error(self, raise_exception=False, errors=[]):
 		title = _('E Invoice Request Failed')
 		if errors:
+<<<<<<< HEAD
 			frappe.throw(errors, title=title, as_list=1)
+=======
+			throw_error_list(errors, title)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		else:
 			link_to_error_list = '<a href="desk#List/Error Log/List?method=E Invoice Request Failed">Error Log</a>'
 			frappe.msgprint(
@@ -727,7 +764,11 @@ class GSPConnector():
 
 		_file = frappe.new_doc('File')
 		_file.update({
+<<<<<<< HEAD
 			'file_name': f'QRCode_{docname}.png',
+=======
+			'file_name': 'QRCode_{}.png'.format(docname),
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			'attached_to_doctype': doctype,
 			'attached_to_name': docname,
 			'content': 'qrcode',

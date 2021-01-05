@@ -141,7 +141,11 @@
  ],
  "is_tree": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-05-08 16:11:11.375701",
+=======
+ "modified": "2020-03-18 18:25:59.283057",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Assets",
  "name": "Location",
@@ -220,7 +224,10 @@
    "write": 1
   }
  ],
+<<<<<<< HEAD
  "quick_entry": 1,
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

@@ -11,11 +11,24 @@ import json
 from six import string_types
 
 import frappe
+<<<<<<< HEAD
 from erpnext.setup.doctype.item_group.item_group import get_child_item_groups
 from erpnext.stock.doctype.warehouse.warehouse import get_child_warehouses
 from erpnext.stock.get_item_details import get_conversion_factor
 from frappe import _, bold
 from frappe.utils import cint, flt, get_link_to_form, getdate, today, fmt_money
+=======
+from erpnext.accounts.doctype.pricing_rule.pricing_rule import set_transaction_type
+from erpnext.setup.doctype.item_group.item_group import get_child_item_groups
+from erpnext.stock.doctype.warehouse.warehouse import get_child_warehouses
+from erpnext.stock.get_item_details import get_conversion_factor, get_default_income_account
+from erpnext.stock.doctype.item.item import get_item_defaults
+from erpnext.setup.doctype.item_group.item_group import get_item_group_defaults
+from erpnext.setup.doctype.brand.brand import get_brand_defaults
+from frappe import _, throw
+from frappe.utils import cint, flt, get_datetime, get_link_to_form, getdate, today
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 class MultiplePricingRuleConflict(frappe.ValidationError): pass
 
@@ -26,13 +39,19 @@ apply_on_table = {
 }
 
 def get_pricing_rules(args, doc=None):
-	pricing_rules = []
-	values =  {}
+	pricing_rules_all = []
+	values = {}
 
 	for apply_on in ['Item Code', 'Item Group', 'Brand']:
-		pricing_rules.extend(_get_pricing_rules(apply_on, args, values))
-		if pricing_rules and not apply_multiple_pricing_rules(pricing_rules):
-			break
+		pricing_rules_all.extend(_get_pricing_rules(apply_on, args, values))
+
+	# removing duplicate pricing rule
+	pricing_rules_name = []
+	pricing_rules = []
+	for p in pricing_rules_all:
+		if p['name'] not in pricing_rules_name:
+			pricing_rules_name.append(p['name'])
+			pricing_rules.append(p)
 
 	rules = []
 
@@ -361,9 +380,16 @@ def apply_internal_priority(pricing_rules, field_set, args):
 	filtered_rules = []
 	for field in field_set:
 		if args.get(field):
+<<<<<<< HEAD
 			# filter function always returns a filter object even if empty
 			# list conversion is necessary to check for an empty result
 			filtered_rules = list(filter(lambda x: x.get(field)==args.get(field), pricing_rules))
+=======
+			for rule in pricing_rules:
+				if rule.get(field) == args.get(field):
+					filtered_rules = [rule]
+					break
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			if filtered_rules: break
 
 	return filtered_rules or pricing_rules
@@ -457,9 +483,34 @@ def apply_pricing_rule_on_transaction(doc):
 	values = {}
 	conditions = get_other_conditions(conditions, values, doc)
 
+<<<<<<< HEAD
 	pricing_rules = frappe.db.sql(""" Select `tabPricing Rule`.* from `tabPricing Rule`
 		where  {conditions} and `tabPricing Rule`.disable = 0
 	""".format(conditions = conditions), values, as_dict=1)
+=======
+	args = frappe._dict({
+		'doctype': doc.doctype,
+		'transaction_type': None,
+	})
+	set_transaction_type(args)
+	tran_type_condition = '{} = 1'.format(args.transaction_type)
+
+	sql = """
+		SELECT
+			`tabPricing Rule`.*
+		FROM
+			`tabPricing Rule`
+		WHERE
+			{conditions} and
+			{tran_type_condition} and
+			`tabPricing Rule`.disable = 0
+	""".format(
+		conditions=conditions,
+		tran_type_condition=tran_type_condition,
+	)
+
+	pricing_rules = frappe.db.sql(sql, values, as_dict=1)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	if pricing_rules:
 		pricing_rules = filter_pricing_rules_for_qty_amount(doc.total_qty,
@@ -484,6 +535,7 @@ def apply_pricing_rule_on_transaction(doc):
 							.format(doc.name))
 					else:
 						doc.set(field, d.get(pr_field))
+<<<<<<< HEAD
 
 				doc.calculate_taxes_and_totals()
 			elif d.price_or_product_discount == 'Product':
@@ -524,6 +576,48 @@ def get_product_discount_rule(pricing_rule, item_details, args=None, doc=None):
 		'is_free_item': 1
 	}
 
+=======
+
+				doc.calculate_taxes_and_totals()
+			elif d.price_or_product_discount == 'Product':
+				item_details = frappe._dict({'parenttype': doc.doctype})
+				get_product_discount_rule(d, item_details, doc=doc)
+				apply_pricing_rule_for_free_items(doc, item_details.free_item_data)
+				doc.set_missing_values()
+				doc.calculate_taxes_and_totals()
+
+def remove_free_item(doc):
+	for d in doc.items:
+		if d.is_free_item:
+			doc.remove(d)
+
+def get_applied_pricing_rules(pricing_rules):
+	if pricing_rules:
+		if pricing_rules.startswith('['):
+			return json.loads(pricing_rules)
+		else:
+			return pricing_rules.split(',')
+
+	return []
+
+def get_product_discount_rule(pricing_rule, item_details, args=None, doc=None):
+	free_item = pricing_rule.free_item
+	if pricing_rule.same_item and pricing_rule.get("apply_on") != 'Transaction':
+		free_item = item_details.item_code or args.item_code
+
+	if not free_item:
+		frappe.throw(_("Free item not set in the pricing rule {0}")
+			.format(get_link_to_form("Pricing Rule", pricing_rule.name)))
+
+	item_details.free_item_data = {
+		'item_code': free_item,
+		'qty': pricing_rule.free_qty or 1,
+		'rate': pricing_rule.free_item_rate or 0,
+		'price_list_rate': pricing_rule.free_item_rate or 0,
+		'is_free_item': 1
+	}
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	item_data = frappe.get_cached_value('Item', free_item, ['item_name',
 		'description', 'stock_uom'], as_dict=1)
 
@@ -538,6 +632,21 @@ def get_product_discount_rule(pricing_rule, item_details, args=None, doc=None):
 	if item_details.get("parenttype") == 'Sales Order':
 		item_details.free_item_data['delivery_date'] = doc.delivery_date if doc else today()
 
+<<<<<<< HEAD
+=======
+	company = doc.company
+	if args and args.get("company"):
+		company = args.get("company")
+
+	if args:
+		item_details.free_item_data['income_account'] = get_default_income_account(
+			args=args,
+			item=get_item_defaults(free_item, company),
+			item_group=get_item_group_defaults(free_item, company),
+			brand=get_brand_defaults(free_item, company),
+		)
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 def apply_pricing_rule_for_free_items(doc, pricing_rule_args, set_missing_values=False):
 	if pricing_rule_args.get('item_code'):
 		items = [d.item_code for d in doc.items

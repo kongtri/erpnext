@@ -270,9 +270,14 @@ def book_deferred_income_or_expense(doc, deferred_process, posting_date=None):
 			make_gl_entries(doc, credit_account, debit_account, against,
 				amount, base_amount, end_date, project, account_currency, item.cost_center, item, deferred_process)
 
+<<<<<<< HEAD
 		# Returned in case of any errors because it tries to submit the same record again and again in case of errors
 		if frappe.flags.deferred_accounting_error:
 			return
+=======
+		make_gl_entries(doc, credit_account, debit_account, against,
+			amount, base_amount, end_date, project, account_currency, item.cost_center, item)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		if getdate(end_date) < getdate(posting_date) and not last_gl_entry:
 			_book_deferred_revenue_or_expense(item, via_journal_entry, submit_journal_entry, book_deferred_entries_based_on)
@@ -311,7 +316,11 @@ def process_deferred_accounting(posting_date=None):
 		doc.submit()
 
 def make_gl_entries(doc, credit_account, debit_account, against,
+<<<<<<< HEAD
 	amount, base_amount, posting_date, project, account_currency, cost_center, item, deferred_process=None):
+=======
+	amount, base_amount, posting_date, project, account_currency, cost_center, item):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	# GL Entry for crediting the amount in the deferred expense
 	from erpnext.accounts.general_ledger import make_gl_entries
 
@@ -327,9 +336,13 @@ def make_gl_entries(doc, credit_account, debit_account, against,
 			"cost_center": cost_center,
 			"voucher_detail_no": item.name,
 			'posting_date': posting_date,
+<<<<<<< HEAD
 			'project': project,
 			'against_voucher_type': 'Process Deferred Accounting',
 			'against_voucher': deferred_process
+=======
+			'project': project
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		}, account_currency, item=item)
 	)
 	# GL Entry to debit the amount from the expense
@@ -342,9 +355,13 @@ def make_gl_entries(doc, credit_account, debit_account, against,
 			"cost_center": cost_center,
 			"voucher_detail_no": item.name,
 			'posting_date': posting_date,
+<<<<<<< HEAD
 			'project': project,
 			'against_voucher_type': 'Process Deferred Accounting',
 			'against_voucher': deferred_process
+=======
+			'project': project
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		}, account_currency, item=item)
 	)
 

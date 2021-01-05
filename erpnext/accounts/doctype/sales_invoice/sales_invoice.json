@@ -450,9 +450,13 @@
   {
    "allow_on_submit": 1,
    "fieldname": "po_no",
+<<<<<<< HEAD
    "fieldtype": "Data",
    "hide_days": 1,
    "hide_seconds": 1,
+=======
+   "fieldtype": "Small Text",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "label": "Customer's Purchase Order",
    "no_copy": 1,
    "print_hide": 1
@@ -938,8 +942,11 @@
   {
    "fieldname": "other_charges_calculation",
    "fieldtype": "Long Text",
+<<<<<<< HEAD
    "hide_days": 1,
    "hide_seconds": 1,
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "label": "Taxes and Charges Calculation",
    "no_copy": 1,
    "oldfieldtype": "HTML",
@@ -1974,8 +1981,12 @@
  "icon": "fa fa-file-text",
  "idx": 181,
  "is_submittable": 1,
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-12-11 12:48:31.769958",
+=======
+ "modified": "2020-07-01 12:41:29.484813",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice",

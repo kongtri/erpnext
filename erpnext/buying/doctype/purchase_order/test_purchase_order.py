@@ -17,8 +17,11 @@ from erpnext.stock.doctype.material_request.material_request import make_purchas
 from erpnext.stock.doctype.stock_entry.test_stock_entry import make_stock_entry
 from erpnext.controllers.accounts_controller import update_child_qty_rate
 from erpnext.controllers.status_updater import OverAllowanceError
+<<<<<<< HEAD
 from erpnext.manufacturing.doctype.blanket_order.test_blanket_order import make_blanket_order
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 from erpnext.stock.doctype.batch.test_batch import make_new_batch
 from erpnext.controllers.buying_controller import get_backflushed_subcontracted_raw_materials
 
@@ -121,7 +124,11 @@ class TestPurchaseOrder(unittest.TestCase):
 		self.assertEqual(get_ordered_qty(), existing_ordered_qty + 3)
 
 
+<<<<<<< HEAD
 	def test_update_child_adding_new_item(self):
+=======
+	def test_add_new_item_in_update_child_qty_rate(self):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		po = create_purchase_order(do_not_save=1)
 		po.items[0].qty = 4
 		po.save()
@@ -147,7 +154,11 @@ class TestPurchaseOrder(unittest.TestCase):
 		self.assertEqual(po.status, 'To Receive and Bill')
 
 
+<<<<<<< HEAD
 	def test_update_child_removing_item(self):
+=======
+	def test_remove_item_in_update_child_qty_rate(self):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		po = create_purchase_order(do_not_save=1)
 		po.items[0].qty = 4
 		po.save()
@@ -187,7 +198,11 @@ class TestPurchaseOrder(unittest.TestCase):
 		self.assertEquals(len(po.get('items')), 1)
 		self.assertEqual(po.status, 'To Receive and Bill')
 
+<<<<<<< HEAD
 	def test_update_child_perm(self):
+=======
+	def test_update_child_qty_rate_perm(self):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		po = create_purchase_order(item_code= "_Test Item", qty=4)
 
 		user = 'test@example.com'
@@ -289,6 +304,7 @@ class TestPurchaseOrder(unittest.TestCase):
 		new_item_with_tax.delete()
 		frappe.get_doc("Item Tax Template", "Test Update Items Template").delete()
 
+<<<<<<< HEAD
 	def test_update_child_uom_conv_factor_change(self):
 		po = create_purchase_order(item_code="_Test FG Item", is_subcontracted="Yes")
 		total_reqd_qty = sum([d.get("required_qty") for d in po.as_dict().get("supplied_items")])
@@ -308,6 +324,8 @@ class TestPurchaseOrder(unittest.TestCase):
 
 		self.assertEqual(total_reqd_qty_after_change, 2 * total_reqd_qty)
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	def test_update_qty(self):
 		po = create_purchase_order()
 

@@ -35,7 +35,12 @@ def get_party_details(party=None, account=None, party_type="Customer", company=N
 
 def _get_party_details(party=None, account=None, party_type="Customer", company=None, posting_date=None,
 	bill_date=None, price_list=None, currency=None, doctype=None, ignore_permissions=False,
+<<<<<<< HEAD
 	fetch_payment_terms_template=True, party_address=None, company_address=None, shipping_address=None, pos_profile=None):
+=======
+	fetch_payment_terms_template=True, party_address=None, company_address=None,shipping_address=None, pos_profile=None):
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	party_details = frappe._dict(set_account_and_due_date(party, account, party_type, company, posting_date, bill_date, doctype))
 	party = party_details[party_type.lower()]
 
@@ -91,6 +96,7 @@ def set_address_details(party_details, party, party_type, doctype=None, company=
 		party_details.shipping_address = get_address_display(party_details["shipping_address_name"])
 		if doctype:
 			party_details.update(get_fetch_values(doctype, 'shipping_address_name', party_details.shipping_address_name))
+<<<<<<< HEAD
 
 	if company_address:
 		party_details.update({'company_address': company_address})
@@ -109,6 +115,26 @@ def set_address_details(party_details, party, party_type, doctype=None, company=
 			party_details.update(get_fetch_values(doctype, 'shipping_address', party_details.shipping_address))
 		get_regional_address_details(party_details, doctype, company)
 
+=======
+
+	if company_address:
+		party_details.update({'company_address': company_address})
+	else:
+		party_details.update(get_company_address(company))
+
+	if doctype and doctype in ['Delivery Note', 'Sales Invoice', 'Sales Order']:
+		if party_details.company_address:
+			party_details.update(get_fetch_values(doctype, 'company_address', party_details.company_address))
+		get_regional_address_details(party_details, doctype, company)
+
+	elif doctype and doctype in ["Purchase Invoice", "Purchase Order", "Purchase Receipt"]:
+		if party_details.company_address:
+			party_details["shipping_address"] = shipping_address or party_details["company_address"]
+			party_details.shipping_address_display = get_address_display(party_details["shipping_address"])
+			party_details.update(get_fetch_values(doctype, 'shipping_address', party_details.shipping_address))
+		get_regional_address_details(party_details, doctype, company)
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	return party_details.get(billing_address_field), party_details.shipping_address_name
 
 @erpnext.allow_regional
@@ -611,7 +637,11 @@ def get_partywise_advanced_payment_amount(party_type, posting_date = None, futur
 			cond = "posting_date <= '{0}'".format(posting_date)
 
 	if company:
+<<<<<<< HEAD
 		cond += "and company = {0}".format(frappe.db.escape(company))
+=======
+		cond += "and company = '{0}'".format(company)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	data = frappe.db.sql(""" SELECT party, sum({0}) as amount
 		FROM `tabGL Entry`

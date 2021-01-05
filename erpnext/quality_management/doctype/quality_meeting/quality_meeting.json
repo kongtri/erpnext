@@ -1,11 +1,21 @@
 {
+<<<<<<< HEAD
  "actions": [],
  "autoname": "format:QA-MEET-{YY}-{MM}-{DD}",
+=======
+ "autoname": "naming_series:",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "creation": "2018-10-15 16:25:41.548432",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+<<<<<<< HEAD
+=======
+  "naming_series",
+  "date",
+  "cb_00",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "status",
   "cb_00",
   "sb_00",
@@ -46,11 +56,21 @@
    "fieldname": "sb_01",
    "fieldtype": "Section Break",
    "label": "Minutes"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "MTNG-.YYYY.-.MM.-.DD.-"
   }
  ],
+<<<<<<< HEAD
  "index_web_pages_for_search": 1,
  "links": [],
  "modified": "2020-10-27 16:36:45.657883",
+=======
+ "modified": "2020-05-19 13:18:59.821740",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Quality Management",
  "name": "Quality Meeting",

@@ -7,7 +7,11 @@
  "doctype": "Report",
  "idx": 0,
  "is_standard": "Yes",
+<<<<<<< HEAD
  "modified": "2020-02-01 11:03:23.816448",
+=======
+ "modified": "2020-02-01 11:04:47.299453",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Quality Management",
  "name": "Review",

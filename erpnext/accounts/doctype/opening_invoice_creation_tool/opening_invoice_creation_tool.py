@@ -68,6 +68,7 @@ class OpeningInvoiceCreationTool(Document):
 	def validate_company(self):
 		if not self.company:
 			frappe.throw(_("Please select the Company"))
+<<<<<<< HEAD
 	
 	def set_missing_values(self, row):
 		row.qty = row.qty or 1.0
@@ -91,6 +92,12 @@ class OpeningInvoiceCreationTool(Document):
 
 	def get_invoices(self):
 		invoices = []
+=======
+
+		company_details = frappe.get_cached_value('Company', self.company,
+			["default_currency", "default_letter_head"], as_dict=1) or {}
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		for row in self.invoices:
 			if not row:
 				continue
@@ -105,7 +112,30 @@ class OpeningInvoiceCreationTool(Document):
 				})
 			invoices.append(invoice)
 
+<<<<<<< HEAD
 		return invoices
+=======
+			if company_details:
+				args.update({
+					"currency": company_details.get("default_currency"),
+					"letter_head": company_details.get("default_letter_head")
+				})
+
+			doc = frappe.get_doc(args).insert()
+			doc.submit()
+			names.append(doc.name)
+
+			if len(self.invoices) > 5:
+				frappe.publish_realtime(
+					"progress", dict(
+						progress=[row.idx, len(self.invoices)],
+						title=_('Creating {0}').format(doc.doctype)
+					),
+					user=frappe.session.user
+				)
+
+		return names
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def add_party(self, party_type, party):
 		party_doc = frappe.new_doc(party_type)

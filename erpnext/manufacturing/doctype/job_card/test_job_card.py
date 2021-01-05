@@ -31,9 +31,12 @@ class TestJobCard(unittest.TestCase):
 				doc.operation_id = "Test Data"
 				self.assertRaises(OperationMismatchError, doc.save)
 
+<<<<<<< HEAD
 			for d in job_cards:
 				frappe.delete_doc("Job Card", d.name)
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	def test_job_card_with_different_work_station(self):
 		data = frappe.get_cached_value('BOM',
 			{'docstatus': 1, 'with_operations': 1, 'company': '_Test Company'}, ['name', 'item'])
@@ -43,11 +46,17 @@ class TestJobCard(unittest.TestCase):
 
 			work_order = make_wo_order_test_record(item=bom_item, qty=1, bom_no=bom)
 
+<<<<<<< HEAD
 			job_cards = frappe.get_all('Job Card',
 				filters = {'work_order': work_order.name},
 				fields = ["operation_id", "workstation", "name", "for_quantity"])
 
 			job_card = job_cards[0]
+=======
+			job_card = frappe.get_all('Job Card',
+				filters = {'work_order': work_order.name},
+				fields = ["operation_id", "workstation", "name", "for_quantity"])[0]
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 			if job_card:
 				workstation = frappe.db.get_value("Workstation",
@@ -69,7 +78,11 @@ class TestJobCard(unittest.TestCase):
 				completed_qty = frappe.db.get_value("Work Order Operation", job_card.operation_id, "completed_qty")
 				self.assertEqual(completed_qty, job_card.for_quantity)
 
+<<<<<<< HEAD
 				doc.cancel()
 
 			for d in job_cards:
 				frappe.delete_doc("Job Card", d.name)
+=======
+				doc.cancel()
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

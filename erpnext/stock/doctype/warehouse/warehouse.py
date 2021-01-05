@@ -198,4 +198,8 @@ def get_warehouses_based_on_account(account, company=None):
 		frappe.throw(_("Warehouse not found against the account {0}")
 			.format(account))
 
+<<<<<<< HEAD
 	return warehouses
+=======
+	return warehouses
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

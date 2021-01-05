@@ -20,6 +20,43 @@ def create_leave_period(from_date, to_date, company=None):
 	if leave_period:
 		return frappe.get_doc("Leave Period", leave_period)
 
+<<<<<<< HEAD
+=======
+		# create the leave policy
+		leave_policy = frappe.get_doc({
+			"doctype": "Leave Policy",
+			"leave_policy_details": [{
+				"leave_type": leave_type,
+				"annual_allocation": 20
+			}]
+		}).insert()
+		leave_policy.submit()
+
+		# create employee and assign the leave period
+		employee = "test_leave_period@employee.com"
+		employee_doc_name = make_employee(employee)
+		frappe.db.set_value("Employee", employee_doc_name, "leave_policy", leave_policy.name)
+
+		# clear the already allocated leave
+		frappe.db.sql('''delete from `tabLeave Allocation` where employee=%s''', "test_leave_period@employee.com")
+
+		# create the leave period
+		leave_period = create_leave_period(add_months(today(), -3), add_months(today(), 3))
+
+		# test leave_allocation
+		leave_period.grant_leave_allocation(employee=employee_doc_name)
+		self.assertEqual(get_leave_balance_on(employee_doc_name, leave_type, today()), 20)
+
+def create_leave_period(from_date, to_date, company=None):
+	leave_period = frappe.db.get_value('Leave Period',
+		dict(company=company or erpnext.get_default_company(),
+			from_date=from_date,
+			to_date=to_date,
+			is_active=1), 'name')
+	if leave_period:
+		return frappe.get_doc("Leave Period", leave_period)
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	leave_period = frappe.get_doc({
 		"doctype": "Leave Period",
 		"company": company or erpnext.get_default_company(),

@@ -46,6 +46,7 @@ class ItemPrice(Document):
 			self.item_name, self.item_description = frappe.db.get_value("Item", self.item_code,["item_name", "description"])
 
 	def check_duplicates(self):
+<<<<<<< HEAD
 		conditions = """where item_code = %(item_code)s and price_list = %(price_list)s and name != %(name)s"""
 
 		for field in [
@@ -66,6 +67,21 @@ class ItemPrice(Document):
 				{conditions}
 			""".format(conditions=conditions),
 			self.as_dict(),)
+=======
+		conditions = "where item_code=%(item_code)s and price_list=%(price_list)s and name != %(name)s"
+		condition_data_dict = dict(item_code=self.item_code, price_list=self.price_list, name=self.name)
+
+		for field in ['uom', 'valid_from',
+			'valid_upto', 'packing_unit', 'customer', 'supplier']:
+			if self.get(field):
+				conditions += " and {0} = %({1})s".format(field, field)
+				condition_data_dict[field] = self.get(field)
+
+		price_list_rate = frappe.db.sql("""
+			SELECT price_list_rate
+			FROM `tabItem Price`
+			  {conditions} """.format(conditions=conditions), condition_data_dict)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		if price_list_rate:
 			frappe.throw(_("Item Price appears multiple times based on Price List, Supplier/Customer, Currency, Item, UOM, Qty, and Dates."), ItemPriceDuplicateItem,)
@@ -75,7 +91,11 @@ class ItemPrice(Document):
 			self.reference = self.customer
 		if self.buying:
 			self.reference = self.supplier
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		if self.selling and not self.buying:
 			# if only selling then remove supplier
 			self.supplier = None

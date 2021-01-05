@@ -60,6 +60,10 @@ class BankClearance(Document):
 		""".format(condition=condition), {"account": self.account, "from":self.from_date,
 				"to": self.to_date, "bank_account": self.bank_account}, as_dict=1)
 
+<<<<<<< HEAD:erpnext/accounts/doctype/bank_clearance/bank_clearance.py
+=======
+		
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/accounts/doctype/bank_reconciliation/bank_reconciliation.py
 		pos_sales_invoices, pos_purchase_invoices = [], []
 		if self.include_pos_transactions:
 			pos_sales_invoices = frappe.db.sql("""

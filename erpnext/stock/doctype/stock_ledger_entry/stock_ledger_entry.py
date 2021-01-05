@@ -89,7 +89,11 @@ class StockLedgerEntry(Document):
 
 		# check if batch number is required
 		if self.voucher_type != 'Stock Reconciliation':
+<<<<<<< HEAD
 			if item_det.has_batch_no == 1:
+=======
+			if item_det.has_batch_no ==1:
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				batch_item = self.item_code if self.item_code == item_det.item_name else self.item_code + ":" +  item_det.item_name
 				if not self.batch_no:
 					frappe.throw(_("Batch number is mandatory for Item {0}").format(batch_item))

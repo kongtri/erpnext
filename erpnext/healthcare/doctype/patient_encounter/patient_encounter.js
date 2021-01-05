@@ -70,7 +70,11 @@ frappe.ui.form.on('Patient Encounter', {
 
 		frm.set_query('patient', function() {
 			return {
+<<<<<<< HEAD
 				filters: {'status': 'Active'}
+=======
+				filters: {"status": "Active"}
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			};
 		});
 
@@ -217,6 +221,7 @@ var schedule_inpatient = function(frm) {
 				expected_length_of_stay: dialog.get_value('expected_length_of_stay'),
 				admission_instruction: dialog.get_value('admission_instruction')
 			}
+<<<<<<< HEAD
 			frappe.call({
 				method: 'erpnext.healthcare.doctype.inpatient_record.inpatient_record.schedule_inpatient',
 				args: {
@@ -233,6 +238,11 @@ var schedule_inpatient = function(frm) {
 			frm.refresh_fields();
 			dialog.hide();
 		}
+=======
+		},
+		freeze: true,
+		freeze_message: __("Process Inpatient Scheduling")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	});
 
 	dialog.set_values({
@@ -275,6 +285,7 @@ var schedule_discharge = function(frm) {
 				discharge_instructions: dialog.get_value('discharge_instructions'),
 				discharge_note: dialog.get_value('discharge_note')
 			}
+<<<<<<< HEAD
 			frappe.call ({
 				method: 'erpnext.healthcare.doctype.inpatient_record.inpatient_record.schedule_discharge',
 				args: {args},
@@ -289,6 +300,11 @@ var schedule_discharge = function(frm) {
 			frm.refresh_fields();
 			dialog.hide();
 		}
+=======
+		},
+		freeze: true,
+		freeze_message: __("Process Discharge")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	});
 
 	dialog.show();

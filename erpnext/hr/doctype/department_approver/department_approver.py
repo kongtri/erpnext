@@ -20,7 +20,11 @@ def get_approvers(doctype, txt, searchfield, start, page_len, filters):
 	approvers = []
 	department_details = {}
 	department_list = []
+<<<<<<< HEAD
 	employee = frappe.get_value("Employee", filters.get("employee"), ["employee_name","department", "leave_approver", "expense_approver", "shift_request_approver"], as_dict=True)
+=======
+	employee = frappe.get_value("Employee", filters.get("employee"), ["employee_name","department", "leave_approver"], as_dict=True)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	employee_department = filters.get("department") or employee.department
 	if employee_department:
@@ -46,9 +50,12 @@ def get_approvers(doctype, txt, searchfield, start, page_len, filters):
 	elif filters.get("doctype") == "Expense Claim":
 		parentfield = "expense_approvers"
 		field_name = "Expense Approver"
+<<<<<<< HEAD
 	elif filters.get("doctype") == "Shift Request":
 		parentfield = "shift_request_approver"
 		field_name = "Shift Request Approver"
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	if department_list:
 		for d in department_list:
 			approvers += frappe.db.sql("""select user.name, user.first_name, user.last_name from

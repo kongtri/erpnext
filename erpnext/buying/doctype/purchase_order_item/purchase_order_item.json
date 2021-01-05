@@ -731,8 +731,12 @@
  "idx": 1,
  "index_web_pages_for_search": 1,
  "istable": 1,
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-12-07 11:59:47.670951",
+=======
+ "modified": "2020-04-07 18:35:17.558928",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order Item",

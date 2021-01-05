@@ -128,7 +128,16 @@ class Asset(AccountsController):
 
 		if self.available_for_use_date and getdate(self.available_for_use_date) < getdate(self.purchase_date):
 			frappe.throw(_("Available-for-use Date should be after purchase date"))
+	
+	def validate_gross_and_purchase_amount(self):
+		if self.is_existing_asset: return
+		
+		if self.gross_purchase_amount and self.gross_purchase_amount != self.purchase_receipt_amount:
+			frappe.throw(_("Gross Purchase Amount should be {} to purchase amount of one single Asset. {}\
+				Please do not book expense of multiple assets against one single Asset.")
+				.format(frappe.bold("equal"), "<br>"), title=_("Invalid Gross Purchase Amount"))
 
+<<<<<<< HEAD
 	def validate_gross_and_purchase_amount(self):
 		if self.is_existing_asset: return
 
@@ -136,6 +145,20 @@ class Asset(AccountsController):
 			frappe.throw(_("Gross Purchase Amount should be {} to purchase amount of one single Asset. {}\
 				Please do not book expense of multiple assets against one single Asset.")
 				.format(frappe.bold("equal"), "<br>"), title=_("Invalid Gross Purchase Amount"))
+=======
+	def cancel_auto_gen_movement(self):
+		movements = frappe.db.sql(
+			"""SELECT asm.name, asm.docstatus
+			FROM `tabAsset Movement` asm, `tabAsset Movement Item` asm_item
+			WHERE asm_item.parent=asm.name and asm_item.asset=%s and asm.docstatus=1""", self.name, as_dict=1)
+		if len(movements) > 1:
+			frappe.throw(_('Asset has multiple Asset Movement Entries which has to be \
+				cancelled manually to cancel this asset.'))
+		if movements:
+			movement = frappe.get_doc('Asset Movement', movements[0].get('name'))
+			movement.flags.ignore_validate = True
+			movement.cancel()
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def make_asset_movement(self):
 		reference_doctype = 'Purchase Receipt' if self.purchase_receipt else 'Purchase Invoice'
@@ -463,6 +486,60 @@ class Asset(AccountsController):
 			for d in self.get('finance_books'):
 				if d.finance_book == self.default_finance_book:
 					return cint(d.idx) - 1
+	
+	def validate_make_gl_entry(self):
+		purchase_document = self.get_purchase_document()
+		if not purchase_document:
+			return False
+
+		asset_bought_with_invoice = (purchase_document == self.purchase_invoice)
+		fixed_asset_account = self.get_fixed_asset_account()
+		
+		cwip_enabled = is_cwip_accounting_enabled(self.asset_category)
+		cwip_account = self.get_cwip_account(cwip_enabled=cwip_enabled)
+
+		query = """SELECT name FROM `tabGL Entry` WHERE voucher_no = %s and account = %s"""
+		if asset_bought_with_invoice:
+			# with invoice purchase either expense or cwip has been booked
+			expense_booked = frappe.db.sql(query, (purchase_document, fixed_asset_account), as_dict=1)
+			if expense_booked:
+				# if expense is already booked from invoice then do not make gl entries regardless of cwip enabled/disabled
+				return False
+
+			cwip_booked = frappe.db.sql(query, (purchase_document, cwip_account), as_dict=1)
+			if cwip_booked:
+				# if cwip is booked from invoice then make gl entries regardless of cwip enabled/disabled
+				return True
+		else:
+			# with receipt purchase either cwip has been booked or no entries have been made
+			if not cwip_account:
+				# if cwip account isn't available do not make gl entries
+				return False
+
+			cwip_booked = frappe.db.sql(query, (purchase_document, cwip_account), as_dict=1)
+			# if cwip is not booked from receipt then do not make gl entries
+			# if cwip is booked from receipt then make gl entries
+			return cwip_booked
+
+	def get_purchase_document(self):
+		asset_bought_with_invoice = self.purchase_invoice and frappe.db.get_value('Purchase Invoice', self.purchase_invoice, 'update_stock')
+		purchase_document = self.purchase_invoice if asset_bought_with_invoice else self.purchase_receipt
+
+		return purchase_document
+	
+	def get_fixed_asset_account(self):
+		return get_asset_category_account('fixed_asset_account', None, self.name, None, self.asset_category, self.company)
+	
+	def get_cwip_account(self, cwip_enabled=False):
+		cwip_account = None
+		try:
+			cwip_account = get_asset_account("capital_work_in_progress_account", self.name, self.asset_category, self.company)
+		except:
+			# if no cwip account found in category or company and "cwip is enabled" then raise else silently pass
+			if cwip_enabled:
+				raise
+
+		return cwip_account
 
 	def validate_make_gl_entry(self):
 		purchase_document = self.get_purchase_document()

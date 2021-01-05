@@ -29,6 +29,42 @@ class PlaidConnector():
 		response = self.client.Item.public_token.exchange(public_token)
 		access_token = response["access_token"]
 		return access_token
+	
+	def get_token_request(self, update_mode=False):
+		args = {
+			"client_name": self.client_name,
+			# only allow Plaid-supported languages and countries (LAST: Sep-19-2020)
+			"language": frappe.local.lang if frappe.local.lang in ["en", "fr", "es", "nl"] else "en",
+			"country_codes": ["US", "CA", "ES", "FR", "GB", "IE", "NL"],
+			"user": {
+				"client_user_id": frappe.generate_hash(frappe.session.user, length=32)
+			}
+		}
+
+		if update_mode:
+			args["access_token"] = self.access_token
+		else:
+			args.update({
+				"client_id": self.settings.plaid_client_id,
+				"secret": self.settings.plaid_secret,
+				"products": self.products,
+			})
+		
+		return args
+
+	def get_link_token(self, update_mode=False):
+		token_request = self.get_token_request(update_mode)
+
+		try:
+			response = self.client.LinkToken.create(token_request)
+		except InvalidRequestError:
+			frappe.log_error(frappe.get_traceback(), _("Plaid invalid request error"))
+			frappe.msgprint(_("Please check your Plaid client ID and secret values"))
+		except APIError as e:
+			frappe.log_error(frappe.get_traceback(), _("Plaid authentication error"))
+			frappe.throw(_(str(e)), title=_("Authentication Failed"))
+		else:
+			return response["link_token"]
 
 	def get_link_token(self):
 		country_codes = ["US", "CA", "FR", "IE", "NL", "ES", "GB"] if self.settings.enable_european_access else ["US", "CA"]

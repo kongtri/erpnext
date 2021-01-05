@@ -82,7 +82,11 @@ def get_fiscal_years(transaction_date=None, fiscal_year=None, label="Date", verb
 	error_msg = _("""{0} {1} is not in any active Fiscal Year""").format(label, formatdate(transaction_date))
 	if company:
 		error_msg = _("""{0} for {1}""").format(error_msg, frappe.bold(company))
+<<<<<<< HEAD
 	
+=======
+		
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	if verbose==1: frappe.msgprint(error_msg)
 	raise FiscalYearError(error_msg)
 
@@ -586,6 +590,27 @@ def fix_total_debit_credit():
 				(dr_or_cr, dr_or_cr, '%s', '%s', '%s', dr_or_cr),
 				(d.diff, d.voucher_type, d.voucher_no))
 
+<<<<<<< HEAD
+=======
+def get_stock_and_account_balance(account=None, posting_date=None, company=None):
+	if not posting_date: posting_date = nowdate()
+
+	warehouse_account = get_warehouse_account_map(company)
+
+	account_balance = get_balance_on(account, posting_date, in_account_currency=False, ignore_account_permission=True)
+
+	related_warehouses = [wh for wh, wh_details in warehouse_account.items()
+		if wh_details.account == account and not wh_details.is_group]
+
+	total_stock_value = 0.0
+	for warehouse in related_warehouses:
+		value = get_stock_value_on(warehouse, posting_date)
+		total_stock_value += value
+
+	precision = frappe.get_precision("Journal Entry Account", "debit_in_account_currency")
+	return flt(account_balance, precision), flt(total_stock_value, precision), related_warehouses
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 def get_currency_precision():
 	precision = cint(frappe.db.get_default("currency_precision"))
 	if not precision:
@@ -886,6 +911,7 @@ def get_coa(doctype, parent, is_root, chart=None):
 
 	return accounts
 
+<<<<<<< HEAD
 def update_gl_entries_after(posting_date, posting_time, for_warehouses=None, for_items=None,
 		warehouse_account=None, company=None):
 	def _delete_gl_entries(voucher_type, voucher_no):
@@ -1047,3 +1073,10 @@ def get_journal_entry(account, stock_adjustment_account, amount):
 			db_or_cr_stock_adjustment_account : abs(amount)
 		}]
 	}
+=======
+def get_stock_accounts(company):
+	return frappe.get_all("Account", filters = {
+		"account_type": "Stock",
+		"company": company
+	})
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

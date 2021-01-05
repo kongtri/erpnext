@@ -349,7 +349,11 @@ class Subscription(Document):
 			invoice.append(
 				'payment_schedule',
 				{
+<<<<<<< HEAD
 					'due_date': add_days(invoice.posting_date, cint(self.days_until_due)),
+=======
+					'due_date': add_days(self.current_invoice_end, cint(self.days_until_due)),
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 					'invoice_portion': 100
 				}
 			)
@@ -439,8 +443,13 @@ class Subscription(Document):
 		self.save()
 
 	def is_postpaid_to_invoice(self):
+<<<<<<< HEAD
 		return getdate() > getdate(self.current_invoice_end) or \
 			(getdate() >= getdate(self.current_invoice_end) and getdate(self.current_invoice_end) == getdate(self.current_invoice_start))
+=======
+		return getdate(nowdate()) > getdate(self.current_invoice_end) or \
+			(getdate(nowdate()) >= getdate(self.current_invoice_end) and getdate(self.current_invoice_end) == getdate(self.current_invoice_start))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def is_prepaid_to_invoice(self):
 		if not self.generate_invoice_at_period_start:
@@ -450,7 +459,11 @@ class Subscription(Document):
 			return True
 
 		# Check invoice dates and make sure it doesn't have outstanding invoices
+<<<<<<< HEAD
 		return getdate() >= getdate(self.current_invoice_start)
+=======
+		return getdate(nowdate()) >= getdate(self.current_invoice_start)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def is_current_invoice_generated(self):
 		invoice = self.get_current_invoice()
@@ -459,6 +472,19 @@ class Subscription(Document):
 			return True
 
 		return False
+<<<<<<< HEAD
+=======
+
+	def is_current_invoice_paid(self):
+		if self.is_new_subscription():
+			return False
+
+		last_invoice = frappe.get_doc('Sales Invoice', self.invoices[-1].invoice)
+		if getdate(last_invoice.posting_date) == getdate(self.current_invoice_start) and last_invoice.status == 'Paid':
+			return True
+
+		return False
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def process_for_active(self):
 		"""
@@ -469,8 +495,16 @@ class Subscription(Document):
 		2. Change the `Subscription` status to 'Past Due Date'
 		3. Change the `Subscription` status to 'Cancelled'
 		"""
+<<<<<<< HEAD
 		if getdate() > getdate(self.current_invoice_end) and self.is_prepaid_to_invoice():
 			self.update_subscription_period(add_days(self.current_invoice_end, 1))
+=======
+		if not self.is_current_invoice_generated() and not self.is_current_invoice_paid() and \
+			(self.is_postpaid_to_invoice() or self.is_prepaid_to_invoice()):
+			self.generate_invoice()
+			if self.current_invoice_is_past_due():
+				self.status = 'Past Due Date'
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		if not self.is_current_invoice_generated() and (self.is_postpaid_to_invoice() or self.is_prepaid_to_invoice()):
 			prorate = frappe.db.get_single_value('Subscription Settings', 'prorate')
@@ -478,6 +512,9 @@ class Subscription(Document):
 
 		if self.cancel_at_period_end and getdate() > getdate(self.current_invoice_end):
 			self.cancel_subscription_at_period_end()
+
+		if self.is_current_invoice_generated() and getdate() > getdate(self.current_invoice_end):
+			self.update_subscription_period(add_days(self.current_invoice_end, 1))
 
 	def cancel_subscription_at_period_end(self):
 		"""

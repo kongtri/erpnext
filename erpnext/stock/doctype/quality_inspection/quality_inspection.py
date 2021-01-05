@@ -98,7 +98,10 @@ class QualityInspection(Document):
 					.format(reading.idx, field),
 					title=_("Invalid Formula"))
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 @frappe.whitelist()
 @frappe.validate_and_sanitize_search_inputs
 def item_query(doctype, txt, searchfield, start, page_len, filters):

@@ -10,12 +10,18 @@
   "naming_series",
   "employee",
   "employee_name",
+<<<<<<< HEAD
   "department",
   "column_break_4",
   "posting_date",
   "currency",
   "exchange_rate",
   "repay_unclaimed_amount_from_salary",
+=======
+  "column_break_4",
+  "posting_date",
+  "department",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "section_break_8",
   "purpose",
   "column_break_11",
@@ -93,7 +99,11 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Advance Amount",
+<<<<<<< HEAD
    "options": "currency",
+=======
+   "options": "Company:company:default_currency",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "reqd": 1
   },
   {
@@ -101,7 +111,11 @@
    "fieldtype": "Currency",
    "label": "Paid Amount",
    "no_copy": 1,
+<<<<<<< HEAD
    "options": "currency",
+=======
+   "options": "Company:company:default_currency",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "read_only": 1
   },
   {
@@ -109,7 +123,11 @@
    "fieldtype": "Currency",
    "label": "Claimed Amount",
    "no_copy": 1,
+<<<<<<< HEAD
    "options": "currency",
+=======
+   "options": "Company:company:default_currency",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "read_only": 1
   },
   {
@@ -159,11 +177,18 @@
    "options": "Mode of Payment"
   },
   {
+<<<<<<< HEAD
    "allow_on_submit": 1,
    "fieldname": "return_amount",
    "fieldtype": "Currency",
    "label": "Returned Amount",
    "options": "currency",
+=======
+   "fieldname": "return_amount",
+   "fieldtype": "Currency",
+   "label": "Returned Amount",
+   "options": "Company:company:default_currency",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "read_only": 1
   },
   {
@@ -177,6 +202,7 @@
    "fieldname": "pending_amount",
    "fieldtype": "Currency",
    "label": "Pending Amount",
+<<<<<<< HEAD
    "options": "currency",
    "read_only": 1
   },
@@ -197,11 +223,19 @@
    "precision": "9",
    "print_hide": 1,
    "reqd": 1
+=======
+   "options": "Company:company:default_currency",
+   "read_only": 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "is_submittable": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-11-25 12:01:55.980721",
+=======
+ "modified": "2020-06-12 12:42:39.833818",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee Advance",
@@ -238,4 +272,8 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

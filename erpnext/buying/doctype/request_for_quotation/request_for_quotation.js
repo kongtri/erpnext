@@ -182,6 +182,47 @@ frappe.ui.form.on("Request for Quotation",{
 
 		dialog.set_value("subject", frm.doc.subject);
 		dialog.show();
+<<<<<<< HEAD
+=======
+
+	},
+	make_suppplier_quotation: function(frm) {
+		var doc = frm.doc;
+		var dialog = new frappe.ui.Dialog({
+			title: __("For Supplier"),
+			fields: [
+				{	"fieldtype": "Select", "label": __("Supplier"),
+					"fieldname": "supplier",
+					"options": doc.suppliers.map(d => d.supplier),
+					"reqd": 1,
+					"default": doc.suppliers.length === 1 ? doc.suppliers[0].supplier_name : "" },
+				{	"fieldtype": "Button", "label": __('Create Supplier Quotation'),
+					"fieldname": "make_supplier_quotation", "cssClass": "btn-primary" },
+			]
+		});
+
+		dialog.fields_dict.make_supplier_quotation.$input.click(function() {
+			var args = dialog.get_values();
+			if(!args) return;
+			dialog.hide();
+			return frappe.call({
+				type: "GET",
+				method: "erpnext.buying.doctype.request_for_quotation.request_for_quotation.make_supplier_quotation",
+				args: {
+					"source_name": doc.name,
+					"for_supplier": args.supplier
+				},
+				freeze: true,
+				callback: function(r) {
+					if(!r.exc) {
+						var doc = frappe.model.sync(r.message);
+						frappe.set_route("Form", r.message.doctype, r.message.name);
+					}
+				}
+			});
+		});
+		dialog.show()
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	}
 })
 

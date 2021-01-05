@@ -55,7 +55,11 @@ class RequestforQuotation(BuyingController):
 
 	def validate_email_id(self, args):
 		if not args.email_id:
+<<<<<<< HEAD
 			frappe.throw(_("Row {0}: For Supplier {1}, Email Address is Required to send an email").format(args.idx, frappe.bold(args.supplier)))
+=======
+			frappe.throw(_("Row {0}: For Supplier {0}, Email Address is Required to Send Email").format(args.idx, args.supplier))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def on_submit(self):
 		frappe.db.set(self, 'status', 'Submitted')

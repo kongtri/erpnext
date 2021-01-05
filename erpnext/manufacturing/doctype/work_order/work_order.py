@@ -6,7 +6,11 @@ import frappe
 import json
 import math
 from frappe import _
+<<<<<<< HEAD
 from frappe.utils import flt, get_datetime, getdate, date_diff, cint, nowdate, get_link_to_form, time_diff_in_hours
+=======
+from frappe.utils import flt, get_datetime, getdate, date_diff, cint, nowdate, get_link_to_form
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 from frappe.model.document import Document
 from erpnext.manufacturing.doctype.bom.bom import validate_bom_no, get_bom_items_as_dict, get_bom_item_rate
 from dateutil.relativedelta import relativedelta
@@ -592,6 +596,7 @@ class WorkOrder(Document):
 					`tabStock Entry Detail` detail
 				WHERE
 					entry.work_order = %(name)s
+<<<<<<< HEAD
 						AND (entry.purpose = "Material Consumption for Manufacture"
 							OR entry.purpose = "Manufacture")
 						AND entry.docstatus = 1
@@ -605,6 +610,18 @@ class WorkOrder(Document):
 				})[0][0]
 
 			item.db_set('consumed_qty', flt(consumed_qty), update_modified=False)
+=======
+					and (entry.purpose = "Material Consumption for Manufacture"
+					or entry.purpose = "Manufacture")
+					and entry.docstatus = 1
+					and detail.parent = entry.name and IFNULL(t_warehouse, "") = ""
+					and (detail.item_code = %(item)s or detail.original_item = %(item)s)''', {
+						'name': self.name,
+						'item': d.item_code
+					})[0][0]
+
+			d.db_set('consumed_qty', flt(consumed_qty), update_modified = False)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def make_bom(self):
 		data = frappe.db.sql(""" select sed.item_code, sed.qty, sed.s_warehouse
@@ -687,7 +704,11 @@ def get_item_details(item, project = None, skip_bom_info=False):
 	return res
 
 @frappe.whitelist()
+<<<<<<< HEAD
 def make_work_order(bom_no, item, qty=0, project=None, variant_items=None):
+=======
+def make_work_order(bom_no, item, qty=0, project=None):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	if not frappe.has_permission("Work Order", "write"):
 		frappe.throw(_("Not permitted"), frappe.PermissionError)
 
@@ -830,6 +851,31 @@ def query_sales_order(production_item):
 def make_job_card(work_order, operations):
 	if isinstance(operations, string_types):
 		operations = json.loads(operations)
+<<<<<<< HEAD
+=======
+
+	work_order = frappe.get_doc('Work Order', work_order)
+	for row in operations:
+		validate_operation_data(row)
+		create_job_card(work_order, row, row.get("qty"), auto_create=True)
+
+def validate_operation_data(row):
+	if row.get("qty") <= 0:
+		frappe.throw(_("Quantity to Manufacture can not be zero for the operation {0}")
+			.format(
+				frappe.bold(row.get("operation"))
+			)
+		)
+
+	if row.get("qty") > row.get("pending_qty"):
+		frappe.throw(_("For operation {0}: Quantity ({1}) can not be greter than pending quantity({2})")
+			.format(
+				frappe.bold(row.get("operation")),
+				frappe.bold(row.get("qty")),
+				frappe.bold(row.get("pending_qty"))
+			)
+		)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	work_order = frappe.get_doc('Work Order', work_order)
 	for row in operations:

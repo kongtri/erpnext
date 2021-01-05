@@ -1055,11 +1055,14 @@
    "fieldtype": "Data",
    "label": "Default Manufacturer Part No",
    "read_only": 1
+<<<<<<< HEAD
   },
   {
    "fieldname": "website_image_alt",
    "fieldtype": "Data",
    "label": "Image Description"
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "has_web_view": 1,
@@ -1069,7 +1072,11 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "max_attachments": 1,
+<<<<<<< HEAD
  "modified": "2020-08-07 14:24:58.384992",
+=======
+ "modified": "2020-08-06 17:03:26.594319",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Item",

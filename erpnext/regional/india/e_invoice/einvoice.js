@@ -16,6 +16,13 @@ erpnext.setup_einvoice_actions = (doctype) => {
 				}
 			};
 
+<<<<<<< HEAD
+=======
+			if (ewaybill && irn) {
+				frm.set_df_property('ewaybill', 'read_only', 1);
+			}
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			if (!irn && !__unsaved) {
 				const action = () => {
 					frappe.call({

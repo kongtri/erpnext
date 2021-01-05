@@ -32,7 +32,11 @@ frappe.query_reports["Stock Ledger"] = {
 			"options": "Warehouse",
 			"get_query": function() {
 				const company = frappe.query_report.get_filter_value('company');
+<<<<<<< HEAD
 				return {
+=======
+				return { 
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 					filters: { 'company': company }
 				}
 			}

@@ -761,6 +761,7 @@
    "fieldname": "additional_notes",
    "fieldtype": "Text",
    "label": "Additional Notes"
+<<<<<<< HEAD
   },
   {
    "default": "0",
@@ -780,12 +781,18 @@
    "fieldname": "manufacturing_section_section",
    "fieldtype": "Section Break",
    "label": "Manufacturing Section"
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "idx": 1,
  "istable": 1,
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-012-07 20:54:32.309460",
+=======
+ "modified": "2020-05-22 12:40:01.696076",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Sales Order Item",

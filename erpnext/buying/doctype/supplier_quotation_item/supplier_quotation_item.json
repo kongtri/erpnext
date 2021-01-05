@@ -559,8 +559,12 @@
  "idx": 1,
  "index_web_pages_for_search": 1,
  "istable": 1,
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-10-19 12:36:26.913211",
+=======
+ "modified": "2020-10-19 17:16:06.731729",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier Quotation Item",

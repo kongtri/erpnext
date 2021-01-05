@@ -19,7 +19,11 @@ frappe.ui.form.on('Patient Appointment', {
 	refresh: function(frm) {
 		frm.set_query('patient', function () {
 			return {
+<<<<<<< HEAD
 				filters: {'status': 'Active'}
+=======
+				filters: {"status": "Active"}
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			};
 		});
 
@@ -256,6 +260,10 @@ let check_and_set_availability = function(frm) {
 			primary_action_label: __('Book'),
 			primary_action: function() {
 				frm.set_value('appointment_time', selected_slot);
+<<<<<<< HEAD
+=======
+				frm.set_value('service_unit', service_unit || '');
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				if (!frm.doc.duration) {
 					frm.set_value('duration', duration);
 				}
@@ -398,7 +406,11 @@ let check_and_set_availability = function(frm) {
 	}
 };
 
+<<<<<<< HEAD
 let get_prescribed_procedure = function(frm) {
+=======
+var get_procedure_prescribed = function(frm){
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	if (frm.doc.patient) {
 		frappe.call({
 			method: 'erpnext.healthcare.doctype.patient_appointment.patient_appointment.get_procedure_prescribed',

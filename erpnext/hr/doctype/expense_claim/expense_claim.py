@@ -45,10 +45,14 @@ class ExpenseClaim(AccountsController):
 		paid_amount = flt(self.total_amount_reimbursed) + flt(self.total_advance_amount)
 		precision = self.precision("grand_total")
 		if (self.is_paid or (flt(self.total_sanctioned_amount) > 0
+<<<<<<< HEAD
 			and flt(self.grand_total, precision) ==  flt(paid_amount, precision))) \
+=======
+			and flt(flt(self.total_sanctioned_amount) + flt(self.total_taxes_and_charges), precision) ==  flt(paid_amount, precision))) \
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			and self.docstatus == 1 and self.approval_status == 'Approved':
 				self.status = "Paid"
-		elif flt(self.total_sanctioned_amount) > 0 and self.docstatus == 1 and self.approval_status == 'Approved':
+		elif flt(self.grand_total) > 0 and self.docstatus == 1 and self.approval_status == 'Approved':
 			self.status = "Unpaid"
 		elif self.docstatus == 1 and self.approval_status == 'Rejected':
 			self.status = 'Rejected'

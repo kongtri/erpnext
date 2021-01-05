@@ -76,7 +76,10 @@ class BOM(WebsiteGenerator):
 		self.set_routing_operations()
 		self.validate_operations()
 		self.calculate_cost()
+<<<<<<< HEAD
 		self.update_stock_qty()
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		self.update_cost(update_parent=False, from_child_bom=True, save=False)
 
 	def get_context(self, context):
@@ -112,8 +115,23 @@ class BOM(WebsiteGenerator):
 	def get_routing(self):
 		if self.routing:
 			self.set("operations", [])
+<<<<<<< HEAD
 			fields = ["sequence_id", "operation", "workstation", "description",
 				"time_in_mins", "batch_size", "operating_cost", "idx", "hour_rate"]
+=======
+			for d in frappe.get_all("BOM Operation", fields = ["*"],
+				filters = {'parenttype': 'Routing', 'parent': self.routing}, order_by="idx"):
+				child = self.append('operations', {
+					"operation": d.operation,
+					"workstation": d.workstation,
+					"description": d.description,
+					"time_in_mins": d.time_in_mins,
+					"batch_size": d.batch_size,
+					"operating_cost": d.operating_cost,
+					"idx": d.idx
+				})
+				child.hour_rate = flt(d.hour_rate / self.conversion_rate, 2)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 			for row in frappe.get_all("BOM Operation", fields = fields,
 				filters = {'parenttype': 'Routing', 'parent': self.routing}, order_by="sequence_id, idx"):
@@ -169,8 +187,12 @@ class BOM(WebsiteGenerator):
 			 'qty'			: args.get("qty") or args.get("stock_qty") or 1,
 			 'stock_qty'	: args.get("qty") or args.get("stock_qty") or 1,
 			 'base_rate'	: flt(rate) * (flt(self.conversion_rate) or 1),
+<<<<<<< HEAD
 			 'include_item_in_manufacturing': cint(args.get('transfer_for_manufacture')),
 			 'sourced_by_supplier'		: args.get('sourced_by_supplier', 0)
+=======
+			 'include_item_in_manufacturing': cint(args['transfer_for_manufacture']) or 0
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		}
 
 		return ret_item
@@ -194,7 +216,37 @@ class BOM(WebsiteGenerator):
 				if arg.get('bom_no') and self.set_rate_of_sub_assembly_item_based_on_bom:
 					rate = flt(self.get_bom_unitcost(arg['bom_no'])) * (arg.get("conversion_factor") or 1)
 				else:
+<<<<<<< HEAD
 					rate = get_bom_item_rate(arg, self)
+=======
+					if self.rm_cost_as_per == 'Valuation Rate':
+						rate = self.get_valuation_rate(arg) * (arg.get("conversion_factor") or 1)
+					elif self.rm_cost_as_per == 'Last Purchase Rate':
+						rate = flt(arg.get('last_purchase_rate') \
+							or frappe.db.get_value("Item", arg['item_code'], "last_purchase_rate")) \
+								* (arg.get("conversion_factor") or 1)
+					elif self.rm_cost_as_per == "Price List":
+						if not self.buying_price_list:
+							frappe.throw(_("Please select Price List"))
+						args = frappe._dict({
+							"doctype": "BOM",
+							"price_list": self.buying_price_list,
+							"qty": arg.get("qty") or 1,
+							"uom": arg.get("uom") or arg.get("stock_uom"),
+							"stock_uom": arg.get("stock_uom"),
+							"transaction_type": "buying",
+							"company": self.company,
+							"currency": self.currency,
+							"conversion_rate": 1, # Passed conversion rate as 1 purposefully, as conversion rate is applied at the end of the function
+							"conversion_factor": arg.get("conversion_factor") or 1,
+							"plc_conversion_rate": 1,
+							"ignore_party": True
+						})
+						item_doc = frappe.get_doc("Item", arg.get("item_code"))
+						out = frappe._dict()
+						get_price_list_rate(args, item_doc, out)
+						rate = out.price_list_rate
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 					if not rate:
 						if self.rm_cost_as_per == "Price List":
@@ -203,6 +255,10 @@ class BOM(WebsiteGenerator):
 						else:
 							frappe.msgprint(_("{0} not found for item {1}")
 								.format(self.rm_cost_as_per, arg["item_code"]), alert=True)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		return flt(rate) * flt(self.plc_conversion_rate or 1) / (self.conversion_rate or 1)
 
 	def update_cost(self, update_parent=True, from_child_bom=False, save=True):
@@ -236,8 +292,12 @@ class BOM(WebsiteGenerator):
 			self.calculate_cost()
 		if save:
 			self.db_update()
+<<<<<<< HEAD
 
 		self.update_exploded_items(save=save)
+=======
+		self.update_exploded_items()
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		# update parent BOMs
 		if self.total_cost != existing_bom_cost and update_parent:
@@ -461,7 +521,11 @@ class BOM(WebsiteGenerator):
 			d.rate = rate
 			d.amount = (d.stock_qty or d.qty) * rate
 
+<<<<<<< HEAD
 	def update_exploded_items(self, save=True):
+=======
+	def update_exploded_items(self):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		""" Update Flat BOM, following will be correct data"""
 		self.get_exploded_items()
 		self.add_exploded_items(save=save)
@@ -483,8 +547,12 @@ class BOM(WebsiteGenerator):
 					'stock_uom'		: d.stock_uom,
 					'stock_qty'		: flt(d.stock_qty),
 					'rate'			: flt(d.base_rate) / (flt(d.conversion_factor) or 1.0),
+<<<<<<< HEAD
 					'include_item_in_manufacturing': d.include_item_in_manufacturing,
 					'sourced_by_supplier': d.sourced_by_supplier
+=======
+					'include_item_in_manufacturing': d.include_item_in_manufacturing
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				}))
 
 	def company_currency(self):
@@ -678,7 +746,11 @@ def get_bom_items_as_dict(bom, company, qty=1, fetch_exploded=1, fetch_scrap_ite
 			is_stock_item=is_stock_item,
 			qty_field="stock_qty",
 			select_columns = """, bom_item.source_warehouse, bom_item.operation,
+<<<<<<< HEAD
 				bom_item.include_item_in_manufacturing, bom_item.description, bom_item.rate, bom_item.sourced_by_supplier,
+=======
+				bom_item.include_item_in_manufacturing, bom_item.description, bom_item.rate,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				(Select idx from `tabBOM Item` where item_code = bom_item.item_code and parent = %(parent)s limit 1) as idx""")
 
 		items = frappe.db.sql(query, { "parent": bom, "qty": qty, "bom": bom, "company": company }, as_dict=True)
@@ -691,7 +763,11 @@ def get_bom_items_as_dict(bom, company, qty=1, fetch_exploded=1, fetch_scrap_ite
 		query = query.format(table="BOM Item", where_conditions="", is_stock_item=is_stock_item,
 			qty_field="stock_qty" if fetch_qty_in_stock_uom else "qty",
 			select_columns = """, bom_item.uom, bom_item.conversion_factor, bom_item.source_warehouse,
+<<<<<<< HEAD
 				bom_item.idx, bom_item.operation, bom_item.include_item_in_manufacturing, bom_item.sourced_by_supplier,
+=======
+				bom_item.idx, bom_item.operation, bom_item.include_item_in_manufacturing,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				bom_item.description, bom_item.base_rate as rate """)
 		items = frappe.db.sql(query, { "qty": qty, "bom": bom, "company": company }, as_dict=True)
 
@@ -828,6 +904,7 @@ def add_non_stock_items_cost(stock_entry, work_order, expense_account):
 		non_stock_items_cost += flt(items.get(name[0])) * flt(stock_entry.fg_completed_qty) / flt(bom.quantity)
 
 	if non_stock_items_cost:
+<<<<<<< HEAD
 		stock_entry.append('additional_costs', {
 			'expense_account': expense_account,
 			'description': _("Non stock items"),
@@ -845,6 +922,25 @@ def add_operations_cost(stock_entry, work_order=None, expense_account=None):
 			"amount": operating_cost_per_unit * flt(stock_entry.fg_completed_qty)
 		})
 
+=======
+		stock_entry.append('additional_costs', {
+			'expense_account': expense_account,
+			'description': _("Non stock items"),
+			'amount': non_stock_items_cost
+		})
+
+def add_operations_cost(stock_entry, work_order=None, expense_account=None):
+	from erpnext.stock.doctype.stock_entry.stock_entry import get_operating_cost_per_unit
+	operating_cost_per_unit = get_operating_cost_per_unit(work_order, stock_entry.bom_no)
+
+	if operating_cost_per_unit:
+		stock_entry.append('additional_costs', {
+			"expense_account": expense_account,
+			"description": _("Operating Cost as per Work Order / BOM"),
+			"amount": operating_cost_per_unit * flt(stock_entry.fg_completed_qty)
+		})
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	if work_order and work_order.additional_operating_cost and work_order.qty:
 		additional_operating_cost_per_unit = \
 			flt(work_order.additional_operating_cost) / flt(work_order.qty)

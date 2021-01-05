@@ -933,7 +933,11 @@
  "is_submittable": 1,
  "links": [],
  "max_attachments": 1,
+<<<<<<< HEAD
  "modified": "2020-10-30 13:58:59.212060",
+=======
+ "modified": "2020-08-12 23:35:13.621823",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Quotation",

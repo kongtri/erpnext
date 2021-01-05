@@ -42,9 +42,15 @@ def get_cart_quotation(doc=None):
 
 	return {
 		"doc": decorate_quotation_doc(doc),
+<<<<<<< HEAD
 		"shipping_addresses": [{"name": address.name, "title": address.address_title, "display": address.display}
 			for address in addresses if address.address_type == "Shipping"],
 		"billing_addresses": [{"name": address.name, "title": address.address_title, "display": address.display}
+=======
+		"shipping_addresses": [{"name": address.name, "display": address.display}
+			for address in addresses if address.address_type == "Shipping"],
+		"billing_addresses": [{"name": address.name, "display": address.display}
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			for address in addresses if address.address_type == "Billing"],
 		"shipping_rules": get_applicable_shipping_rules(party),
 		"cart_settings": frappe.get_cached_doc("Shopping Cart Settings")
@@ -345,7 +351,11 @@ def _set_price_list(cart_settings, quotation=None):
 	selling_price_list = None
 
 	# check if default customer price list exists
+<<<<<<< HEAD
 	if party_name and frappe.db.exists("Customer", party_name):
+=======
+	if party_name:
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		selling_price_list = get_default_price_list(frappe.get_doc("Customer", party_name))
 
 	# check default price list in shopping cart

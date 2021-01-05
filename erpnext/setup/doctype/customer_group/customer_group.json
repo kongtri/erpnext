@@ -139,7 +139,11 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-03-18 18:10:13.048492",
+=======
+ "modified": "2020-03-18 18:26:02.536305",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Customer Group",

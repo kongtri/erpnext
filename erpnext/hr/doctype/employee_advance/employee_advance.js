@@ -65,6 +65,7 @@ frappe.ui.form.on('Employee Advance', {
 		}
 
 		if (frm.doc.docstatus === 1
+<<<<<<< HEAD
 			&& (flt(frm.doc.claimed_amount) < flt(frm.doc.paid_amount) && flt(frm.doc.paid_amount) != flt(frm.doc.return_amount))) {
 
 			if (frm.doc.repay_unclaimed_amount_from_salary == 0 && frappe.model.can_create("Journal Entry")){
@@ -90,6 +91,15 @@ frappe.ui.form.on('Employee Advance', {
 				frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
 			}
 		});
+=======
+			&& (flt(frm.doc.claimed_amount) + flt(frm.doc.return_amount) < flt(frm.doc.paid_amount))
+			&& frappe.model.can_create("Journal Entry")) {
+
+			frm.add_custom_button(__("Return"),  function() {
+				frm.trigger('make_return_entry');
+			}, __('Create'));
+		}
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	},
 
 	make_payment_entry: function(frm) {
@@ -137,9 +147,13 @@ frappe.ui.form.on('Employee Advance', {
 				'employee_advance_name': frm.doc.name,
 				'return_amount': flt(frm.doc.paid_amount - frm.doc.claimed_amount),
 				'advance_account': frm.doc.advance_account,
+<<<<<<< HEAD
 				'mode_of_payment': frm.doc.mode_of_payment,
 				'currency': frm.doc.currency,
 				'exchange_rate': frm.doc.exchange_rate
+=======
+				'mode_of_payment': frm.doc.mode_of_payment
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			},
 			callback: function(r) {
 				const doclist = frappe.model.sync(r.message);
@@ -150,6 +164,7 @@ frappe.ui.form.on('Employee Advance', {
 
 	employee: function (frm) {
 		if (frm.doc.employee) {
+<<<<<<< HEAD
 			frappe.run_serially([
 				() => 	frm.trigger('get_employee_currency'),
 				() => 	frm.trigger('get_pending_amount')
@@ -180,6 +195,16 @@ frappe.ui.form.on('Employee Advance', {
 				if (r.message) {
 					frm.set_value('currency', r.message);
 					frm.refresh_fields();
+=======
+			return frappe.call({
+				method: "erpnext.hr.doctype.employee_advance.employee_advance.get_pending_amount",
+				args: {
+					"employee": frm.doc.employee,
+					"posting_date": frm.doc.posting_date
+				},
+				callback: function(r) {
+					frm.set_value("pending_amount",r.message);
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				}
 			}
 		});

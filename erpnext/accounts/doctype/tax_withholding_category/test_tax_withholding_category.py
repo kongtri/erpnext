@@ -104,20 +104,33 @@ class TestTaxWithholdingCategory(unittest.TestCase):
 
 	def test_single_threshold_tds_with_previous_vouchers_and_no_tds(self):
 		invoices = []
+<<<<<<< HEAD
 		doc = create_supplier(supplier_name = "Test TDS Supplier ABC",
 			tax_withholding_category="Single Threshold TDS")
 		supplier = doc.name
 
 		pi = create_purchase_invoice(supplier=supplier)
+=======
+		frappe.db.set_value("Supplier", "Test TDS Supplier2", "tax_withholding_category", "Single Threshold TDS")
+		pi = create_purchase_invoice(supplier="Test TDS Supplier2")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		pi.submit()
 		invoices.append(pi)
 
 		# TDS not applied
+<<<<<<< HEAD
 		pi = create_purchase_invoice(supplier=supplier, do_not_apply_tds=True)
 		pi.submit()
 		invoices.append(pi)
 
 		pi = create_purchase_invoice(supplier=supplier)
+=======
+		pi = create_purchase_invoice(supplier="Test TDS Supplier2", do_not_apply_tds=True)
+		pi.submit()
+		invoices.append(pi)
+
+		pi = create_purchase_invoice(supplier="Test TDS Supplier2")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		pi.submit()
 		invoices.append(pi)
 

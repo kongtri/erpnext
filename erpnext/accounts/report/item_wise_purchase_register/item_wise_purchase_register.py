@@ -8,13 +8,20 @@ from frappe.utils import flt
 from erpnext.accounts.report.item_wise_sales_register.item_wise_sales_register import (get_tax_accounts,
 	get_grand_total, add_total_row, get_display_value, get_group_by_and_display_fields, add_sub_total_row,
 	get_group_by_conditions)
+<<<<<<< HEAD
 from erpnext.selling.report.item_wise_sales_history.item_wise_sales_history import get_item_details
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 def execute(filters=None):
 	return _execute(filters)
 
 def _execute(filters=None, additional_table_columns=None, additional_query_columns=None):
 	if not filters: filters = {}
+<<<<<<< HEAD
+=======
+	filters.update({"from_date": filters.get("date_range")[0], "to_date": filters.get("date_range")[1]})
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	columns = get_columns(additional_table_columns, filters)
 
 	company_currency = erpnext.get_company_currency(filters.company)
@@ -23,7 +30,11 @@ def _execute(filters=None, additional_table_columns=None, additional_query_colum
 	aii_account_map = get_aii_accounts()
 	if item_list:
 		itemised_tax, tax_columns = get_tax_accounts(item_list, columns, company_currency,
+<<<<<<< HEAD
 			doctype='Purchase Invoice', tax_doctype='Purchase Taxes and Charges')
+=======
+			doctype="Purchase Invoice", tax_doctype="Purchase Taxes and Charges")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	po_pr_map = get_purchase_receipts_against_purchase_order(item_list)
 
@@ -35,8 +46,11 @@ def _execute(filters=None, additional_table_columns=None, additional_query_colum
 	if filters.get('group_by'):
 		grand_total = get_grand_total(filters, 'Purchase Invoice')
 
+<<<<<<< HEAD
 	item_details = get_item_details()
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	for d in item_list:
 		if not d.stock_qty:
 			continue
@@ -53,8 +67,13 @@ def _execute(filters=None, additional_table_columns=None, additional_query_colum
 
 		row = {
 			'item_code': d.item_code,
+<<<<<<< HEAD
 			'item_name': item_record.item_name,
 			'item_group': item_record.item_group,
+=======
+			'item_name': d.item_name,
+			'item_group': d.item_group,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			'description': d.description,
 			'invoice': d.parent,
 			'posting_date': d.posting_date,
@@ -86,16 +105,24 @@ def _execute(filters=None, additional_table_columns=None, additional_query_colum
 		for tax in tax_columns:
 			item_tax = itemised_tax.get(d.name, {}).get(tax, {})
 			row.update({
+<<<<<<< HEAD
 				frappe.scrub(tax + ' Rate'): item_tax.get('tax_rate', 0),
 				frappe.scrub(tax + ' Amount'): item_tax.get('tax_amount', 0),
 			})
 			total_tax += flt(item_tax.get('tax_amount'))
+=======
+				frappe.scrub(tax + ' Rate'): item_tax.get("tax_rate", 0),
+				frappe.scrub(tax + ' Amount'): item_tax.get("tax_amount", 0),
+			})
+			total_tax += flt(item_tax.get("tax_amount"))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		row.update({
 			'total_tax': total_tax,
 			'total': d.base_net_amount + total_tax,
 			'currency': company_currency
 		})
+<<<<<<< HEAD
 
 		if filters.get('group_by'):
 			row.update({'percent_gt': flt(row['total']/grand_total) * 100})
@@ -106,6 +133,18 @@ def _execute(filters=None, additional_table_columns=None, additional_query_colum
 
 		data.append(row)
 
+=======
+
+		if filters.get('group_by'):
+			row.update({'percent_gt': flt(row['total']/grand_total) * 100})
+			group_by_field, subtotal_display_field = get_group_by_and_display_fields(filters)
+			data, prev_group_by_value = add_total_row(data, filters, prev_group_by_value, d, total_row_map,
+				group_by_field, subtotal_display_field, grand_total, tax_columns)
+			add_sub_total_row(row, total_row_map, d.get(group_by_field, ''), tax_columns)
+
+		data.append(row)
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	if filters.get('group_by') and item_list:
 		total_row = total_row_map.get(prev_group_by_value or d.get('item_name'))
 		total_row['percent_gt'] = flt(total_row['total']/grand_total * 100)
@@ -270,6 +309,16 @@ def get_columns(additional_table_columns, filters):
 			'fieldtype': 'Currency',
 			'options': 'currency',
 			'width': 100
+<<<<<<< HEAD
+=======
+		},
+		{
+			'fieldname': 'currency',
+			'label': _('Currency'),
+			'fieldtype': 'Currency',
+			'width': 80,
+			'hidden': 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		}
 	]
 

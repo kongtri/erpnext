@@ -329,9 +329,14 @@
   }
  ],
  "issingle": 1,
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-11-05 20:44:03.664891",
  "modified_by": "Administrator",
+=======
+ "modified": "2020-05-28 12:32:11.384757",
+ "modified_by": "umair@erpnext.com",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "module": "ERPNext Integrations",
  "name": "Shopify Settings",
  "owner": "Administrator",

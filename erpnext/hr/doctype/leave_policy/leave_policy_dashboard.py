@@ -6,8 +6,15 @@ def get_data():
 		'fieldname':  'leave_policy',
 		'transactions': [
 			{
+<<<<<<< HEAD
+=======
+				'label': _('Employees'),
+				'items': ['Employee', 'Employee Grade']
+			},
+			{
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				'label': _('Leaves'),
 				'items': ['Leave Allocation']
 			},
 		]
-	}
+	}	

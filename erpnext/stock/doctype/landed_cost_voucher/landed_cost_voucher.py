@@ -77,9 +77,15 @@ class LandedCostVoucher(Document):
 		company_currency = erpnext.get_company_currency(self.company)
 		for account in self.taxes:
 			if get_account_currency(account.expense_account) != company_currency:
+<<<<<<< HEAD
 				frappe.throw(_("Row {}: Expense account currency should be same as company's default currency.").format(account.idx)
 					+ _("Please select expense account with account currency as {}.").format(frappe.bold(company_currency)),
 					title=_("Invalid Account Currency"))
+=======
+				frappe.throw(msg=_(""" Row {0}: Expense account currency should be same as company's default currency.
+					Please select expense account with account currency as {1}""")
+					.format(account.idx, frappe.bold(company_currency)), title=_("Invalid Account Currency"))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def set_total_taxes_and_charges(self):
 		self.total_taxes_and_charges = sum([flt(d.amount) for d in self.get("taxes")])

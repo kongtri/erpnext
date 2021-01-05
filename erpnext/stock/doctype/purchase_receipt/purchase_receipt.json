@@ -60,11 +60,14 @@
   "total_net_weight",
   "total",
   "net_total",
+<<<<<<< HEAD
   "pricing_rule_details",
   "pricing_rules",
   "raw_material_details",
   "get_current_stock",
   "supplied_items",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "taxes_charges_section",
   "tax_category",
   "shipping_col",
@@ -1075,6 +1078,7 @@
    "width": "100px"
   },
   {
+<<<<<<< HEAD
    "default": "0",
    "fetch_from": "supplier.is_internal_supplier",
    "fieldname": "is_internal_supplier",
@@ -1090,11 +1094,14 @@
    "read_only": 1
   },
   {
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "scan_barcode",
    "fieldtype": "Data",
    "label": "Scan Barcode"
   },
   {
+<<<<<<< HEAD
    "fieldname": "billing_address",
    "fieldtype": "Link",
    "label": "Select Billing Address",
@@ -1114,13 +1121,24 @@
    "no_copy": 1,
    "print_hide": 1,
    "read_only": 1
+=======
+   "description": "Track this Purchase Receipt against any Project",
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "icon": "fa fa-truck",
  "idx": 261,
  "is_submittable": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-11-30 12:54:23.278500",
+=======
+ "modified": "2020-07-15 12:49:42.095297",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Purchase Receipt",

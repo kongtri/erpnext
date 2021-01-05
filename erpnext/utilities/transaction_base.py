@@ -5,7 +5,11 @@ from __future__ import unicode_literals
 import frappe
 import frappe.share
 from frappe import _
+<<<<<<< HEAD
 from frappe.utils import cstr, now_datetime, cint, flt, get_time, get_datetime, get_link_to_form, date_diff, nowdate
+=======
+from frappe.utils import cstr, now_datetime, cint, flt, get_time, get_link_to_form
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 from erpnext.controllers.status_updater import StatusUpdater
 from erpnext.accounts.utils import get_fiscal_year
 

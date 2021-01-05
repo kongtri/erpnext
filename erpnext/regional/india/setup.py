@@ -578,6 +578,7 @@ def make_custom_fields(update=True):
 				'default': 'Without Payment of Tax',
 				'depends_on':'eval:in_list(["SEZ", "Overseas", "Deemed Export"], doc.gst_category)',
 				'options': '\nWith Payment of Tax\nWithout Payment of Tax'
+<<<<<<< HEAD
 			}
 		],
 		"Member": [
@@ -586,6 +587,8 @@ def make_custom_fields(update=True):
 				'label': 'PAN Details',
 				'fieldtype': 'Data',
 				'insert_after': 'email'
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			}
 		]
 	}

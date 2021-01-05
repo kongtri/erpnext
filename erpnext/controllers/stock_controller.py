@@ -36,6 +36,13 @@ class StockController(AccountsController):
 					gl_entries = self.get_gl_entries(warehouse_account)
 				make_gl_entries(gl_entries, from_repost=from_repost)
 
+<<<<<<< HEAD
+=======
+			if (repost_future_gle or self.flags.repost_future_gle):
+				items, warehouses = self.get_items_and_warehouses()
+				update_gl_entries_after(self.posting_date, self.posting_time, warehouses, items,
+					warehouse_account, company=self.company)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		elif self.doctype in ['Purchase Receipt', 'Purchase Invoice'] and self.docstatus == 1:
 			gl_entries = []
 			gl_entries = self.get_asset_gl_entry(gl_entries)
@@ -44,6 +51,7 @@ class StockController(AccountsController):
 	def validate_serialized_batch(self):
 		from erpnext.stock.doctype.serial_no.serial_no import get_serial_nos
 		for d in self.get("items"):
+<<<<<<< HEAD
 			if hasattr(d, 'serial_no') and hasattr(d, 'batch_no') and d.serial_no and d.batch_no:
 				serial_nos = get_serial_nos(d.serial_no)
 				for serial_no_data in frappe.get_all("Serial No",
@@ -58,6 +66,16 @@ class StockController(AccountsController):
 				if expiry_date and getdate(expiry_date) < getdate(self.posting_date):
 					frappe.throw(_("Row #{0}: The batch {1} has already expired.")
 						.format(d.idx, get_link_to_form("Batch", d.get("batch_no"))))
+=======
+			if not (hasattr(d, 'serial_no') and d.serial_no and d.batch_no): continue
+
+			serial_nos = get_serial_nos(d.serial_no)
+			for serial_no_data in frappe.get_all("Serial No",
+				filters={"name": ("in", serial_nos)}, fields=["batch_no", "name"]):
+				if serial_no_data.batch_no != d.batch_no:
+					frappe.throw(_("Row #{0}: Serial No {1} does not belong to Batch {2}")
+						.format(d.idx, serial_no_data.name, d.batch_no))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def get_gl_entries(self, warehouse_account=None, default_expense_account=None,
 			default_cost_center=None):
@@ -70,6 +88,10 @@ class StockController(AccountsController):
 
 		gl_list = []
 		warehouse_with_no_account = []
+<<<<<<< HEAD
+=======
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		precision = frappe.get_precision("GL Entry", "debit_in_account_currency")
 		for item_row in voucher_details:
 			sle_list = sle_map.get(item_row.name)
@@ -102,7 +124,11 @@ class StockController(AccountsController):
 							"account": warehouse_account[sle.warehouse]["account"],
 							"against": expense_account,
 							"cost_center": item_row.cost_center,
+<<<<<<< HEAD
 							"project": item_row.project or self.get('project'),
+=======
+							"project": item_row.get("project") or self.get("project"),
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 							"remarks": self.get("remarks") or "Accounting Entry for Stock",
 							"debit": flt(sle.stock_value_difference, precision),
 							"is_opening": item_row.get("is_opening") or self.get("is_opening") or "No",
@@ -112,7 +138,11 @@ class StockController(AccountsController):
 							"account": expense_account,
 							"against": warehouse_account[sle.warehouse]["account"],
 							"cost_center": item_row.cost_center,
+<<<<<<< HEAD
 							"project": item_row.project or self.get('project'),
+=======
+							"project": item_row.get("project") or self.get("project"),
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 							"remarks": self.get("remarks") or "Accounting Entry for Stock",
 							"credit": flt(sle.stock_value_difference, precision),
 							"project": item_row.get("project") or self.get("project"),
@@ -308,6 +338,26 @@ class StockController(AccountsController):
 
 		return serialized_items
 
+<<<<<<< HEAD
+=======
+	def get_incoming_rate_for_sales_return(self, item_code, against_document, against_document_no=None):
+		incoming_rate = 0.0
+		cond = ''
+		if against_document and item_code:
+			if against_document_no:
+				cond = " and voucher_detail_no = %s" %(frappe.db.escape(against_document_no))
+
+			incoming_rate = frappe.db.sql("""select abs(stock_value_difference / actual_qty)
+				from `tabStock Ledger Entry`
+				where voucher_type = %s and voucher_no = %s
+					and item_code = %s {0} limit 1""".format(cond),
+				(self.doctype, against_document, item_code))
+
+			incoming_rate = incoming_rate[0][0] if incoming_rate else 0.0
+
+		return incoming_rate
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	def validate_warehouse(self):
 		from erpnext.stock.utils import validate_warehouse_company
 
@@ -391,6 +441,7 @@ class StockController(AccountsController):
 			if frappe.db.get_value('Item', d.item_code, 'is_customer_provided_item'):
 				d.allow_zero_valuation_rate = 1
 
+<<<<<<< HEAD
 	def repost_future_sle_and_gle(self):
 		args = frappe._dict({
 			"posting_date": self.posting_date,
@@ -460,3 +511,77 @@ def create_repost_item_valuation_entry(args):
 	repost_entry.flags.ignore_links = True
 	repost_entry.save()
 	repost_entry.submit()
+=======
+def update_gl_entries_after(posting_date, posting_time, for_warehouses=None, for_items=None,
+		warehouse_account=None, company=None):
+	def _delete_gl_entries(voucher_type, voucher_no):
+		frappe.db.sql("""delete from `tabGL Entry`
+			where voucher_type=%s and voucher_no=%s""", (voucher_type, voucher_no))
+
+	if not warehouse_account:
+		warehouse_account = get_warehouse_account_map(company)
+
+	future_stock_vouchers = get_future_stock_vouchers(posting_date, posting_time, for_warehouses, for_items)
+	gle = get_voucherwise_gl_entries(future_stock_vouchers, posting_date)
+
+	for voucher_type, voucher_no in future_stock_vouchers:
+		existing_gle = gle.get((voucher_type, voucher_no), [])
+		voucher_obj = frappe.get_doc(voucher_type, voucher_no)
+		expected_gle = voucher_obj.get_gl_entries(warehouse_account)
+		if expected_gle:
+			if not existing_gle or not compare_existing_and_expected_gle(existing_gle, expected_gle):
+				_delete_gl_entries(voucher_type, voucher_no)
+				voucher_obj.make_gl_entries(gl_entries=expected_gle, repost_future_gle=False, from_repost=True)
+		else:
+			_delete_gl_entries(voucher_type, voucher_no)
+
+def compare_existing_and_expected_gle(existing_gle, expected_gle):
+	matched = True
+	for entry in expected_gle:
+		account_existed = False
+		for e in existing_gle:
+			if entry.account == e.account:
+				account_existed = True
+			if entry.account == e.account and entry.against_account == e.against_account \
+					and (not entry.cost_center or not e.cost_center or entry.cost_center == e.cost_center) \
+					and (entry.debit != e.debit or entry.credit != e.credit):
+				matched = False
+				break
+		if not account_existed:
+			matched = False
+			break
+	return matched
+
+def get_future_stock_vouchers(posting_date, posting_time, for_warehouses=None, for_items=None):
+	future_stock_vouchers = []
+
+	values = []
+	condition = ""
+	if for_items:
+		condition += " and item_code in ({})".format(", ".join(["%s"] * len(for_items)))
+		values += for_items
+
+	if for_warehouses:
+		condition += " and warehouse in ({})".format(", ".join(["%s"] * len(for_warehouses)))
+		values += for_warehouses
+
+	for d in frappe.db.sql("""select distinct sle.voucher_type, sle.voucher_no
+		from `tabStock Ledger Entry` sle
+		where timestamp(sle.posting_date, sle.posting_time) >= timestamp(%s, %s) {condition}
+		order by timestamp(sle.posting_date, sle.posting_time) asc, creation asc for update""".format(condition=condition),
+		tuple([posting_date, posting_time] + values), as_dict=True):
+			future_stock_vouchers.append([d.voucher_type, d.voucher_no])
+
+	return future_stock_vouchers
+
+def get_voucherwise_gl_entries(future_stock_vouchers, posting_date):
+	gl_entries = {}
+	if future_stock_vouchers:
+		for d in frappe.db.sql("""select * from `tabGL Entry`
+			where posting_date >= %s and voucher_no in (%s)""" %
+			('%s', ', '.join(['%s']*len(future_stock_vouchers))),
+			tuple([posting_date] + [d[1] for d in future_stock_vouchers]), as_dict=1):
+				gl_entries.setdefault((d.voucher_type, d.voucher_no), []).append(d)
+
+	return gl_entries
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

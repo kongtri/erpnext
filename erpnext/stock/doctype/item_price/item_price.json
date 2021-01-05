@@ -172,7 +172,11 @@
    "default": "Today",
    "fieldname": "valid_from",
    "fieldtype": "Date",
+<<<<<<< HEAD
    "label": "Valid From"
+=======
+   "label": "Valid From "
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "default": "0",
@@ -187,7 +191,11 @@
   {
    "fieldname": "valid_upto",
    "fieldtype": "Date",
+<<<<<<< HEAD
    "label": "Valid Upto"
+=======
+   "label": "Valid Upto "
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "section_break_24",
@@ -208,7 +216,11 @@
  "icon": "fa fa-flag",
  "idx": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-07-06 22:31:32.943475",
+=======
+ "modified": "2020-02-28 14:21:25.580331",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Item Price",

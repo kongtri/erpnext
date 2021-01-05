@@ -1,5 +1,8 @@
 {
+<<<<<<< HEAD
  "actions": [],
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "autoname": "naming_series:",
  "creation": "2015-12-15 22:23:24.745065",
  "doctype": "DocType",
@@ -48,7 +51,10 @@
   "section_break_7",
   "payment_gateway",
   "payment_account",
+<<<<<<< HEAD
   "payment_channel",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "payment_order",
   "amended_from"
  ],
@@ -213,13 +219,20 @@
   },
   {
    "fetch_from": "bank_account.branch_code",
+<<<<<<< HEAD
    "fetch_if_empty": 1,
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "branch_code",
    "fieldtype": "Read Only",
    "label": "Branch Code"
   },
   {
+<<<<<<< HEAD
    "fetch_from": "bank.swift_number",
+=======
+   "fetch_from": "bank_account.swift_number",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "swift_number",
    "fieldtype": "Read Only",
    "label": "SWIFT Number"
@@ -231,7 +244,10 @@
    "label": "Recipient Message And Payment Details"
   },
   {
+<<<<<<< HEAD
    "depends_on": "eval: doc.payment_channel != \"Phone\"",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "print_format",
    "fieldtype": "Select",
    "label": "Print Format"
@@ -243,7 +259,10 @@
    "label": "To"
   },
   {
+<<<<<<< HEAD
    "depends_on": "eval: doc.payment_channel != \"Phone\"",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "subject",
    "fieldtype": "Data",
    "in_global_search": 1,
@@ -280,18 +299,28 @@
    "read_only": 1
   },
   {
+<<<<<<< HEAD
    "depends_on": "eval: doc.payment_request_type == 'Inward' || doc.payment_channel != \"Phone\"",
+=======
+   "depends_on": "eval: doc.payment_request_type == 'Inward'",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "section_break_10",
    "fieldtype": "Section Break"
   },
   {
+<<<<<<< HEAD
    "depends_on": "eval: doc.payment_channel != \"Phone\"",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "message",
    "fieldtype": "Text",
    "label": "Message"
   },
   {
+<<<<<<< HEAD
    "depends_on": "eval: doc.payment_channel != \"Phone\"",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "message_examples",
    "fieldtype": "HTML",
    "label": "Message Examples",
@@ -352,6 +381,7 @@
    "options": "Payment Request",
    "print_hide": 1,
    "read_only": 1
+<<<<<<< HEAD
   },
   {
    "fetch_from": "payment_gateway_account.payment_channel",
@@ -367,6 +397,12 @@
  "is_submittable": 1,
  "links": [],
  "modified": "2020-09-18 12:24:14.178853",
+=======
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2020-03-28 16:07:31.960798",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Payment Request",

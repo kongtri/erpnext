@@ -12,8 +12,12 @@
   "plaid_client_id",
   "plaid_secret",
   "column_break_7",
+<<<<<<< HEAD
   "plaid_env",
   "enable_european_access"
+=======
+  "plaid_env"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  ],
  "fields": [
   {
@@ -69,8 +73,12 @@
   }
  ],
  "issingle": 1,
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-10-29 20:24:56.916104",
+=======
+ "modified": "2020-09-12 02:31:44.542385",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "ERPNext Integrations",
  "name": "Plaid Settings",

@@ -1,6 +1,11 @@
 import frappe
+<<<<<<< HEAD
+=======
+import numpy as np
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 from frappe.utils import cint
 from erpnext.portal.product_configurator.item_variants_cache import ItemVariantsCacheManager
+from erpnext.shopping_cart.doctype.shopping_cart_settings.shopping_cart_settings import get_shopping_cart_settings
 
 def get_field_filter_data():
 	product_settings = get_product_settings()
@@ -174,6 +179,7 @@ def get_attributes_and_values(item_code):
 
 	item_attribute_values = frappe.db.get_all('Item Attribute Value',
 		['parent', 'attribute_value', 'idx'], order_by='parent asc, idx asc')
+	item_attribute_values += get_numeric_values()
 	ordered_attribute_value_map = frappe._dict()
 	for iv in item_attribute_values:
 		ordered_attribute_value_map.setdefault(iv.parent, []).append(iv.attribute_value)
@@ -185,6 +191,25 @@ def get_attributes_and_values(item_code):
 		attr['values'] = [v for v in ordered_values if v in valid_attribute_values]
 
 	return attributes
+
+def get_numeric_values():
+	attribute_values_list = []
+	numeric_attributes = frappe.db.get_all("Item Attribute",
+		fields=['name', 'from_range', 'to_range', 'increment'],
+		filters={"numeric_values": 1})
+	for attribute in numeric_attributes:
+		from_range = attribute["from_range"]
+		to_range = attribute['to_range'] + attribute['increment']
+		increment = attribute['increment']
+		values = list(np.arange(from_range, to_range, increment))
+
+		for idx, val in enumerate(values):
+			attribute_values_list.append(frappe._dict({
+					"parent": attribute.get("name"),
+					"attribute_value": str(int(val)) if val.is_integer() else str(val),
+					"idx": idx
+				}))
+	return attribute_values_list
 
 
 @frappe.whitelist(allow_guest=True)
@@ -227,6 +252,8 @@ def get_next_attribute_and_values(item_code, selected_attributes):
 
 	optional_attributes = item_cache.get_optional_attributes()
 	exact_match = []
+	shopping_cart_settings = get_shopping_cart_settings()
+	allow_items_not_in_stock = cint(shopping_cart_settings.allow_items_not_in_stock)
 	# search for exact match if all selected attributes are required attributes
 	if len(selected_attributes.keys()) >= (len(attribute_list) - len(optional_attributes)):
 		item_attribute_value_map = item_cache.get_item_attribute_value_map()
@@ -254,6 +281,7 @@ def get_next_attribute_and_values(item_code, selected_attributes):
 		'filtered_items_count': filtered_items_count,
 		'filtered_items': filtered_items if filtered_items_count < 10 else [],
 		'exact_match': exact_match,
+		'allow_items_not_in_stock': allow_items_not_in_stock,
 		'product_info': product_info
 	}
 
@@ -356,7 +384,7 @@ def get_items(filters=None, search=None):
 
 	results = frappe.db.sql('''
 		SELECT
-			`tabItem`.`name`, `tabItem`.`item_name`,
+			`tabItem`.`name`, `tabItem`.`item_name`, `tabItem`.`item_code`,
 			`tabItem`.`website_image`, `tabItem`.`image`,
 			`tabItem`.`web_long_description`, `tabItem`.`description`,
 			`tabItem`.`route`

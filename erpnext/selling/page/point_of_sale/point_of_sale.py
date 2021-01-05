@@ -15,8 +15,15 @@ def get_items(start, page_length, price_list, item_group, pos_profile, search_va
 	data = dict()
 	result = []
 
+<<<<<<< HEAD
 	allow_negative_stock = frappe.db.get_single_value('Stock Settings', 'allow_negative_stock')
 	warehouse, hide_unavailable_items = frappe.db.get_value('POS Profile', pos_profile, ['warehouse', 'hide_unavailable_items'])
+=======
+	if pos_profile:
+		warehouse, display_items_in_stock, hide_unavailable_items = frappe.db.get_value(
+			'POS Profile', pos_profile, ['warehouse', 'display_items_in_stock', 'hide_unavailable_items']
+		)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	if not frappe.db.exists('Item Group', item_group):
 		item_group = get_root_of('Item Group')
@@ -40,11 +47,21 @@ def get_items(start, page_length, price_list, item_group, pos_profile, search_va
 
 		return { 'items': [item_info] }
 
+<<<<<<< HEAD
 	condition = get_conditions(item_code, serial_no, batch_no, barcode)
 	condition += get_item_group_condition(pos_profile)
+=======
+	bin_join = bin_cond = ""
+	if hide_unavailable_items:
+		bin_join = ",`tabBin` b"
+		bin_cond = "and i.item_code = b.item_code and ifnull(b.actual_qty, 0) > 0 "
+		if warehouse:
+			bin_cond += "and b.warehouse = {}".format(frappe.db.escape(warehouse))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	lft, rgt = frappe.db.get_value('Item Group', item_group, ['lft', 'rgt'])
 
+<<<<<<< HEAD
 	bin_join_selection, bin_join_condition = "", ""
 	if hide_unavailable_items:
 		bin_join_selection = ", `tabBin` bin"
@@ -71,6 +88,26 @@ def get_items(start, page_length, price_list, item_group, pos_profile, search_va
 			{bin_join_condition}
 		ORDER BY
 			item.name asc
+=======
+	items_data = frappe.db.sql("""
+		SELECT
+			i.name AS item_code,
+			i.item_name,
+			i.stock_uom,
+			i.image AS item_image,
+			i.idx AS idx,
+			i.is_stock_item
+		FROM
+			`tabItem` i {bin_join}
+		WHERE
+			disabled = 0
+				AND i.has_variants = 0
+				AND i.is_sales_item = 1
+				AND i.item_group in (SELECT name FROM `tabItem Group` WHERE lft >= {lft} AND rgt <= {rgt})
+				{condition} {bin_cond}
+		ORDER BY
+			idx desc
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		LIMIT
 			{start}, {page_length}"""
 		.format(
@@ -79,9 +116,15 @@ def get_items(start, page_length, price_list, item_group, pos_profile, search_va
 			lft=lft,
 			rgt=rgt,
 			condition=condition,
+<<<<<<< HEAD
 			bin_join_selection=bin_join_selection,
 			bin_join_condition=bin_join_condition
 		), {'warehouse': warehouse}, as_dict=1)
+=======
+			bin_join=bin_join,
+			bin_cond=bin_cond
+		), as_dict=1)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	if items_data:
 		items = [d.item_code for d in items_data]
@@ -93,6 +136,7 @@ def get_items(start, page_length, price_list, item_group, pos_profile, search_va
 		for d in item_prices_data:
 			item_prices[d.item_code] = d
 
+<<<<<<< HEAD
 		for item in items_data:
 			item_code = item.item_code
 			item_price = item_prices.get(item_code) or {}
@@ -109,6 +153,42 @@ def get_items(start, page_length, price_list, item_group, pos_profile, search_va
 				'actual_qty': item_stock_qty,
 			})
 			result.append(row)
+=======
+		# prepare filter for bin query
+		bin_filters = {'item_code': ['in', items]}
+		if warehouse:
+			bin_filters['warehouse'] = warehouse
+		if display_items_in_stock:
+			bin_filters['actual_qty'] = [">", 0]
+
+		# query item bin
+		bin_data = frappe.get_all(
+			'Bin', fields=['item_code', 'sum(actual_qty) as actual_qty'],
+			filters=bin_filters, group_by='item_code'
+		)
+
+		# convert list of dict into dict as {item_code: actual_qty}
+		bin_dict = {}
+		for b in bin_data:
+			bin_dict[b.get('item_code')] = b.get('actual_qty')
+
+		for item in items_data:
+			item_code = item.item_code
+			item_price = item_prices.get(item_code) or {}
+			item_stock_qty = bin_dict.get(item_code)
+
+			if display_items_in_stock and not item_stock_qty:
+				pass
+			else:
+				row = {}
+				row.update(item)
+				row.update({
+					'price_list_rate': item_price.get('price_list_rate'),
+					'currency': item_price.get('currency'),
+					'actual_qty': item_stock_qty,
+				})
+				result.append(row)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	res = {
 		'items': result
@@ -137,16 +217,27 @@ def search_serial_or_batch_or_barcode_number(search_value):
 
 def get_conditions(item_code, serial_no, batch_no, barcode):
 	if serial_no or batch_no or barcode:
+<<<<<<< HEAD
 		return "item.name = {0}".format(frappe.db.escape(item_code))
 
 	return """(item.name like {item_code}
 		or item.item_name like {item_code})""".format(item_code = frappe.db.escape('%' + item_code + '%'))
+=======
+		return "and i.name = {0}".format(frappe.db.escape(item_code))
+
+	return ("""and (i.name like {item_code} or i.item_name like {item_code})"""
+				.format(item_code=frappe.db.escape('%' + item_code + '%')))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 def get_item_group_condition(pos_profile):
 	cond = "and 1=1"
 	item_groups = get_item_groups(pos_profile)
 	if item_groups:
+<<<<<<< HEAD
 		cond = "and item.item_group in (%s)"%(', '.join(['%s']*len(item_groups)))
+=======
+		cond = "and i.item_group in (%s)"%(', '.join(['%s']*len(item_groups)))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	return cond % tuple(item_groups)
 

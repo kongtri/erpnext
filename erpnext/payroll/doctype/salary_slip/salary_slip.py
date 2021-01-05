@@ -53,8 +53,17 @@ class SalarySlip(TransactionBase):
 		self.compute_year_to_date()
 		self.compute_month_to_date()
 
+<<<<<<< HEAD:erpnext/payroll/doctype/salary_slip/salary_slip.py
 		if frappe.db.get_single_value("Payroll Settings", "max_working_hours_against_timesheet"):
 			max_working_hours = frappe.db.get_single_value("Payroll Settings", "max_working_hours_against_timesheet")
+=======
+		company_currency = erpnext.get_company_currency(self.company)
+		total = self.net_pay if self.is_rounding_total_disabled() else self.rounded_total
+		self.total_in_words = money_in_words(total, company_currency)
+
+		if frappe.db.get_single_value("HR Settings", "max_working_hours_against_timesheet"):
+			max_working_hours = frappe.db.get_single_value("HR Settings", "max_working_hours_against_timesheet")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/salary_slip/salary_slip.py
 			if self.salary_slip_based_on_timesheet and (self.total_working_hours > int(max_working_hours)):
 				frappe.msgprint(_("Total working hours should not be greater than max working hours {0}").
 								format(max_working_hours), alert=True)
@@ -71,6 +80,7 @@ class SalarySlip(TransactionBase):
 		if self.net_pay < 0:
 			frappe.throw(_("Net Pay cannot be less than 0"))
 		else:
+			self.update_loans()
 			self.set_status()
 			self.update_status(self.name)
 			self.make_loan_repayment_entry()
@@ -78,6 +88,7 @@ class SalarySlip(TransactionBase):
 				self.email_salary_slip()
 
 	def on_cancel(self):
+		self.update_loans()
 		self.set_status()
 		self.update_status()
 		self.cancel_loan_repayment_entry()
@@ -100,7 +111,11 @@ class SalarySlip(TransactionBase):
 			frappe.throw(_("To date cannot be before From date"))
 
 	def is_rounding_total_disabled(self):
+<<<<<<< HEAD:erpnext/payroll/doctype/salary_slip/salary_slip.py
 		return cint(frappe.db.get_single_value("Payroll Settings", "disable_rounded_total"))
+=======
+		return cint(frappe.db.get_single_value("HR Settings", "disable_rounded_total"))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/salary_slip/salary_slip.py
 
 	def check_existing(self):
 		if not self.salary_slip_based_on_timesheet:
@@ -425,7 +440,10 @@ class SalarySlip(TransactionBase):
 		if self.salary_structure:
 			self.calculate_component_amounts("earnings")
 		self.gross_pay = self.get_component_totals("earnings")
+<<<<<<< HEAD:erpnext/payroll/doctype/salary_slip/salary_slip.py
 		self.base_gross_pay = flt(flt(self.gross_pay) * flt(self.exchange_rate), self.precision('base_gross_pay'))
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/salary_slip/salary_slip.py
 
 		if self.salary_structure:
 			self.calculate_component_amounts("deductions")
@@ -454,9 +472,15 @@ class SalarySlip(TransactionBase):
 			self.add_employee_benefits(payroll_period)
 		else:
 			self.add_tax_components(payroll_period)
+<<<<<<< HEAD:erpnext/payroll/doctype/salary_slip/salary_slip.py
 
 		self.set_component_amounts_based_on_payment_days(component_type)
 
+=======
+
+		self.set_component_amounts_based_on_payment_days(component_type)
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/salary_slip/salary_slip.py
 	def add_structure_components(self, component_type):
 		data = self.get_data_for_eval()
 		for struct_row in self._salary_structure_doc.get(component_type):
@@ -536,6 +560,7 @@ class SalarySlip(TransactionBase):
 						self.update_component_row(frappe._dict(last_benefit.struct_row), amount, "earnings")
 
 	def add_additional_salary_components(self, component_type):
+<<<<<<< HEAD:erpnext/payroll/doctype/salary_slip/salary_slip.py
 		salary_components_details, additional_salary_details = get_additional_salary_component(self.employee,
 			self.start_date, self.end_date, component_type)
 		if salary_components_details and additional_salary_details:
@@ -545,6 +570,16 @@ class SalarySlip(TransactionBase):
 				overwrite = additional_salary.overwrite
 				self.update_component_row(frappe._dict(salary_components_details[additional_salary.component]), amount,
 					component_type, overwrite=overwrite, additional_salary=additional_salary.name)
+=======
+		additional_components = get_additional_salary_component(self.employee,
+			self.start_date, self.end_date, component_type)
+		if additional_components:
+			for additional_component in additional_components:
+				amount = additional_component.amount
+				overwrite = additional_component.overwrite
+				self.update_component_row(frappe._dict(additional_component.struct_row), amount,
+					component_type, overwrite=overwrite)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/salary_slip/salary_slip.py
 
 	def add_tax_components(self, payroll_period):
 		# Calculate variable_based_on_taxable_salary after all components updated in salary slip
@@ -652,7 +687,7 @@ class SalarySlip(TransactionBase):
 		# Total taxable earnings including additional and other incomes
 		total_taxable_earnings = previous_taxable_earnings + current_structured_taxable_earnings + future_structured_taxable_earnings \
 			+ current_additional_earnings + other_incomes + unclaimed_taxable_benefits - total_exemption_amount
-
+		
 		# Total taxable earnings without additional earnings with full tax
 		total_taxable_earnings_without_full_tax_addl_components = total_taxable_earnings - current_additional_earnings_with_full_tax
 
@@ -660,7 +695,7 @@ class SalarySlip(TransactionBase):
 		total_structured_tax_amount = self.calculate_tax_by_tax_slab(
 			total_taxable_earnings_without_full_tax_addl_components, tax_slab)
 		current_structured_tax_amount = (total_structured_tax_amount - previous_total_paid_taxes) / remaining_sub_periods
-
+		
 		# Total taxable earnings with additional earnings with full tax
 		full_tax_on_additional_earnings = 0.0
 		if current_additional_earnings_with_full_tax:
@@ -696,7 +731,7 @@ class SalarySlip(TransactionBase):
 			select sum(sd.amount)
 			from
 				`tabSalary Detail` sd join `tabSalary Slip` ss on sd.parent=ss.name
-			where
+			where 
 				sd.parentfield='earnings'
 				and sd.is_tax_applicable=1
 				and is_flexible_benefit=0
@@ -911,11 +946,19 @@ class SalarySlip(TransactionBase):
 		# other taxes and charges on income tax
 		for d in tax_slab.other_taxes_and_charges:
 			if flt(d.min_taxable_income) and flt(d.min_taxable_income) > annual_taxable_earning:
+<<<<<<< HEAD:erpnext/payroll/doctype/salary_slip/salary_slip.py
 				continue
 
 			if flt(d.max_taxable_income) and flt(d.max_taxable_income) < annual_taxable_earning:
 				continue
 
+=======
+				continue
+
+			if flt(d.max_taxable_income) and flt(d.max_taxable_income) < annual_taxable_earning:
+				continue
+			
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/salary_slip/salary_slip.py
 			tax_amount += tax_amount * flt(d.percent) / 100
 
 		return tax_amount
@@ -1001,6 +1044,18 @@ class SalarySlip(TransactionBase):
 			self.total_loan_repayment += payment.total_payment
 
 	def get_loan_details(self):
+<<<<<<< HEAD:erpnext/payroll/doctype/salary_slip/salary_slip.py
+=======
+		return frappe.db.sql("""select rps.principal_amount,
+				rps.name as repayment_name, rps.interest_amount, l.name,
+				rps.total_payment, l.loan_account, l.interest_income_account
+			from
+				`tabRepayment Schedule` as rps, `tabLoan` as l
+			where
+				l.name = rps.parent and rps.payment_date between %s and %s and
+				l.repay_from_salary = 1 and l.docstatus = 1 and l.applicant = %s""",
+			(self.start_date, self.end_date, self.employee), as_dict=True) or []
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/salary_slip/salary_slip.py
 
 		return frappe.get_all("Loan",
 			fields=["name", "interest_income_account", "loan_account", "loan_type"],
@@ -1061,6 +1116,17 @@ class SalarySlip(TransactionBase):
 				timesheet.flags.ignore_validate_update_after_submit = True
 				timesheet.set_status()
 				timesheet.save()
+
+	def update_loans(self):
+		for loan in self.get_loan_details():
+			doc = frappe.get_doc("Loan", loan.name)
+
+			#setting repayment schedule and updating total amount to pay
+			repayment_status = 1 if doc.docstatus == 1 else 0
+			frappe.db.set_value("Repayment Schedule", loan.repayment_name, "paid", repayment_status)
+			doc.reload()
+			doc.update_total_amount_paid()
+			doc.set_status()
 
 	def set_status(self, status=None):
 		'''Get and update status'''

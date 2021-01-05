@@ -3,8 +3,12 @@
 
 erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 	setup: function() {
+		frappe.flags.hide_serial_batch_dialog = true
 		this._super();
+<<<<<<< HEAD
 		frappe.flags.hide_serial_batch_dialog = true;
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		frappe.ui.form.on(this.frm.doctype + " Item", "rate", function(frm, cdt, cdn) {
 			var item = frappe.get_doc(cdt, cdn);
 			var has_margin_field = frappe.meta.has_field(cdt, 'margin_type');
@@ -209,6 +213,7 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 			});
 		}
 
+<<<<<<< HEAD
 		if (this.frm.fields_dict.taxes_and_charges) {
 			this.frm.set_query("taxes_and_charges", function() {
 				return {
@@ -220,6 +225,8 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 			});
 		}
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	},
 	onload: function() {
 		var me = this;
@@ -573,6 +580,7 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 									if (d.free_item_data) {
 										me.apply_product_discount(d.free_item_data);
 									}
+<<<<<<< HEAD
 								},
 								() => {
 									// for internal customer instead of pricing rule directly apply valuation rate on item
@@ -587,13 +595,28 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 									if (me.frm.doc.is_internal_customer || me.frm.doc.is_internal_supplier) {
 										me.calculate_taxes_and_totals();
 									}
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 								},
 								() => me.toggle_conversion_factor(item),
 								() => {
+<<<<<<< HEAD
 									if (show_batch_dialog)
 										return frappe.db.get_value("Item", item.item_code, ["has_batch_no", "has_serial_no"])
 											.then((r) => {
 												if (r.message &&
+=======
+									if (show_batch_dialog && !item.has_serial_no
+										&& !item.has_batch_no) {
+										show_batch_dialog = false;
+									}
+								},
+								() => {
+									if (show_batch_dialog)
+										return frappe.db.get_value("Item", item.item_code, ["has_batch_no", "has_serial_no"])
+											.then((r) => {
+												if(r.message && !frappe.flags.hide_serial_batch_dialog &&
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 													(r.message.has_batch_no || r.message.has_serial_no)) {
 													frappe.flags.hide_serial_batch_dialog = false;
 												}
@@ -1478,9 +1501,15 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 
 			if (data && data.apply_rule_on_other_items) {
 				me.frm.doc.items.forEach(d => {
+<<<<<<< HEAD
 					if (in_list(data.apply_rule_on_other_items, d[data.apply_rule_on])) {
 						for(var k in data) {
 							if (in_list(fields, k) && data[k] && (data.price_or_product_discount === 'price' || k === 'pricing_rules')) {
+=======
+					if (in_list(JSON.parse(data.apply_rule_on_other_items), d[data.apply_rule_on])) {
+						for(var k in data) {
+							if (in_list(fields, k) && data[k] && (data.price_or_product_discount === 'Price' || k === 'pricing_rules')) {
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 								frappe.model.set_value(d.doctype, d.name, k, data[k]);
 							}
 						}
@@ -1564,9 +1593,9 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 			me.frm.doc.items = items;
 			refresh_field('items');
 		} else if(item.applied_on_items && item.apply_on) {
-			const applied_on_items = item.applied_on_items.split(',');
+			const applied_on_items = JSON.parse(item.applied_on_items);
 			me.frm.doc.items.forEach(row => {
-				if(applied_on_items.includes(row[item.apply_on])) {
+				if(in_list(applied_on_items, row[item.apply_on])) {
 					fields.forEach(f => {
 						row[f] = 0;
 					});
@@ -1867,8 +1896,12 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 
 			if (doc.tax_category)
 				filters['tax_category'] = doc.tax_category;
+<<<<<<< HEAD
 			if (doc.company)
 				filters['company'] = doc.company;
+=======
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			return {
 				query: "erpnext.controllers.queries.get_tax_template",
 				filters: filters

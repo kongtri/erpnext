@@ -8,7 +8,7 @@ from frappe import _
 from frappe.model.document import Document
 import json
 from six import iteritems
-from frappe.utils import flt, getdate
+from frappe.utils import flt, getdate, cstr
 from erpnext.regional.india import state_numbers
 
 class GSTR3BReport(Document):
@@ -158,7 +158,11 @@ class GSTR3BReport(Document):
 
 		self.prepare_data("Sales Invoice", outward_supply_tax_amounts, "sup_details", "osup_det", ["Registered Regular"])
 		self.prepare_data("Sales Invoice", outward_supply_tax_amounts, "sup_details", "osup_zero", ["SEZ", "Deemed Export", "Overseas"])
+<<<<<<< HEAD
 		self.prepare_data("Purchase Invoice", inward_supply_tax_amounts, "sup_details", "isup_rev", ["Unregistered", "Overseas"], reverse_charge="Y")
+=======
+		self.prepare_data("Purchase Invoice", inward_supply_tax_amounts, "sup_details", "isup_rev", ["Unregistered", "Overseas", "Registered Regular"], reverse_charge="Y")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		self.report_dict["sup_details"]["osup_nil_exmp"]["txval"] = flt(self.get_nil_rated_supply_value(), 2)
 		self.set_itc_details(itc_details)
 
@@ -196,7 +200,11 @@ class GSTR3BReport(Document):
 			if d["ty"] == 'ISRC':
 				reverse_charge = ["Y"]
 				itc_type = 'All Other ITC'
+<<<<<<< HEAD
 				gst_category = ['Unregistered', 'Overseas']
+=======
+				gst_category = ['Unregistered', 'Overseas', 'Registered Regular']
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			else:
 				gst_category = ['Unregistered', 'Overseas', 'Registered Regular']
 				reverse_charge = ["N", "Y"]
@@ -254,7 +262,11 @@ class GSTR3BReport(Document):
 	def get_total_taxable_value(self, doctype, reverse_charge):
 
 		return frappe._dict(frappe.db.sql("""
+<<<<<<< HEAD
 			select gst_category, sum(net_total) as total
+=======
+			select gst_category, sum(base_net_total) as total
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			from `tab{doctype}`
 			where docstatus = 1 and month(posting_date) = %s
 			and year(posting_date) = %s and reverse_charge = %s
@@ -299,13 +311,21 @@ class GSTR3BReport(Document):
 			s.name, s.net_total, s.place_of_supply, s.gst_category from `tabSales Invoice` s, `tabSales Taxes and Charges` t
 			where t.parent = s.name and s.docstatus = 1 and month(s.posting_date) = %s and year(s.posting_date) = %s
 			and s.company = %s and s.company_gstin = %s and s.gst_category in ('Unregistered', 'Registered Composition', 'UIN Holders')
+<<<<<<< HEAD
+=======
+			and ifnull(s.name, '') != ''
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		""", (self.month_no, self.year, self.company, self.gst_details.get("gstin")), as_dict=1)
 
 		inter_state_supply_tax_mapping = {}
 		inter_state_supply_details = {}
 
 		for d in inter_state_supply_tax:
+<<<<<<< HEAD
 			inter_state_supply_tax_mapping.setdefault(d.name, {
+=======
+			inter_state_supply_tax_mapping.setdefault(cstr(d.name), {
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				'place_of_supply': d.place_of_supply,
 				'taxable_value': d.net_total,
 				'gst_category': d.gst_category,
@@ -316,6 +336,7 @@ class GSTR3BReport(Document):
 			})
 
 			if d.account_head in [a.cgst_account for a in self.account_heads]:
+<<<<<<< HEAD
 				inter_state_supply_tax_mapping[d.name]['camt'] += d.tax_amount
 
 			if d.account_head in [a.sgst_account for a in self.account_heads]:
@@ -326,6 +347,18 @@ class GSTR3BReport(Document):
 
 			if d.account_head in [a.cess_account for a in self.account_heads]:
 				inter_state_supply_tax_mapping[d.name]['csamt'] += d.tax_amount
+=======
+				inter_state_supply_tax_mapping[cstr(d.name)]['camt'] += d.tax_amount
+
+			if d.account_head in [a.sgst_account for a in self.account_heads]:
+				inter_state_supply_tax_mapping[cstr(d.name)]['samt'] += d.tax_amount
+
+			if d.account_head in [a.igst_account for a in self.account_heads]:
+				inter_state_supply_tax_mapping[cstr(d.name)]['iamt'] += d.tax_amount
+
+			if d.account_head in [a.cess_account for a in self.account_heads]:
+				inter_state_supply_tax_mapping[cstr(d.name)]['csamt'] += d.tax_amount
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		for key, value in iteritems(inter_state_supply_tax_mapping):
 			if value.get('place_of_supply'):

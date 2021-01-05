@@ -95,6 +95,7 @@ frappe.ui.form.on("Company", {
 					frm.trigger("make_default_tax_template");
 				});
 			}
+<<<<<<< HEAD
 
 			if (frappe.perm.has_perm("Cost Center", 0, 'read')) {
 				frm.add_custom_button(__('Cost Centers'), function() {
@@ -107,6 +108,20 @@ frappe.ui.form.on("Company", {
 					frappe.set_route('Tree', 'Account', {'company': frm.doc.name});
 				}, __("View"));
 			}
+=======
+			if (frappe.perm.has_perm("Cost Center", 0, 'read')) {
+				frm.add_custom_button(__('Cost Centers'), function() {
+					frappe.set_route('Tree', 'Cost Center', {'company': frm.doc.name});
+				}, __("View"));
+			}
+
+			if (frappe.perm.has_perm("Account", 0, 'read')) {
+				frm.add_custom_button(__('Chart of Accounts'), function() {
+					frappe.set_route('Tree', 'Account', {'company': frm.doc.name});
+				}, __("View"));
+			}
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 			if (frappe.perm.has_perm("Sales Taxes and Charges Template", 0, 'read')) {
 				frm.add_custom_button(__('Sales Tax Template'), function() {
@@ -236,8 +251,6 @@ cur_frm.cscript.change_abbr = function() {
 				if(r.exc) {
 					frappe.msgprint(__("There were errors."));
 					return;
-				} else {
-					cur_frm.set_value("abbr", args.new_abbr);
 				}
 				dialog.hide();
 				cur_frm.refresh();

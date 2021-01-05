@@ -52,7 +52,11 @@ class TestDeliveryNote(unittest.TestCase):
 
 		sle = frappe.get_doc("Stock Ledger Entry", {"voucher_type": "Delivery Note", "voucher_no": dn.name})
 
+<<<<<<< HEAD
 		self.assertEqual(sle.stock_value_difference, flt(-1*stock_queue[0][1], 2))
+=======
+		self.assertEqual(sle.stock_value_difference, flt(-1*stock_queue[0][1]))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		self.assertFalse(get_gl_entries("Delivery Note", dn.name))
 
@@ -81,9 +85,15 @@ class TestDeliveryNote(unittest.TestCase):
 	# 	for i, gle in enumerate(gl_entries):
 	# 		self.assertEqual([gle.debit, gle.credit], expected_values.get(gle.account))
 
+<<<<<<< HEAD
 	# 	# check stock in hand balance
 	# 	bal = get_balance_on(stock_in_hand_account)
 	# 	self.assertEqual(bal, prev_bal - stock_value_difference)
+=======
+		# check stock in hand balance
+		bal = get_balance_on(stock_in_hand_account)
+		self.assertEqual(flt(bal, 2), flt(prev_bal - stock_value_difference, 2))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	# 	# back dated incoming entry
 	# 	make_stock_entry(posting_date=add_days(nowdate(), -2), target="Stores - TCP1",
@@ -540,6 +550,13 @@ class TestDeliveryNote(unittest.TestCase):
 
 		# Testing if Customer's Purchase Order No was rightly copied
 		self.assertEqual(so.po_no, dn1.po_no)
+<<<<<<< HEAD
+=======
+
+		self.assertEqual(dn1.get("items")[0].billed_amt, 200)
+		self.assertEqual(dn1.per_billed, 100)
+		self.assertEqual(dn1.status, "Completed")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		dn2 = make_delivery_note(so.name)
 		dn2.get("items")[0].qty = 3

@@ -226,6 +226,17 @@ def validate_duplicate_exemption_for_payroll_period(doctype, docname, payroll_pe
 		frappe.throw(_("{0} already exists for employee {1} and period {2}")
 			.format(doctype, employee, payroll_period), DuplicateDeclarationError)
 
+def validate_duplicate_exemption_for_payroll_period(doctype, docname, payroll_period, employee):
+	existing_record = frappe.db.exists(doctype, {
+		"payroll_period": payroll_period,
+		"employee": employee,
+		'docstatus': ['<', 2],
+		'name': ['!=', docname]
+	})
+	if existing_record:
+		frappe.throw(_("{0} already exists for employee {1} and period {2}")
+			.format(doctype, employee, payroll_period), DuplicateDeclarationError)
+
 def validate_tax_declaration(declarations):
 	subcategories = []
 	for d in declarations:
@@ -306,6 +317,7 @@ def allocate_earned_leaves():
 				'parent': leave_policy,
 				'leave_type': e_leave_type.name
 			}, fieldname=['annual_allocation'])
+<<<<<<< HEAD
 
 			from_date=allocation.from_date
 
@@ -349,6 +361,25 @@ def get_earned_leaves():
 	return frappe.get_all("Leave Type",
 		fields=["name", "max_leaves_allowed", "earned_leave_frequency", "rounding", "based_on_date_of_joining"],
 		filters={'is_earned_leave' : 1})
+=======
+			if annual_allocation:
+				earned_leaves = flt(annual_allocation) / divide_by_frequency[e_leave_type.earned_leave_frequency]
+				if e_leave_type.rounding == "0.5":
+					earned_leaves = round(earned_leaves * 2) / 2
+				else:
+					earned_leaves = round(earned_leaves)
+
+				allocation = frappe.get_doc('Leave Allocation', allocation.name)
+				new_allocation = flt(allocation.total_leaves_allocated) + flt(earned_leaves)
+
+				if new_allocation > e_leave_type.max_leaves_allowed and e_leave_type.max_leaves_allowed > 0:
+					new_allocation = e_leave_type.max_leaves_allowed
+
+				if new_allocation == allocation.total_leaves_allocated:
+					continue
+				allocation.db_set("total_leaves_allocated", new_allocation, update_modified=False)
+				create_additional_leave_ledger_entry(allocation, earned_leaves, today)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 def create_additional_leave_ledger_entry(allocation, leaves, date):
 	''' Create leave ledger entry for leave types '''
@@ -473,6 +504,7 @@ def get_previous_claimed_amount(employee, payroll_period, non_pro_rata=False, co
 	}, as_dict=True)
 	if sum_of_claimed_amount and flt(sum_of_claimed_amount[0].total_amount) > 0:
 		total_claimed_amount = sum_of_claimed_amount[0].total_amount
+<<<<<<< HEAD
 	return total_claimed_amount
 
 def grant_leaves_automatically():
@@ -481,3 +513,6 @@ def grant_leaves_automatically():
 		lpa = frappe.db.get_all("Leave Policy Assignment", filters={"effective_from": getdate(), "docstatus": 1, "leaves_allocated":0})
 		for assignment in lpa:
 			frappe.get_doc("Leave Policy Assignment", assignment.name).grant_leave_alloc_for_employee()
+=======
+	return total_claimed_amount
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

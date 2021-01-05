@@ -51,6 +51,7 @@ frappe.ready(function() {
 	if (referral_sales_partner) {
 		$(".txtreferral_sales_partner").val(referral_sales_partner);
 	}
+
 	// update login
 	shopping_cart.show_shoppingcart_dropdown();
 	shopping_cart.set_cart_count();

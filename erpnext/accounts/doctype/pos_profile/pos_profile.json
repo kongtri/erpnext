@@ -14,9 +14,18 @@
   "column_break_9",
   "update_stock",
   "ignore_pricing_rule",
+<<<<<<< HEAD
   "warehouse",
   "campaign",
   "company_address",
+=======
+  "allow_delete",
+  "allow_user_to_edit_rate",
+  "allow_user_to_edit_discount",
+  "allow_print_before_pay",
+  "display_items_in_stock",
+  "hide_unavailable_items",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "section_break_15",
   "applicable_for_users",
   "section_break_11",
@@ -284,6 +293,7 @@
    "fieldtype": "Column Break"
   },
   {
+<<<<<<< HEAD
    "fieldname": "print_format",
    "fieldtype": "Link",
    "label": "Print Format",
@@ -311,12 +321,19 @@
    "fieldtype": "Check",
    "label": "Update Stock",
    "read_only": 1
+=======
+   "fieldname": "tax_category",
+   "fieldtype": "Link",
+   "label": "Tax Category",
+   "options": "Tax Category"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "default": "0",
    "fieldname": "hide_unavailable_items",
    "fieldtype": "Check",
    "label": "Hide Unavailable Items"
+<<<<<<< HEAD
   },
   {
    "default": "0",
@@ -329,13 +346,20 @@
    "fieldname": "auto_add_item_to_cart",
    "fieldtype": "Check",
    "label": "Automatically Add Filtered Item To Cart"
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "icon": "icon-cog",
  "idx": 1,
+<<<<<<< HEAD
  "index_web_pages_for_search": 1,
  "links": [],
  "modified": "2020-12-10 13:59:28.877572",
+=======
+ "links": [],
+ "modified": "2020-10-16 04:33:57.283873",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "POS Profile",

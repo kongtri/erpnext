@@ -91,6 +91,7 @@ frappe.query_reports["Consolidated Financial Statement"] = {
 			"label": __("Include Default Book Entries"),
 			"fieldtype": "Check",
 			"default": 1
+<<<<<<< HEAD
 		}
 	],
 	"formatter": function(value, row, column, data, default_formatter) {
@@ -102,6 +103,8 @@ frappe.query_reports["Consolidated Financial Statement"] = {
 			var $value = $(value).css("font-weight", "bold");
 
 			value = $value.wrap("<p></p>").parent().html();
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		}
 		return value;
 	},

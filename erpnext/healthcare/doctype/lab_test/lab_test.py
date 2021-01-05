@@ -340,6 +340,7 @@ def insert_lab_test_to_medical_record(doc):
 		comment = ''
 		if item.lab_test_comment:
 			comment = str(item.lab_test_comment)
+<<<<<<< HEAD
 		table_row = frappe.bold(_('Lab Test Conducted: ')) + item.lab_test_name
 
 		if item.lab_test_event:
@@ -351,12 +352,29 @@ def insert_lab_test_to_medical_record(doc):
 		if item.normal_range:
 			table_row += ' ' + _('Normal Range: ') + item.normal_range
 		table_row += ' ' + comment
+=======
+		table_row = item.lab_test_name
+
+		if item.lab_test_event:
+			table_row += " " + item.lab_test_event
+
+		if item.result_value:
+			table_row += " " + item.result_value
+
+		if item.normal_range:
+			table_row += " normal_range("+item.normal_range+")"
+		table_row += " " + comment
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	elif doc.descriptive_test_items:
 		item = doc.descriptive_test_items[0]
 
 		if item.lab_test_particulars and item.result_value:
+<<<<<<< HEAD
 			table_row = item.lab_test_particulars + ' ' + item.result_value
+=======
+			table_row = item.lab_test_particulars + " " + item.result_value
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	elif doc.sensitivity_test_items:
 		item = doc.sensitivity_test_items[0]

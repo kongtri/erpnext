@@ -49,7 +49,11 @@ frappe.ui.form.on('Payroll Entry', {
 			if ((frm.doc.employees || []).length) {
 				frm.page.clear_primary_action();
 				frm.page.set_primary_action(__('Create Salary Slips'), () => {
+<<<<<<< HEAD:erpnext/payroll/doctype/payroll_entry/payroll_entry.js
 					frm.save('Submit').then(() => {
+=======
+					frm.save('Submit').then(()=>{
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/payroll_entry/payroll_entry.js
 						frm.page.clear_primary_action();
 						frm.refresh();
 						frm.events.refresh(frm);

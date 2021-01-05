@@ -48,6 +48,12 @@ frappe.ui.form.on("Sales Invoice", {
 
 			}, __("Create"));
 		}
+<<<<<<< HEAD
 	}
+=======
+	},
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 });
+
+

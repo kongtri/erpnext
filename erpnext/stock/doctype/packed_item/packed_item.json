@@ -201,6 +201,7 @@
    "no_copy": 1,
    "print_hide": 1,
    "read_only": 1
+<<<<<<< HEAD
   },
   {
    "fieldname": "incoming_rate",
@@ -209,13 +210,19 @@
    "no_copy": 1,
    "print_hide": 1,
    "read_only": 1
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "idx": 1,
  "index_web_pages_for_search": 1,
  "istable": 1,
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-09-24 09:25:13.050151",
+=======
+ "modified": "2019-11-26 20:09:59.400960",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Packed Item",

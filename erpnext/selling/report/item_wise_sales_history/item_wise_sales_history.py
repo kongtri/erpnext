@@ -10,8 +10,13 @@ from frappe.utils.nestedset import get_descendants_of
 def execute(filters=None):
 	filters = frappe._dict(filters or {})
 	if filters.from_date > filters.to_date:
+<<<<<<< HEAD
 		frappe.throw(_("From Date cannot be greater than To Date"))
 
+=======
+		frappe.throw(_('From Date cannot be greater than To Date'))
+	
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	columns = get_columns(filters)
 	data = get_data(filters)
 
@@ -236,6 +241,7 @@ def get_sales_order_details(company_list, filters):
 			AND so.company in ({0})
 			AND so.docstatus = 1 {1}
 	""".format(','.join(["%s"] * len(company_list)), conditions), tuple(company_list), as_dict=1)
+<<<<<<< HEAD
 
 def get_chart_data(data):
 	item_wise_sales_map = {}
@@ -267,3 +273,5 @@ def get_chart_data(data):
 		},
 		"type" : "bar"
 	}
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

@@ -8,7 +8,10 @@
  "allow_print": 0,
  "amount": 0.0,
  "amount_based_on_field": 0,
+<<<<<<< HEAD
  "apply_document_permissions": 0,
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "creation": "2016-09-22 13:10:10.792735",
  "doc_type": "Student Applicant",
  "docstatus": 0,
@@ -17,7 +20,11 @@
  "is_standard": 1,
  "login_required": 1,
  "max_attachment_size": 0,
+<<<<<<< HEAD
  "modified": "2020-10-07 23:13:07.814941",
+=======
+ "modified": "2020-06-11 22:53:45.875310",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Education",
  "name": "student-applicant",
@@ -70,6 +77,7 @@
    "show_in_filter": 0
   },
   {
+<<<<<<< HEAD
    "allow_read_on_all_link_options": 1,
    "fieldname": "program",
    "fieldtype": "Link",
@@ -104,6 +112,41 @@
    "max_length": 0,
    "max_value": 0,
    "options": "Academic Term",
+=======
+   "allow_read_on_all_link_options": 0,
+   "fieldname": "image",
+   "fieldtype": "Data",
+   "hidden": 0,
+   "label": "Image",
+   "max_length": 0,
+   "max_value": 0,
+   "read_only": 0,
+   "reqd": 0,
+   "show_in_filter": 0
+  },
+  {
+   "allow_read_on_all_link_options": 0,
+   "fieldname": "program",
+   "fieldtype": "Link",
+   "hidden": 0,
+   "label": "Program",
+   "max_length": 0,
+   "max_value": 0,
+   "options": "Program",
+   "read_only": 0,
+   "reqd": 1,
+   "show_in_filter": 0
+  },
+  {
+   "allow_read_on_all_link_options": 0,
+   "fieldname": "academic_year",
+   "fieldtype": "Link",
+   "hidden": 0,
+   "label": "Academic Year",
+   "max_length": 0,
+   "max_value": 0,
+   "options": "Academic Year",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "read_only": 0,
    "reqd": 0,
    "show_in_filter": 0
@@ -121,6 +164,7 @@
    "show_in_filter": 0
   },
   {
+<<<<<<< HEAD
    "allow_read_on_all_link_options": 1,
    "fieldname": "gender",
    "fieldtype": "Link",
@@ -134,6 +178,8 @@
    "show_in_filter": 0
   },
   {
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "allow_read_on_all_link_options": 0,
    "fieldname": "blood_group",
    "fieldtype": "Select",
@@ -155,7 +201,11 @@
    "max_length": 0,
    "max_value": 0,
    "read_only": 0,
+<<<<<<< HEAD
    "reqd": 1,
+=======
+   "reqd": 0,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "show_in_filter": 0
   },
   {
@@ -172,7 +222,11 @@
   },
   {
    "allow_read_on_all_link_options": 0,
+<<<<<<< HEAD
    "default": "",
+=======
+   "default": "INDIAN",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "nationality",
    "fieldtype": "Data",
    "hidden": 0,
@@ -222,6 +276,22 @@
   },
   {
    "allow_read_on_all_link_options": 0,
+<<<<<<< HEAD
+=======
+   "fieldname": "guardians",
+   "fieldtype": "Table",
+   "hidden": 0,
+   "label": "Guardians",
+   "max_length": 0,
+   "max_value": 0,
+   "options": "Student Guardian",
+   "read_only": 0,
+   "reqd": 0,
+   "show_in_filter": 0
+  },
+  {
+   "allow_read_on_all_link_options": 0,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "siblings",
    "fieldtype": "Table",
    "hidden": 0,

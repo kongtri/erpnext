@@ -41,7 +41,11 @@ def validate_accounting_period(gl_map):
 			}, as_dict=1)
 
 	if accounting_periods:
+<<<<<<< HEAD
 		frappe.throw(_("You cannot create or cancel any accounting entries with in the closed Accounting Period {0}")
+=======
+		frappe.throw(_("You cannot create or cancel any accounting entries within in the closed Accounting Period {0}")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			.format(frappe.bold(accounting_periods[0].name)), ClosedAccountingPeriod)
 
 def process_gl_map(gl_map, merge_entries=True):
@@ -132,12 +136,67 @@ def make_entry(args, adv_adj, update_outstanding, from_repost=False):
 	gle.update(args)
 	gle.flags.ignore_permissions = 1
 	gle.flags.from_repost = from_repost
-	gle.insert()
+	gle.validate()
+	gle.db_insert()
 	gle.run_method("on_update_with_args", adv_adj, update_outstanding, from_repost)
+	gle.flags.ignore_validate = True
 	gle.submit()
 
+<<<<<<< HEAD
 	if not from_repost:
 		validate_expense_against_budget(args)
+=======
+def validate_account_for_perpetual_inventory(gl_map):
+	if cint(erpnext.is_perpetual_inventory_enabled(gl_map[0].company)):
+		account_list = [gl_entries.account for gl_entries in gl_map]
+
+		aii_accounts = [d.name for d in frappe.get_all("Account",
+			filters={'account_type': 'Stock', 'is_group': 0, 'company': gl_map[0].company})]
+
+		for account in account_list:
+			if account not in aii_accounts:
+				continue
+
+			account_bal, stock_bal, warehouse_list = get_stock_and_account_balance(account,
+				gl_map[0].posting_date, gl_map[0].company)
+
+			if gl_map[0].voucher_type=="Journal Entry":
+				# In case of Journal Entry, there are no corresponding SL entries,
+				# hence deducting currency amount
+				account_bal -= flt(gl_map[0].debit) - flt(gl_map[0].credit)
+				if account_bal == stock_bal:
+					frappe.throw(_("Account: {0} can only be updated via Stock Transactions")
+						.format(account), StockAccountInvalidTransaction)
+
+			# This has been comment for a temporary, will add this code again on release of immutable ledger
+			# elif account_bal != stock_bal:
+			# 	precision = get_field_precision(frappe.get_meta("GL Entry").get_field("debit"),
+			# 		currency=frappe.get_cached_value('Company',  gl_map[0].company,  "default_currency"))
+
+			# 	diff = flt(stock_bal - account_bal, precision)
+			# 	error_reason = _("Stock Value ({0}) and Account Balance ({1}) are out of sync for account {2} and it's linked warehouses.").format(
+			# 		stock_bal, account_bal, frappe.bold(account))
+			# 	error_resolution = _("Please create adjustment Journal Entry for amount {0} ").format(frappe.bold(diff))
+			# 	stock_adjustment_account = frappe.db.get_value("Company",gl_map[0].company,"stock_adjustment_account")
+
+			# 	db_or_cr_warehouse_account =('credit_in_account_currency' if diff < 0 else 'debit_in_account_currency')
+			# 	db_or_cr_stock_adjustment_account = ('debit_in_account_currency' if diff < 0 else 'credit_in_account_currency')
+
+			# 	journal_entry_args = {
+			# 	'accounts':[
+			# 		{'account': account, db_or_cr_warehouse_account : abs(diff)},
+			# 		{'account': stock_adjustment_account, db_or_cr_stock_adjustment_account : abs(diff) }]
+			# 	}
+
+			# 	frappe.msgprint(msg="""{0}<br></br>{1}<br></br>""".format(error_reason, error_resolution),
+			# 		raise_exception=StockValueAndAccountBalanceOutOfSync,
+			# 		title=_('Values Out Of Sync'),
+			# 		primary_action={
+			# 			'label': _('Make Journal Entry'),
+			# 			'client_action': 'erpnext.route_to_adjustment_jv',
+			# 			'args': journal_entry_args
+			# 		})
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 def validate_cwip_accounts(gl_map):
 	cwip_enabled = any([cint(ac.enable_cwip_accounting) for ac in frappe.db.get_all("Asset Category","enable_cwip_accounting")])

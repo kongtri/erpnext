@@ -304,6 +304,7 @@ class TestJournalEntry(unittest.TestCase):
 			'project_template_name': 'Test Project Template',
 			'start_date': '2020-01-01'
 		})
+<<<<<<< HEAD
 
 		jv = make_journal_entry("_Test Cash - _TC", "_Test Bank - _TC", 100, save=False)
 		for d in jv.accounts:
@@ -315,6 +316,19 @@ class TestJournalEntry(unittest.TestCase):
 		jv.insert()
 		jv.submit()
 
+=======
+
+		jv = make_journal_entry("_Test Cash - _TC", "_Test Bank - _TC", 100, save=False)
+		for d in jv.accounts:
+			d.project = project.project_name
+		jv.voucher_type = "Bank Entry"
+		jv.multi_currency = 0
+		jv.cheque_no = "112233"
+		jv.cheque_date = nowdate()
+		jv.insert()
+		jv.submit()
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		expected_values = {
 			"_Test Cash - _TC": {
 				"project": project.project_name

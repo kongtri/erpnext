@@ -14,9 +14,12 @@
   "sec_break1",
   "item_code",
   "item_name",
+<<<<<<< HEAD
   "col_break2",
   "is_finished_item",
   "is_scrap_item",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "subcontracted_item",
   "section_break_8",
   "description",
@@ -24,7 +27,12 @@
   "item_group",
   "image",
   "image_view",
+<<<<<<< HEAD
   "quantity_section",
+=======
+  "quantity_and_rate",
+  "set_basic_rate_manually",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "qty",
   "transfer_qty",
   "retain_sample",
@@ -494,6 +502,7 @@
    "fieldname": "set_basic_rate_manually",
    "fieldtype": "Check",
    "label": "Set Basic Rate Manually"
+<<<<<<< HEAD
   },
   {
    "fieldname": "quantity_section",
@@ -520,13 +529,19 @@
    "fieldname": "is_finished_item",
    "fieldtype": "Check",
    "label": "Is Finished Item"
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "idx": 1,
  "index_web_pages_for_search": 1,
  "istable": 1,
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-12-23 17:55:03.384138",
+=======
+ "modified": "2020-09-04 12:12:35.668198",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock Entry Detail",

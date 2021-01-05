@@ -2759,6 +2759,7 @@
                 },
                 "Gew. Skonti 7 % USt": {
                     "account_number": "4731"
+<<<<<<< HEAD
                 },
                 "Gew. Skonti 19 % USt": {
                     "account_number": "4736"
@@ -2775,6 +2776,24 @@
                 "Gew. Skonti aus steuerfreien innergem. Lieferungen \u00a7 4 Nr. 1b UStG": {
                     "account_number": "4743"
                 },
+=======
+                },
+                "Gew. Skonti 19 % USt": {
+                    "account_number": "4736"
+                },
+                "Gew. Skonti aus Lieferungen von Mobilfunkger./Schaltkr., f. die der Leistungsempf. die Ust. schuldet": {
+                    "account_number": "4738"
+                },
+                "Gew. Skonti aus Leistungen, f. die der Leistungsempf. die Umsatzsteuer nach \u00a7 13b UStG schuldet": {
+                    "account_number": "4741"
+                },
+                "Gew. Skonti aus Erl\u00f6sen aus im anderen EU-Land steuerpfl. Leistungen, f. die der Leistungsempf. die Ust. schuldet": {
+                    "account_number": "4742"
+                },
+                "Gew. Skonti aus steuerfreien innergem. Lieferungen \u00a7 4 Nr. 1b UStG": {
+                    "account_number": "4743"
+                },
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
                 "Gew. Skonti aus im Inland steuerpfl. EU-Lieferungen": {
                     "account_number": "4745"
                 },

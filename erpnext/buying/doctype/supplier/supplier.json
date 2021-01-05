@@ -135,7 +135,12 @@
    "fieldtype": "Link",
    "ignore_user_permissions": 1,
    "label": "Represents Company",
+<<<<<<< HEAD
    "options": "Company"
+=======
+   "options": "Company",
+   "unique": 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "image",
@@ -384,7 +389,11 @@
  "idx": 370,
  "image_field": "image",
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-06-17 23:18:20",
+=======
+ "modified": "2020-06-17 23:28:30",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier",

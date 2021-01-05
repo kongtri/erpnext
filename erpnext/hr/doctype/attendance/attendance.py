@@ -27,6 +27,7 @@ class Attendance(Document):
 			frappe.throw(_("Attendance date can not be less than employee's joining date"))
 
 	def validate_duplicate_record(self):
+<<<<<<< HEAD
 		res = frappe.db.sql("""
 			select name from `tabAttendance`
 			where employee = %s
@@ -34,6 +35,11 @@ class Attendance(Document):
 				and name != %s
 				and docstatus != 2
 		""", (self.employee, getdate(self.attendance_date), self.name))
+=======
+		res = frappe.db.sql("""select name from `tabAttendance` where employee = %s and attendance_date = %s
+			and name != %s and docstatus != 2""",
+			(self.employee, getdate(self.attendance_date), self.name))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		if res:
 			frappe.throw(_("Attendance for employee {0} is already marked").format(self.employee))
 
@@ -58,6 +64,7 @@ class Attendance(Document):
 					frappe.msgprint(_("Employee {0} is on Leave on {1}")
 						.format(self.employee, formatdate(self.attendance_date)))
 
+<<<<<<< HEAD
 		if self.status in ("On Leave", "Half Day"):
 			if not leave_record:
 				frappe.msgprint(_("No leave record found for employee {0} on {1}")
@@ -65,6 +72,13 @@ class Attendance(Document):
 		elif self.leave_type:
 			self.leave_type = None
 			self.leave_application = None
+=======
+		# leaves can be marked for future dates
+		if self.status != 'On Leave' and not self.leave_application and getdate(self.attendance_date) > getdate(nowdate()):
+			frappe.throw(_("Attendance can not be marked for future dates"))
+		elif date_of_joining and getdate(self.attendance_date) < getdate(date_of_joining):
+			frappe.throw(_("Attendance date can not be less than employee's joining date"))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def validate_employee(self):
 		emp = frappe.db.sql("select name from `tabEmployee` where name = %s and status = 'Active'",

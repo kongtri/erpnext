@@ -180,7 +180,11 @@
  ],
  "istable": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-06-24 17:18:57.357120",
+=======
+ "modified": "2020-03-13 19:08:21.995986",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Pick List Item",

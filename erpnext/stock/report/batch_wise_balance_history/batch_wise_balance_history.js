@@ -37,7 +37,11 @@ frappe.query_reports["Batch-Wise Balance History"] = {
 					filters: {
 						"has_batch_no": 1
 					}
+<<<<<<< HEAD
 				};
+=======
+				}
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			}
 		},
 		{
@@ -51,7 +55,11 @@ frappe.query_reports["Batch-Wise Balance History"] = {
 					filters: {
 						"company": company
 					}
+<<<<<<< HEAD
 				};
+=======
+				}
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			}
 		},
 		{
@@ -65,6 +73,7 @@ frappe.query_reports["Batch-Wise Balance History"] = {
 					filters: {
 						"item": item_code
 					}
+<<<<<<< HEAD
 				};
 			}
 		},
@@ -86,3 +95,10 @@ frappe.query_reports["Batch-Wise Balance History"] = {
 		frappe.set_route("query-report", "Stock Ledger");
 	}
 }
+=======
+				}
+			}
+		},
+	]
+}
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

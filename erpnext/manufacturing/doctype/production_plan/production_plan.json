@@ -19,7 +19,10 @@
   "column_break2",
   "from_date",
   "to_date",
+<<<<<<< HEAD
   "sales_order_status",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "sales_orders_detail",
   "get_sales_orders",
   "sales_orders",
@@ -44,7 +47,10 @@
   "total_produced_qty",
   "column_break_32",
   "status",
+<<<<<<< HEAD
   "warehouses",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "amended_from"
  ],
  "fields": [
@@ -221,7 +227,16 @@
    "fieldtype": "Column Break"
   },
   {
+<<<<<<< HEAD
    "depends_on": "eval:!doc.__islocal",
+=======
+   "fieldname": "for_warehouse",
+   "fieldtype": "Link",
+   "label": "For Warehouse",
+   "options": "Warehouse"
+  },
+  {
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "download_materials_required",
    "fieldtype": "Button",
    "label": "Download Required Materials"
@@ -276,7 +291,11 @@
    "fieldtype": "Select",
    "label": "Status",
    "no_copy": 1,
+<<<<<<< HEAD
    "options": "\nDraft\nSubmitted\nNot Started\nIn Process\nCompleted\nClosed\nCancelled\nMaterial Requested",
+=======
+   "options": "\nDraft\nSubmitted\nNot Started\nIn Process\nCompleted\nStopped\nCancelled\nMaterial Requested",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "print_hide": 1,
    "read_only": 1
   },
@@ -288,6 +307,7 @@
    "options": "Production Plan",
    "print_hide": 1,
    "read_only": 1
+<<<<<<< HEAD
   },
   {
    "fieldname": "for_warehouse",
@@ -316,6 +336,14 @@
  "is_submittable": 1,
  "links": [],
  "modified": "2020-11-10 18:01:54.991970",
+=======
+  }
+ ],
+ "icon": "fa fa-calendar",
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2019-12-04 15:58:50.940460",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Manufacturing",
  "name": "Production Plan",

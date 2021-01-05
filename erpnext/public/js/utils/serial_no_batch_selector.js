@@ -75,7 +75,11 @@ erpnext.SerialNoBatchSelector = Class.extend({
 				fieldtype:'Float',
 				read_only: me.has_batch && !me.has_serial_no,
 				label: __(me.has_batch && !me.has_serial_no ? 'Total Qty' : 'Qty'),
+<<<<<<< HEAD
 				default: flt(me.item.stock_qty),
+=======
+				default: 0
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			},
 			{
 				fieldname: 'auto_fetch_button',
@@ -91,8 +95,12 @@ erpnext.SerialNoBatchSelector = Class.extend({
 							qty: qty,
 							item_code: me.item_code,
 							warehouse: typeof me.warehouse_details.name == "string" ? me.warehouse_details.name : '',
+<<<<<<< HEAD
 							batch_no: me.item.batch_no || null,
 							posting_date: me.frm.doc.posting_date || me.frm.doc.transaction_date
+=======
+							batch_no: me.item.batch_no || null
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 						}
 					});
 
@@ -205,7 +213,13 @@ erpnext.SerialNoBatchSelector = Class.extend({
 		} else {
 			let serial_nos = values.serial_no || '';
 			if (!serial_nos || !serial_nos.replace(/\s/g, '').length) {
+<<<<<<< HEAD
 				frappe.throw(__("Please enter serial numbers for serialized item {0}", [values.item_code]));
+=======
+				frappe.throw(__("Please enter serial numbers for serialized item "
+					+ values.item_code));
+				return false;
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			}
 			return true;
 		}
@@ -350,9 +364,14 @@ erpnext.SerialNoBatchSelector = Class.extend({
 									return row.on_grid_fields_dict.batch_no.get_value();
 								}
 							});
-							if (selected_batches.includes(val)) {
+							if (selected_batches.includes(batch_no)) {
 								this.set_value("");
+<<<<<<< HEAD
 								frappe.throw(__('Batch {0} already selected.', [val]));
+=======
+								frappe.throw(__(`Batch ${batch_no} already selected.`));
+								return;
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 							}
 
 							if (me.warehouse_details.name) {

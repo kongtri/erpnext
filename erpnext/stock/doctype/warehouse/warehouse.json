@@ -10,7 +10,11 @@
  "field_order": [
   "warehouse_detail",
   "warehouse_name",
+<<<<<<< HEAD
   "column_break_3",
+=======
+  "section_break_3",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "warehouse_type",
   "parent_warehouse",
   "is_group",
@@ -228,7 +232,11 @@
    "options": "Warehouse Type"
   },
   {
+<<<<<<< HEAD
    "fieldname": "column_break_3",
+=======
+   "fieldname": "section_break_3",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldtype": "Section Break"
   }
  ],

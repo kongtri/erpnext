@@ -1,5 +1,8 @@
 {
+<<<<<<< HEAD
  "actions": [],
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "autoname": "naming_series:",
  "creation": "2018-07-09 17:23:29.518745",
  "doctype": "DocType",
@@ -20,7 +23,10 @@
   "production_item",
   "item_name",
   "for_quantity",
+<<<<<<< HEAD
   "quality_inspection",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "wip_warehouse",
   "column_break_12",
   "employee",
@@ -37,7 +43,10 @@
   "items",
   "more_information",
   "operation_id",
+<<<<<<< HEAD
   "sequence_id",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "transferred_qty",
   "requested_qty",
   "column_break_20",
@@ -268,10 +277,15 @@
   {
    "fetch_from": "work_order.production_item",
    "fieldname": "production_item",
+<<<<<<< HEAD
    "fieldtype": "Link",
    "label": "Production Item",
    "options": "Item",
    "read_only": 1
+=======
+   "fieldtype": "Read Only",
+   "label": "Production Item"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "barcode",
@@ -280,8 +294,12 @@
    "read_only": 1
   },
   {
+<<<<<<< HEAD
    "fetch_from": "production_item.item_name",
    "fetch_if_empty": 1,
+=======
+   "fetch_from": "work_order.item_name",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "item_name",
    "fieldtype": "Read Only",
    "label": "Item Name"
@@ -299,6 +317,7 @@
    "fieldname": "operation_row_number",
    "fieldtype": "Select",
    "label": "Operation Row Number"
+<<<<<<< HEAD
   },
   {
    "fieldname": "sequence_id",
@@ -319,6 +338,12 @@
  "is_submittable": 1,
  "links": [],
  "modified": "2020-11-19 18:26:50.531664",
+=======
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2020-08-24 15:21:21.398267",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Manufacturing",
  "name": "Job Card",

@@ -1,8 +1,12 @@
 from __future__ import unicode_literals
 import frappe
+<<<<<<< HEAD
 from frappe import _
 import erpnext
 from frappe.utils import flt, round_based_on_smallest_currency_fraction, money_in_words
+=======
+from frappe.utils import flt
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 from erpnext.controllers.taxes_and_totals import get_itemised_tax
 from six import iteritems
 

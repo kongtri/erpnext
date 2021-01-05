@@ -12,6 +12,17 @@
   "column_break_4",
   "stop_birthday_reminders",
   "expense_approver_mandatory_in_expense_claim",
+<<<<<<< HEAD
+=======
+  "payroll_settings",
+  "include_holidays_in_total_working_days",
+  "disable_rounded_total",
+  "max_working_hours_against_timesheet",
+  "column_break_11",
+  "email_salary_slip_to_employee",
+  "encrypt_salary_slips_in_emails",
+  "password_policy",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "leave_settings",
   "leave_approval_notification_template",
   "leave_status_notification_template",
@@ -116,6 +127,7 @@
   },
   {
    "default": "0",
+<<<<<<< HEAD
    "fieldname": "restrict_backdated_leave_application",
    "fieldtype": "Check",
    "label": "Restrict Backdated Leave Application"
@@ -132,13 +144,23 @@
    "fieldname": "automatically_allocate_leaves_based_on_leave_policy",
    "fieldtype": "Check",
    "label": "Automatically Allocate Leaves Based On Leave Policy"
+=======
+   "description": "If checked, hides and disables Rounded Total field in Salary Slips",
+   "fieldname": "disable_rounded_total",
+   "fieldtype": "Check",
+   "label": "Disable Rounded Total"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "icon": "fa fa-cog",
  "idx": 1,
  "issingle": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-08-27 14:30:28.995324",
+=======
+ "modified": "2019-12-31 14:28:32.004121",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "HR",
  "name": "HR Settings",

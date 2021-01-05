@@ -4,6 +4,7 @@
 frappe.ui.form.on('Lab Test Template', {
 	lab_test_name: function(frm) {
 		if (!frm.doc.lab_test_code)
+<<<<<<< HEAD
 			frm.set_value('lab_test_code', frm.doc.lab_test_name);
 		if (!frm.doc.lab_test_description)
 			frm.set_value('lab_test_description', frm.doc.lab_test_name);
@@ -23,6 +24,18 @@ frappe.ui.form.on('Lab Test Template', {
 			return {
 				filters: {
 					medical_code_standard: frm.doc.medical_code_standard
+=======
+			frm.set_value("lab_test_code", frm.doc.lab_test_name);
+		if (!frm.doc.lab_test_description)
+			frm.set_value("lab_test_description", frm.doc.lab_test_name);
+	},
+	refresh : function(frm) {
+		// Restrict Special, Grouped type templates in Child TestGroups
+		frm.set_query("lab_test_template", "lab_test_groups", function() {
+			return {
+				filters: {
+					lab_test_template_type: ['in',['Single','Compound']]
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				}
 			};
 		});
@@ -33,7 +46,11 @@ cur_frm.cscript.custom_refresh = function(doc) {
 	cur_frm.set_df_property('lab_test_code', 'read_only', doc.__islocal ? 0 : 1);
 
 	if (!doc.__islocal) {
+<<<<<<< HEAD
 		cur_frm.add_custom_button(__('Change Template Code'), function() {
+=======
+		cur_frm.add_custom_button(__("Change Template Code"), function() {
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			change_template_code(doc);
 		});
 	}
@@ -41,6 +58,7 @@ cur_frm.cscript.custom_refresh = function(doc) {
 
 let change_template_code = function(doc) {
 	let d = new frappe.ui.Dialog({
+<<<<<<< HEAD
 		title:__('Change Template Code'),
 		fields:[
 			{
@@ -64,11 +82,40 @@ let change_template_code = function(doc) {
 			d.hide();
 		},
 		primary_action_label: __('Change Template Code')
+=======
+		title:__("Change Template Code"),
+		fields:[
+			{
+				"fieldtype": "Data",
+				"label": "Lab Test Template Code",
+				"fieldname": "lab_test_code",
+				reqd: 1
+			}
+		],
+		primary_action: function() {
+			let values = d.get_values();
+			if (values) {
+				frappe.call({
+					"method": "erpnext.healthcare.doctype.lab_test_template.lab_test_template.change_test_code_from_template",
+					"args": {lab_test_code: values.lab_test_code, doc: doc},
+					callback: function (data) {
+						frappe.set_route("Form", "Lab Test Template", data.message);
+					}
+				});
+			}
+			d.hide();
+		},
+		primary_action_label: __("Change Template Code")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	});
 	d.show();
 
 	d.set_values({
+<<<<<<< HEAD
 		'lab_test_code': doc.lab_test_code
+=======
+		"lab_test_code": doc.lab_test_code
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	});
 };
 
@@ -88,10 +135,18 @@ frappe.ui.form.on('Lab Test Template', 'lab_test_description', function(frm) {
 	frm.doc.change_in_item = 1;
 });
 
+<<<<<<< HEAD
 frappe.ui.form.on('Lab Test Groups', 'template_or_new_line', function (frm, cdt, cdn) {
 	let child = locals[cdt][cdn];
 	if (child.template_or_new_line == 'Add New Line') {
 		frappe.model.set_value(cdt, cdn, 'lab_test_template', '');
 		frappe.model.set_value(cdt, cdn, 'lab_test_description', '');
+=======
+frappe.ui.form.on("Lab Test Groups", "template_or_new_line", function (frm, cdt, cdn) {
+	let child = locals[cdt][cdn];
+	if (child.template_or_new_line == "Add new line") {
+		frappe.model.set_value(cdt, cdn, 'lab_test_template', "");
+		frappe.model.set_value(cdt, cdn, 'lab_test_description', "");
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	}
 });

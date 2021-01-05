@@ -193,6 +193,22 @@ class PayrollEntry(Document):
 			for ss in submitted_ss:
 				ss.email_salary_slip()
 
+<<<<<<< HEAD:erpnext/payroll/doctype/payroll_entry/payroll_entry.py
+=======
+	def get_loan_details(self):
+		"""
+			Get loan details from submitted salary slip based on selected criteria
+		"""
+		cond = self.get_filter_condition()
+		return frappe.db.sql(""" select eld.loan_account, eld.loan,
+				eld.interest_income_account, eld.principal_amount, eld.interest_amount, eld.total_payment,t1.employee
+			from
+				`tabSalary Slip` t1, `tabSalary Slip Loan` eld
+			where
+				t1.docstatus = 1 and t1.name = eld.parent and start_date >= %s and end_date <= %s %s
+			""" % ('%s', '%s', cond), (self.start_date, self.end_date), as_dict=True) or []
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/payroll_entry/payroll_entry.py
 	def get_salary_component_account(self, salary_component):
 		account = frappe.db.get_value("Salary Component Account",
 			{"parent": salary_component, "company": self.company}, "account")
@@ -265,11 +281,18 @@ class PayrollEntry(Document):
 				exchange_rate, amt = self.get_amount_and_exchange_rate_for_journal_entry(acc_cc[0], amount, company_currency, currencies)
 				payable_amount += flt(amount, precision)
 				accounts.append({
+<<<<<<< HEAD:erpnext/payroll/doctype/payroll_entry/payroll_entry.py
 						"account": acc_cc[0],
 						"debit_in_account_currency": flt(amt, precision),
 						"exchange_rate": flt(exchange_rate),
 						"party_type": '',
 						"cost_center": acc_cc[1] or self.cost_center,
+=======
+						"account": acc,
+						"debit_in_account_currency": flt(amount, precision),
+						"party_type": '',
+						"cost_center": self.cost_center,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/payroll_entry/payroll_entry.py
 						"project": self.project
 					})
 
@@ -278,20 +301,55 @@ class PayrollEntry(Document):
 				exchange_rate, amt = self.get_amount_and_exchange_rate_for_journal_entry(acc_cc[0], amount, company_currency, currencies)
 				payable_amount -= flt(amount, precision)
 				accounts.append({
+<<<<<<< HEAD:erpnext/payroll/doctype/payroll_entry/payroll_entry.py
 						"account": acc_cc[0],
 						"credit_in_account_currency": flt(amt, precision),
 						"exchange_rate": flt(exchange_rate),
 						"cost_center": acc_cc[1] or self.cost_center,
 						"party_type": '',
 						"project": self.project
+=======
+						"account": acc,
+						"credit_in_account_currency": flt(amount, precision),
+						"cost_center": self.cost_center,
+						"party_type": '',
+						"project": self.project
+					})
+
+			# Loan
+			for data in loan_details:
+				accounts.append({
+						"account": data.loan_account,
+						"credit_in_account_currency": data.principal_amount,
+						"party_type": "Employee",
+						"party": data.employee
+					})
+
+				if data.interest_amount and not data.interest_income_account:
+					frappe.throw(_("Select interest income account in loan {0}").format(data.loan))
+
+				if data.interest_income_account and data.interest_amount:
+					accounts.append({
+						"account": data.interest_income_account,
+						"credit_in_account_currency": data.interest_amount,
+						"cost_center": self.cost_center,
+						"project": self.project,
+						"party_type": "Employee",
+						"party": data.employee
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/payroll_entry/payroll_entry.py
 					})
 
 			# Payable amount
 			exchange_rate, payable_amt = self.get_amount_and_exchange_rate_for_journal_entry(payroll_payable_account, payable_amount, company_currency, currencies)
 			accounts.append({
+<<<<<<< HEAD:erpnext/payroll/doctype/payroll_entry/payroll_entry.py
 				"account": payroll_payable_account,
 				"credit_in_account_currency": flt(payable_amt, precision),
 				"exchange_rate": flt(exchange_rate),
+=======
+				"account": default_payroll_payable_account,
+				"credit_in_account_currency": flt(payable_amount, precision),
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/payroll_entry/payroll_entry.py
 				"party_type": '',
 				"cost_center": self.cost_center
 			})
@@ -350,6 +408,10 @@ class PayrollEntry(Document):
 					statistical_component = frappe.db.get_value("Salary Component", sal_detail.salary_component, 'statistical_component')
 					if statistical_component != 1:
 						salary_slip_total -= sal_detail.amount
+
+				#loan deduction from bank entry during payroll
+				salary_slip_total -= salary_slip.total_loan_repayment
+
 			if salary_slip_total > 0:
 				self.create_journal_entry(salary_slip_total, "salary")
 

@@ -128,6 +128,19 @@ class BuyingController(StockController):
 			frappe.throw(_("{} has submitted assets linked to it. You need to cancel the assets to create purchase return.")
 				.format(self.return_against), title=_("Not Allowed"))
 
+	def validate_asset_return(self):
+		if self.doctype not in ['Purchase Receipt', 'Purchase Invoice'] or not self.is_return:
+			return
+
+		purchase_doc_field = 'purchase_receipt' if self.doctype == 'Purchase Receipt' else 'purchase_invoice'
+		not_cancelled_asset = [d.name for d in frappe.db.get_all("Asset", {
+			purchase_doc_field: self.return_against,
+			"docstatus": 1
+		})]
+		if self.is_return and len(not_cancelled_asset):
+			frappe.throw(_("{} has submitted assets linked to it. You need to cancel the assets to create purchase return.".format(self.return_against)),
+				title=_("Not Allowed"))
+
 	def get_asset_items(self):
 		if self.doctype not in ['Purchase Order', 'Purchase Invoice', 'Purchase Receipt']:
 			return []
@@ -351,6 +364,7 @@ class BuyingController(StockController):
 
 					if frappe.get_cached_value('UOM', raw_material.stock_uom, 'must_be_whole_number'):
 						qty = frappe.utils.ceil(qty)
+<<<<<<< HEAD
 
 				if qty > rm_qty_to_be_consumed:
 					qty = rm_qty_to_be_consumed
@@ -363,6 +377,20 @@ class BuyingController(StockController):
 				if raw_material.batch_nos:
 					backflushed_batch_qty_map = raw_material_data.get('consumed_batch', {})
 
+=======
+
+				if qty > rm_qty_to_be_consumed:
+					qty = rm_qty_to_be_consumed
+
+				if not qty: continue
+
+				if raw_material.serial_nos:
+					set_serial_nos(raw_material, consumed_serial_nos, qty)
+
+				if raw_material.batch_nos:
+					backflushed_batch_qty_map = raw_material_data.get('consumed_batch', {})
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 					batches_qty = get_batches_with_qty(raw_material.rm_item_code, raw_material.main_item_code,
 						qty, transferred_batch_qty_map, backflushed_batch_qty_map, item.purchase_order)
 					for batch_data in batches_qty:
@@ -372,16 +400,46 @@ class BuyingController(StockController):
 				else:
 					self.append_raw_material_to_be_backflushed(item, raw_material, qty)
 
+<<<<<<< HEAD
 	def append_raw_material_to_be_backflushed(self, fg_item_row, raw_material_data, qty):
+=======
+	def append_raw_material_to_be_backflushed(self, fg_item_doc, raw_material_data, qty):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		rm = self.append('supplied_items', {})
 		rm.update(raw_material_data)
 
 		if not rm.main_item_code:
+<<<<<<< HEAD
 			rm.main_item_code = fg_item_row.item_code
 
 		rm.reference_name = fg_item_row.name
 		rm.required_qty = qty
 		rm.consumed_qty = qty
+=======
+			rm.main_item_code = fg_item_doc.item_code
+
+		rm.reference_name = fg_item_doc.name
+		rm.required_qty = qty
+		rm.consumed_qty = qty
+
+		if not raw_material_data.get('non_stock_item'):
+			from erpnext.stock.utils import get_incoming_rate
+			rm.rate = get_incoming_rate({
+				"item_code": raw_material_data.rm_item_code,
+				"warehouse": self.supplier_warehouse,
+				"posting_date": self.posting_date,
+				"posting_time": self.posting_time,
+				"qty": -1 * qty,
+				"serial_no": rm.serial_no
+			})
+
+			if not rm.rate:
+				rm.rate = get_valuation_rate(raw_material_data.rm_item_code, self.supplier_warehouse,
+					self.doctype, self.name, currency=self.company_currency, company=self.company)
+
+		rm.amount = qty * flt(rm.rate)
+		fg_item_doc.rm_supp_cost += rm.amount
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def update_raw_materials_supplied_based_on_bom(self, item, raw_material_table):
 		exploded_item = 1
@@ -569,7 +627,23 @@ class BuyingController(StockController):
 						"serial_no": cstr(d.serial_no).strip()
 					})
 					if self.is_return:
+<<<<<<< HEAD
 						outgoing_rate = get_rate_for_return(self.doctype, self.name, d.item_code, self.return_against, item_row=d)
+=======
+						filters = {
+							"voucher_type": self.doctype,
+							"voucher_no": self.return_against,
+							"item_code": d.item_code
+						}
+
+						if (self.doctype == "Purchase Invoice" and self.update_stock
+							and d.get("purchase_invoice_item")):
+							filters["voucher_detail_no"] = d.purchase_invoice_item
+						elif self.doctype == "Purchase Receipt" and d.get("purchase_receipt_item"):
+							filters["voucher_detail_no"] = d.purchase_receipt_item
+
+						original_incoming_rate = frappe.db.get_value("Stock Ledger Entry", filters, "incoming_rate")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 						sle.update({
 							"outgoing_rate": outgoing_rate,
@@ -787,8 +861,13 @@ class BuyingController(StockController):
 							asset.set(field, None)
 							asset.supplier = None
 						if asset.docstatus == 1 and delete_asset:
+<<<<<<< HEAD
 							frappe.throw(_('Cannot cancel this document as it is linked with submitted asset {0}. Please cancel it to continue.')
 								.format(frappe.utils.get_link_to_form('Asset', asset.name)))
+=======
+							frappe.throw(_('Cannot cancel this document as it is linked with submitted asset {0}.\
+								Please cancel the it to continue.').format(frappe.utils.get_link_to_form('Asset', asset.name)))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 					asset.flags.ignore_validate_update_after_submit = True
 					asset.flags.ignore_mandatory = True

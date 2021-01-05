@@ -72,7 +72,11 @@ def lead_query(doctype, txt, searchfield, start, page_len, filters):
 		})
 
 
+<<<<<<< HEAD
  # searches for customer
+=======
+# searches for customer
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 @frappe.whitelist()
 @frappe.validate_and_sanitize_search_inputs
 def customer_query(doctype, txt, searchfield, start, page_len, filters):
@@ -165,6 +169,7 @@ def tax_account_query(doctype, txt, searchfield, start, page_len, filters):
 				AND company = %(company)s
 				AND account_currency = %(currency)s
 				AND `{searchfield}` LIKE %(txt)s
+<<<<<<< HEAD
 				{mcond}
 			ORDER BY idx DESC, name
 			LIMIT %(offset)s, %(limit)s
@@ -173,6 +178,11 @@ def tax_account_query(doctype, txt, searchfield, start, page_len, filters):
 				searchfield=searchfield,
 				mcond=get_match_cond(doctype)
 			),
+=======
+			ORDER BY idx DESC, name
+			LIMIT %(offset)s, %(limit)s
+		""".format(account_type_condition=account_type_condition, searchfield=searchfield),
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			dict(
 				account_types=filters.get("account_type"),
 				company=filters.get("company"),
@@ -391,8 +401,12 @@ def get_batch_no(doctype, txt, searchfield, start, page_len, filters):
 				and sle.warehouse = %(warehouse)s
 				and (sle.batch_no like %(txt)s
 				or batch.expiry_date like %(txt)s
+<<<<<<< HEAD
 				or batch.manufacturing_date like %(txt)s
 				{search_cond})
+=======
+				or batch.manufacturing_date like %(txt)s)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				and batch.docstatus < 2
 				{cond}
 				{match_conditions}
@@ -415,8 +429,12 @@ def get_batch_no(doctype, txt, searchfield, start, page_len, filters):
 			and item = %(item_code)s
 			and (name like %(txt)s
 			or expiry_date like %(txt)s
+<<<<<<< HEAD
 			or manufacturing_date like %(txt)s
 			{search_cond})
+=======
+			or manufacturing_date like %(txt)s)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			and docstatus < 2
 			{0}
 			{match_conditions}
@@ -642,8 +660,12 @@ def get_tax_template(doctype, txt, searchfield, start, page_len, filters):
 		args = {
 			'item_code': filters.get('item_code'),
 			'posting_date': valid_from,
+<<<<<<< HEAD
 			'tax_category': filters.get('tax_category'),
 			'company': filters.get('company')
+=======
+			'tax_category': filters.get('tax_category')
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		}
 
 		taxes = _get_item_tax_template(args, taxes, for_validate=True)

@@ -23,6 +23,7 @@ frappe.ui.form.on('Salary Structure Assignment', {
 				filters: {
 					company: frm.doc.company,
 					docstatus: 1,
+<<<<<<< HEAD:erpnext/payroll/doctype/salary_structure_assignment/salary_structure_assignment.js
 					disabled: 0,
 					currency: frm.doc.currency
 				}
@@ -37,6 +38,9 @@ frappe.ui.form.on('Salary Structure Assignment', {
 					"root_type": "Liability",
 					"is_group": 0,
 					"account_currency": ["in", [frm.doc.currency, company_currency]],
+=======
+					disabled: 0
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/salary_structure_assignment/salary_structure_assignment.js
 				}
 			}
 		});

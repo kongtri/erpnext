@@ -4,10 +4,14 @@ from frappe import _
 import erpnext
 from frappe.utils import cstr, flt, date_diff, nowdate, round_based_on_smallest_currency_fraction, money_in_words
 from erpnext.regional.india import states, state_numbers
-from erpnext.controllers.taxes_and_totals import get_itemised_tax, get_itemised_taxable_amount
+from erpnext.controllers.taxes_and_totals import get_itemised_tax, get_itemised_taxable_amount, calculate_outstanding_amount
 from erpnext.controllers.accounts_controller import get_taxes_and_charges
 from erpnext.hr.utils import get_salary_assignment
+<<<<<<< HEAD
 from erpnext.payroll.doctype.salary_structure.salary_structure import make_salary_slip
+=======
+from erpnext.hr.doctype.salary_structure.salary_structure import make_salary_slip
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 from erpnext.regional.india import number_state_mapping
 from six import string_types
 from erpnext.accounts.general_ledger import make_gl_entries
@@ -93,7 +97,12 @@ def validate_gstin_check_digit(gstin, label='GSTIN'):
 		total += digit
 		factor = 2 if factor == 1 else 1
 	if gstin[-1] != code_point_chars[((mod - (total % mod)) % mod)]:
+<<<<<<< HEAD
 		frappe.throw(_("""Invalid {0}! The check digit validation has failed. Please ensure you've typed the {0} correctly.""").format(label))
+=======
+		frappe.throw(_("""Invalid {0}! The check digit validation has failed.
+			Please ensure you've typed the {0} correctly.""").format(label))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 def get_itemised_tax_breakup_header(item_doctype, tax_accounts):
 	if frappe.get_meta(item_doctype).has_field('gst_hsn_code'):
@@ -161,6 +170,7 @@ def get_regional_address_details(party_details, doctype, company):
 	if isinstance(party_details, string_types):
 		party_details = json.loads(party_details)
 		party_details = frappe._dict(party_details)
+<<<<<<< HEAD
 
 	update_party_details(party_details, doctype)
 
@@ -171,6 +181,18 @@ def get_regional_address_details(party_details, doctype, company):
 		party_details.taxes = ''
 		return party_details
 
+=======
+
+	update_party_details(party_details, doctype)
+
+	party_details.place_of_supply = get_place_of_supply(party_details, doctype)
+
+	if is_internal_transfer(party_details, doctype):
+		party_details.taxes_and_charges = ''
+		party_details.taxes = ''
+		return party_details
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	if doctype in ("Sales Invoice", "Delivery Note", "Sales Order"):
 		master_doctype = "Sales Taxes and Charges Template"
 
@@ -185,6 +207,7 @@ def get_regional_address_details(party_details, doctype, company):
 
 	elif doctype in ("Purchase Invoice", "Purchase Order", "Purchase Receipt"):
 		master_doctype = "Purchase Taxes and Charges Template"
+<<<<<<< HEAD
 		get_tax_template_for_sez(party_details, master_doctype, company, 'Supplier')
 		get_tax_template_based_on_category(master_doctype, company, party_details)
 
@@ -194,6 +217,18 @@ def get_regional_address_details(party_details, doctype, company):
 		if not party_details.supplier_gstin:
 			return party_details
 
+=======
+
+		get_tax_template_for_sez(party_details, master_doctype, company, 'Supplier')
+		get_tax_template_based_on_category(master_doctype, company, party_details)
+
+		if party_details.get('taxes_and_charges'):
+			return party_details
+
+		if not party_details.supplier_gstin:
+			return party_details
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	if not party_details.place_of_supply: return party_details
 
 	if not party_details.company_gstin: return party_details
@@ -247,7 +282,11 @@ def get_tax_template(master_doctype, company, is_inter_state, state_code):
 
 	for tax_category in tax_categories:
 		if tax_category.gst_state == number_state_mapping[state_code] or \
+<<<<<<< HEAD
 	 		(not default_tax and not tax_category.gst_state):
+=======
+			(not default_tax and not tax_category.gst_state):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			default_tax = frappe.db.get_value(master_doctype,
 				{'company': company, 'disabled': 0, 'tax_category': tax_category.name}, 'name')
 	return default_tax
@@ -387,6 +426,11 @@ def calculate_hra_exemption_for_period(doc):
 		return exemptions
 
 def get_ewb_data(dt, dn):
+<<<<<<< HEAD
+=======
+	if dt != 'Sales Invoice':
+		frappe.throw(_('e-Way Bill JSON can only be generated from Sales Invoice'))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	ewaybills = []
 	for doc_name in dn:
@@ -483,11 +527,19 @@ def download_ewb_json():
 			docname = json.loads(docname)
 			if len(docname) == 1:
 				docname = docname[0]
+<<<<<<< HEAD
 
 		if not isinstance(docname, list):
 			# removes characters not allowed in a filename (https://stackoverflow.com/a/38766141/4767738)
 			filename_prefix = re.sub('[^\w_.)( -]', '', docname)
 
+=======
+
+		if not isinstance(docname, list):
+			# removes characters not allowed in a filename (https://stackoverflow.com/a/38766141/4767738)
+			filename_prefix = re.sub('[^\w_.)( -]', '', docname)
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	frappe.local.response.filename = '{0}_e-WayBill_Data_{1}.json'.format(filename_prefix, frappe.utils.random_string(5))
 
 @frappe.whitelist()
@@ -721,16 +773,24 @@ def update_totals(gst_tax, base_gst_tax, doc):
 	doc.grand_total -= gst_tax
 
 	if doc.meta.get_field("rounded_total"):
+<<<<<<< HEAD
 		if doc.is_rounded_total_disabled():
 			doc.outstanding_amount = doc.grand_total
 		else:
+=======
+		if not doc.is_rounded_total_disabled():
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			doc.rounded_total = round_based_on_smallest_currency_fraction(doc.grand_total,
 				doc.currency, doc.precision("rounded_total"))
 
 			doc.rounding_adjustment += flt(doc.rounded_total - doc.grand_total,
 				doc.precision("rounding_adjustment"))
 
+<<<<<<< HEAD
 			doc.outstanding_amount = doc.rounded_total or doc.grand_total
+=======
+		calculate_outstanding_amount(doc)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	doc.in_words = money_in_words(doc.grand_total, doc.currency)
 	doc.base_in_words = money_in_words(doc.base_grand_total, erpnext.get_company_currency(doc.company))

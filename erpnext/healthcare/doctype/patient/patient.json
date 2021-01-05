@@ -24,12 +24,17 @@
   "image",
   "column_break_14",
   "status",
+<<<<<<< HEAD
   "inpatient_record",
   "inpatient_status",
+=======
+  "customer",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "report_preference",
   "mobile",
   "email",
   "phone",
+<<<<<<< HEAD
   "customer_details_section",
   "customer",
   "customer_group",
@@ -42,6 +47,8 @@
   "occupation",
   "column_break_25",
   "marital_status",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "sb_relation",
   "patient_relation",
   "allergy_medical_and_surgical_history",
@@ -198,8 +205,12 @@
    "fieldname": "phone",
    "fieldtype": "Data",
    "in_filter": 1,
+<<<<<<< HEAD
    "label": "Phone",
    "options": "Phone"
+=======
+   "label": "Phone"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "collapsible": 1,
@@ -395,7 +406,11 @@
  "image_field": "image",
  "links": [],
  "max_attachments": 50,
+<<<<<<< HEAD
  "modified": "2020-04-25 17:24:32.146415",
+=======
+ "modified": "2020-01-29 11:22:40.698125",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Healthcare",
  "name": "Patient",

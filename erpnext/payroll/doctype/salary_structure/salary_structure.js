@@ -125,7 +125,10 @@ frappe.ui.form.on('Salary Structure', {
 			fields: [
 				{fieldname: "sec_break", fieldtype: "Section Break", label: __("Filter Employees By (Optional)")},
 				{fieldname: "company", fieldtype: "Link", options: "Company", label: __("Company"), default: frm.doc.company, read_only:1},
+<<<<<<< HEAD:erpnext/payroll/doctype/salary_structure/salary_structure.js
 				{fieldname: "currency", fieldtype: "Link", options: "Currency", label: __("Currency"), default: frm.doc.currency, read_only:1},
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/salary_structure/salary_structure.js
 				{fieldname: "grade", fieldtype: "Link", options: "Employee Grade", label: __("Employee Grade")},
 				{fieldname:'department', fieldtype:'Link', options: 'Department', label: __('Department')},
 				{fieldname:'designation', fieldtype:'Link', options: 'Designation', label: __('Designation')},

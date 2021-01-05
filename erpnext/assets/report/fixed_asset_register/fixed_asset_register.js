@@ -21,6 +21,7 @@ frappe.query_reports["Fixed Asset Register"] = {
 			reqd: 1
 		},
 		{
+<<<<<<< HEAD
 			"fieldname":"filter_based_on",
 			"label": __("Period Based On"),
 			"fieldtype": "Select",
@@ -77,12 +78,25 @@ frappe.query_reports["Fixed Asset Register"] = {
 			options: "Asset Category"
 		},
 		{	
+=======
+			fieldname:"purchase_date",
+			label: __("Purchase Date"),
+			fieldtype: "Date"
+		},
+		{
+			fieldname:"available_for_use_date",
+			label: __("Available For Use Date"),
+			fieldtype: "Date"
+		},
+		{
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			fieldname:"finance_book",
 			label: __("Finance Book"),
 			fieldtype: "Link",
 			options: "Finance Book"
 		},
 		{
+<<<<<<< HEAD
 			fieldname:"cost_center",
 			label: __("Cost Center"),
 			fieldtype: "Link",
@@ -95,6 +109,12 @@ frappe.query_reports["Fixed Asset Register"] = {
 			options: ["--Select a group--", "Asset Category", "Location"],
 			default: "--Select a group--",
 			reqd: 1
+=======
+			fieldname:"asset_category",
+			label: __("Asset Category"),
+			fieldtype: "Link",
+			options: "Asset Category"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		},
 		{
 			fieldname:"is_existing_asset",

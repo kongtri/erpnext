@@ -8,7 +8,10 @@
   "program",
   "min_age",
   "max_age",
+<<<<<<< HEAD
   "description",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "column_break_4",
   "application_fee",
   "applicant_naming_series"
@@ -19,34 +22,65 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Program",
+<<<<<<< HEAD
    "options": "Program"
   },
   {
    "fieldname": "column_break_4",
    "fieldtype": "Column Break"
+=======
+   "options": "Program",
+   "show_days": 1,
+   "show_seconds": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break",
+   "show_days": 1,
+   "show_seconds": 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "application_fee",
    "fieldtype": "Currency",
    "in_list_view": 1,
+<<<<<<< HEAD
    "label": "Application Fee"
+=======
+   "label": "Application Fee",
+   "show_days": 1,
+   "show_seconds": 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "applicant_naming_series",
    "fieldtype": "Data",
    "in_list_view": 1,
+<<<<<<< HEAD
    "label": "Naming Series (for Student Applicant)"
+=======
+   "label": "Naming Series (for Student Applicant)",
+   "show_days": 1,
+   "show_seconds": 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "min_age",
    "fieldtype": "Int",
    "in_list_view": 1,
+<<<<<<< HEAD
    "label": "Minimum Age"
+=======
+   "label": "Minimum Age",
+   "show_days": 1,
+   "show_seconds": 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "max_age",
    "fieldtype": "Int",
    "in_list_view": 1,
+<<<<<<< HEAD
    "label": "Maximum Age"
   },
   {
@@ -55,11 +89,20 @@
    "fieldname": "description",
    "fieldtype": "Small Text",
    "label": "Description"
+=======
+   "label": "Maximum Age",
+   "show_days": 1,
+   "show_seconds": 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "istable": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-10-05 13:03:42.005985",
+=======
+ "modified": "2020-06-10 23:06:30.037404",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Student Admission Program",

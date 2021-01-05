@@ -183,14 +183,25 @@ def get_data():
 				},
 				{
 					"type": "doctype",
+<<<<<<< HEAD
 					"label": _("Update Bank Clearance Dates"),
 					"name": "Bank Clearance",
+=======
+					"label": _("Invoice Discounting"),
+					"name": "Invoice Discounting",
+				},
+				{
+					"type": "doctype",
+					"label": _("Update Bank Transaction Dates"),
+					"name": "Bank Reconciliation",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 					"description": _("Update bank payment dates with journals.")
 				},
 				{
 					"type": "doctype",
-					"label": _("Invoice Discounting"),
-					"name": "Invoice Discounting",
+					"label": _("Bank Transaction"),
+					"name": "Bank Transaction",
+					"doctype": "Bank Transaction"
 				},
 				{
 					"type": "report",

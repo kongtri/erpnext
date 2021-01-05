@@ -12,7 +12,10 @@ from erpnext.stock.doctype.stock_entry.stock_entry_utils import make_stock_entry
 from erpnext.selling.doctype.sales_order.sales_order import make_work_orders
 from erpnext.controllers.accounts_controller import update_child_qty_rate
 from erpnext.selling.doctype.sales_order.sales_order import make_raw_material_request
+<<<<<<< HEAD
 from erpnext.manufacturing.doctype.blanket_order.test_blanket_order import make_blanket_order
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 from erpnext.selling.doctype.product_bundle.test_product_bundle import make_product_bundle
 from erpnext.stock.doctype.item.test_item import make_item
 
@@ -340,7 +343,11 @@ class TestSalesOrder(unittest.TestCase):
 		self.assertEqual(so.get("items")[-1].amount, 1400)
 		self.assertEqual(so.status, 'To Deliver and Bill')
 
+<<<<<<< HEAD
 	def test_update_child_removing_item(self):
+=======
+	def test_remove_item_in_update_child_qty_rate(self):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		so = make_sales_order(**{
 			"item_list": [{
 				"item_code": '_Test Item',
@@ -377,6 +384,14 @@ class TestSalesOrder(unittest.TestCase):
 			"docname": so.get("items")[0].name
 		}])
 		update_child_qty_rate('Sales Order', trans_item, so.name)
+<<<<<<< HEAD
+=======
+
+		so.reload()
+		self.assertEqual(len(so.get("items")), 1)
+		self.assertEqual(so.status, 'To Deliver and Bill')
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		so.reload()
 		self.assertEqual(len(so.get("items")), 1)
@@ -420,7 +435,11 @@ class TestSalesOrder(unittest.TestCase):
 		self.assertEqual(so.items[0].rate, 200.34669)
 		make_property_setter("Sales Order Item", "rate", "precision", precision, "Currency")
 
+<<<<<<< HEAD
 	def test_update_child_perm(self):
+=======
+	def test_update_child_qty_rate_perm(self):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		so = make_sales_order(item_code= "_Test Item", qty=4)
 
 		user = 'test@example.com'
@@ -444,9 +463,15 @@ class TestSalesOrder(unittest.TestCase):
 		frappe.set_user("Administrator")
 		workflow = make_sales_order_workflow()
 		so = make_sales_order(item_code= "_Test Item", qty=1, rate=150, do_not_submit=1)
+<<<<<<< HEAD
 		apply_workflow(so, 'Approve')
 
 		frappe.set_user("Administrator")
+=======
+		frappe.set_user("Administrator")
+		apply_workflow(so, 'Approve')
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		user = 'test@example.com'
 		test_user = frappe.get_doc('User', user)
 		test_user.add_roles("Sales User", "Test Junior Approver")
@@ -473,7 +498,11 @@ class TestSalesOrder(unittest.TestCase):
 		workflow.is_active = 0
 		workflow.save()
 
+<<<<<<< HEAD
 	def test_update_child_product_bundle(self):
+=======
+	def test_update_child_qty_rate_product_bundle(self):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		# test Update Items with product bundle
 		if not frappe.db.exists("Item", "_Product Bundle Item"):
 			bundle_item = make_item("_Product Bundle Item", {"is_stock_item": 0})
@@ -493,6 +522,7 @@ class TestSalesOrder(unittest.TestCase):
 		so.reload()
 		self.assertEqual(so.packed_items[0].qty, 4)
 
+<<<<<<< HEAD
 		# test uom and conversion factor change
 		update_uom_conv_factor = json.dumps([{
 			'item_code': so.get("items")[0].item_code,
@@ -507,6 +537,8 @@ class TestSalesOrder(unittest.TestCase):
 		so.reload()
 		self.assertEqual(so.packed_items[0].qty, 8)
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	def test_update_child_with_tax_template(self):
 		"""
 			Test Action: Create a SO with one item having its tax account head already in the SO.
@@ -1133,7 +1165,11 @@ def make_sales_order_workflow():
 		"is_active": 1,
 		"send_email_alert": 0,
 	})
+<<<<<<< HEAD
 	workflow.append('states', dict( state = 'Pending', allow_edit = 'All' ))
+=======
+	workflow.append('states', dict( state = 'Pending', allow_edit = 'Administrator' ))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	workflow.append('states', dict( state = 'Approved', allow_edit = 'Test Approver', doc_status = 1 ))
 	workflow.append('transitions', dict(
 		state = 'Pending', action = 'Approve', next_state = 'Approved', allowed = 'Test Junior Approver', allow_self_approval = 1,

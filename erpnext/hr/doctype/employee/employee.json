@@ -812,8 +812,12 @@
  "icon": "fa fa-user",
  "idx": 24,
  "image_field": "image",
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-10-16 15:02:04.283657",
+=======
+ "modified": "2020-01-09 04:23:55.611366",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee",

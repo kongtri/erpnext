@@ -430,6 +430,9 @@ class SalesInvoice(SellingController):
 			if not for_validate:
 				self.tax_category = pos.get("tax_category")
 
+			if not for_validate:
+				self.tax_category = pos.get("tax_category")
+
 			if not for_validate and not self.customer:
 				self.customer = pos.customer
 
@@ -493,6 +496,7 @@ class SalesInvoice(SellingController):
 			frappe.throw(_("Debit To is required"), title=_("Account Missing"))
 
 		if account.report_type != "Balance Sheet":
+<<<<<<< HEAD
 			msg = _("Please ensure {} account is a Balance Sheet account. ").format(frappe.bold("Debit To"))
 			msg += _("You can change the parent account to a Balance Sheet account or select a different account.")
 			frappe.throw(msg, title=_("Invalid Account"))
@@ -501,6 +505,16 @@ class SalesInvoice(SellingController):
 			msg = _("Please ensure {} account is a Receivable account. ").format(frappe.bold("Debit To"))
 			msg += _("Change the account type to Receivable or select a different account.")
 			frappe.throw(msg, title=_("Invalid Account"))
+=======
+			frappe.throw(_("Please ensure {} account is a Balance Sheet account. \
+					You can change the parent account to a Balance Sheet account or select a different account.")
+				.format(frappe.bold("Debit To")), title=_("Invalid Account"))
+
+		if self.customer and account.account_type != "Receivable":
+			frappe.throw(_("Please ensure {} account is a Receivable account. \
+					Change the account type to Receivable or select a different account.")
+				.format(frappe.bold("Debit To")), title=_("Invalid Account"))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		self.party_account_currency = account.account_currency
 
@@ -576,7 +590,14 @@ class SalesInvoice(SellingController):
 					continue
 
 				for d in self.get('items'):
+<<<<<<< HEAD
 					if (d.item_code and not d.get(key.lower().replace(' ', '_')) and not self.get(value[1])):
+=======
+					if not d.item_code: continue
+
+					is_stock_item = frappe.get_cached_value('Item', d.item_code, 'is_stock_item')
+					if (d.item_code and is_stock_item ==1 and not d.get(key.lower().replace(' ', '_')) and not self.get(value[1])):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 						msgprint(_("{0} is mandatory for Item {1}").format(key, d.item_code), raise_exception=1)
 
 
@@ -756,6 +777,14 @@ class SalesInvoice(SellingController):
 				update_outstanding_amt(self.debit_to, "Customer", self.customer,
 					self.doctype, self.return_against if cint(self.is_return) and self.return_against else self.name)
 
+<<<<<<< HEAD
+=======
+			if (repost_future_gle or self.flags.repost_future_gle) and cint(self.update_stock) \
+				and cint(auto_accounting_for_stock):
+					items, warehouses = self.get_items_and_warehouses()
+					update_gl_entries_after(self.posting_date, self.posting_time,
+						warehouses, items, company = self.company)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		elif self.docstatus == 2 and cint(self.update_stock) \
 			and cint(auto_accounting_for_stock):
 				make_reverse_gl_entries(voucher_type=self.doctype, voucher_no=self.name)
@@ -861,6 +890,7 @@ class SalesInvoice(SellingController):
 					asset.db_set("disposal_date", self.posting_date)
 					asset.set_status("Sold" if self.docstatus==1 else None)
 				else:
+<<<<<<< HEAD
 					# Do not book income for transfer within same company
 					if not self.is_internal_transfer():
 						income_account = (item.income_account
@@ -879,6 +909,24 @@ class SalesInvoice(SellingController):
 								"project": item.project or self.project
 							}, account_currency, item=item)
 						)
+=======
+					income_account = (item.income_account
+						if (not item.enable_deferred_revenue or self.is_return) else item.deferred_revenue_account)
+
+					account_currency = get_account_currency(income_account)
+					gl_entries.append(
+						self.get_gl_dict({
+							"account": income_account,
+							"against": self.customer,
+							"credit": flt(item.base_net_amount, item.precision("base_net_amount")),
+							"credit_in_account_currency": (flt(item.base_net_amount, item.precision("base_net_amount"))
+								if account_currency==self.company_currency
+								else flt(item.net_amount, item.precision("net_amount"))),
+							"cost_center": item.cost_center,
+							"project": item.project or self.project
+						}, account_currency, item=item)
+					)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		# expense account gl entries
 		if cint(self.update_stock) and \
@@ -1112,8 +1160,13 @@ class SalesInvoice(SellingController):
 					and self.name != serial_no_details.sales_invoice:
 					sales_invoice_company = frappe.db.get_value("Sales Invoice", serial_no_details.sales_invoice, "company")
 					if sales_invoice_company == self.company:
+<<<<<<< HEAD
 						frappe.throw(_("Serial Number: {0} is already referenced in Sales Invoice: {1}")
 							.format(serial_no, serial_no_details.sales_invoice))
+=======
+						frappe.throw(_("Serial Number: {0} is already referenced in Sales Invoice: {1}"
+							.format(serial_no, serial_no_details.sales_invoice)))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def update_project(self):
 		if self.project:
@@ -1290,9 +1343,13 @@ class SalesInvoice(SellingController):
 			if self.docstatus == 2:
 				status = "Cancelled"
 			elif self.docstatus == 1:
+<<<<<<< HEAD
 				if self.is_internal_transfer():
 					self.status = 'Internal Transfer'
 				elif outstanding_amount > 0 and due_date < nowdate and self.is_discounted and discountng_status=='Disbursed':
+=======
+				if outstanding_amount > 0 and due_date < nowdate and self.is_discounted and discountng_status=='Disbursed':
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 					self.status = "Overdue and Discounted"
 				elif outstanding_amount > 0 and due_date < nowdate:
 					self.status = "Overdue"

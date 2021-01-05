@@ -20,12 +20,13 @@ frappe.ui.form.on('Material Request', {
 		frm.set_indicator_formatter('item_code',
 			function(doc) { return (doc.stock_qty<=doc.ordered_qty) ? "green" : "orange"; });
 
-		frm.set_query("item_code", "items", function() {
+		frm.set_query("from_warehouse", "items", function(doc) {
 			return {
-				query: "erpnext.controllers.queries.item_query"
+				filters: {'company': doc.company}
 			};
 		});
 
+<<<<<<< HEAD
 		frm.set_query("from_warehouse", "items", function(doc) {
 			return {
 				filters: {'company': doc.company}
@@ -40,6 +41,8 @@ frappe.ui.form.on('Material Request', {
 				}
 			}
 		});
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	},
 
 	onload: function(frm) {
@@ -185,8 +188,14 @@ frappe.ui.form.on('Material Request', {
 		});
 	},
 
+<<<<<<< HEAD
 	get_item_data: function(frm, item, overwrite_warehouse=false) {
 		if (item && !item.item_code) { return; }
+=======
+	get_item_data: function(frm, item) {
+		if (item && !item.item_code) { return; }
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		frm.call({
 			method: "erpnext.stock.get_item_details.get_item_details",
 			child: item,
@@ -281,7 +290,11 @@ frappe.ui.form.on('Material Request', {
 				fieldname:'default_supplier',
 				fieldtype: 'Link',
 				options: 'Supplier',
+<<<<<<< HEAD
 				description: __('Select a Supplier from the Default Suppliers of the items below. On selection, a Purchase Order will be made against items belonging to the selected Supplier only.'),
+=======
+				description: __('Select a Supplier from the Default Supplier List of the items below.'),
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				get_query: () => {
 					return{
 						query: "erpnext.stock.doctype.material_request.material_request.get_default_supplier_query",
@@ -297,8 +310,12 @@ frappe.ui.form.on('Material Request', {
 					run_link_triggers: true
 				});
 			},
+<<<<<<< HEAD
 			__('Enter Supplier'),
 			__('Create')
+=======
+			__('Enter Supplier')
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		)
 	},
 

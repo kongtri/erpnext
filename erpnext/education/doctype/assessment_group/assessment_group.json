@@ -6,6 +6,10 @@
  "creation": "2016-08-04 04:42:48.319388",
  "doctype": "DocType",
  "editable_grid": 1,
+<<<<<<< HEAD
+=======
+ "engine": "InnoDB",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "field_order": [
   "assessment_group_name",
   "is_group",
@@ -63,7 +67,11 @@
  ],
  "is_tree": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-03-18 18:01:14.710416",
+=======
+ "modified": "2020-03-18 18:26:07.834596",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Assessment Group",

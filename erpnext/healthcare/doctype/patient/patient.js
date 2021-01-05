@@ -18,8 +18,12 @@ frappe.ui.form.on('Patient', {
 		} else {
 			erpnext.toggle_naming_series();
 		}
+<<<<<<< HEAD
 
 		if (frappe.defaults.get_default('collect_registration_fee') && frm.doc.status == 'Disabled') {
+=======
+		if (frappe.defaults.get_default("collect_registration_fee") && frm.doc.status == 'Disabled') {
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			frm.add_custom_button(__('Invoice Patient Registration'), function () {
 				invoice_registration(frm);
 			});

@@ -36,6 +36,10 @@ def execute(filters=None):
 	conditions, filters = get_conditions(filters)
 	columns, days = get_columns(filters)
 	att_map = get_attendance_list(conditions, filters)
+<<<<<<< HEAD
+=======
+	emp_map = get_employee_details(filters)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	if filters.group_by:
 		emp_map, group_by_parameters = get_employee_details(filters.group_by, filters.company)
@@ -257,6 +261,7 @@ def get_conditions(filters):
 
 	return conditions, filters
 
+<<<<<<< HEAD
 def get_employee_details(group_by, company):
 	emp_map = {}
 	query = """select name, employee_name, designation, department, branch, company,
@@ -283,6 +288,13 @@ def get_employee_details(group_by, company):
 				emp_map[d.get(group_by)][d.name] = d
 		else:
 			emp_map[d.name] = d
+=======
+def get_employee_details(filters):
+	emp_map = frappe._dict()
+	for d in frappe.db.sql("""select name, employee_name, designation, department, branch, company,
+		holiday_list from tabEmployee where company = "%s" """ % (filters.get("company")), as_dict=1):
+		emp_map.setdefault(d.name, d)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	if not group_by:
 		return emp_map

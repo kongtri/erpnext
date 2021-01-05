@@ -7,6 +7,11 @@ import frappe
 from frappe.utils import cint, flt
 from erpnext.stock.utils import update_included_uom_in_report, is_reposting_item_valuation_in_progress
 from frappe import _
+<<<<<<< HEAD
+=======
+from frappe.utils import cint, flt
+from erpnext.stock.utils import update_included_uom_in_report
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 from erpnext.stock.doctype.serial_no.serial_no import get_serial_nos
 
 def execute(filters=None):
@@ -45,11 +50,14 @@ def execute(filters=None):
 				"stock_value": stock_value
 			})
 
+<<<<<<< HEAD
 		sle.update({
 			"in_qty": max(sle.actual_qty, 0),
 			"out_qty": min(sle.actual_qty, 0)
 		})
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		if sle.serial_no:
 			update_available_serial_nos(available_serial_nos, sle)
 
@@ -102,7 +110,11 @@ def get_columns():
 		{"label": _("Voucher Type"), "fieldname": "voucher_type", "width": 110},
 		{"label": _("Voucher #"), "fieldname": "voucher_no", "fieldtype": "Dynamic Link", "options": "voucher_type", "width": 100},
 		{"label": _("Batch"), "fieldname": "batch_no", "fieldtype": "Link", "options": "Batch", "width": 100},
+<<<<<<< HEAD
 		{"label": _("Serial No"), "fieldname": "serial_no", "fieldtype": "Link", "options": "Serial No", "width": 100},
+=======
+		{"label": _("Serial No"), "fieldname": "serial_no", "width": 100},
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		{"label": _("Balance Serial No"), "fieldname": "balance_serial_no", "width": 100},
 		{"label": _("Project"), "fieldname": "project", "fieldtype": "Link", "options": "Project", "width": 100},
 		{"label": _("Company"), "fieldname": "company", "fieldtype": "Link", "options": "Company", "width": 110}

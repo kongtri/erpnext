@@ -14,8 +14,11 @@ from erpnext.accounts.party import validate_party_accounts, get_dashboard_info, 
 from frappe.contacts.address_and_contact import load_address_and_contact, delete_contact_and_address
 from frappe.model.rename_doc import update_linked_doctypes
 from frappe.model.mapper import get_mapped_doc
+<<<<<<< HEAD
 from frappe.utils.user import get_users_with_role
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 class Customer(TransactionBase):
 	def get_feed(self):
@@ -58,7 +61,10 @@ class Customer(TransactionBase):
 		self.set_loyalty_program()
 		self.check_customer_group_change()
 		self.validate_default_bank_account()
+<<<<<<< HEAD
 		self.validate_internal_customer()
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		# set loyalty program tier
 		if frappe.db.exists('Customer', self.name):
@@ -83,11 +89,14 @@ class Customer(TransactionBase):
 			if not is_company_account:
 				frappe.throw(_("{0} is not a company bank account").format(frappe.bold(self.default_bank_account)))
 
+<<<<<<< HEAD
 	def validate_internal_customer(self):
 		if self.is_internal_customer and frappe.db.get_value('Customer', {"represents_company": self.represents_company}, "name"):
 			frappe.throw(_("Internal Customer for company {0} already exists").format(
 				frappe.bold(self.represents_company)))
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	def on_update(self):
 		self.validate_name_with_customer_group()
 		self.create_primary_contact()
@@ -189,6 +198,14 @@ class Customer(TransactionBase):
 
 	def validate_credit_limit_on_change(self):
 		if self.get("__islocal") or not self.credit_limits:
+			return
+		
+		past_credit_limits = [d.credit_limit
+			for d in frappe.db.get_all("Customer Credit Limit", filters={'parent': self.name}, fields=["credit_limit"], order_by="company")]
+		
+		current_credit_limits = [d.credit_limit for d in sorted(self.credit_limits, key=lambda k: k.company)]
+
+		if past_credit_limits == current_credit_limits:
 			return
 
 		past_credit_limits = [d.credit_limit
@@ -333,6 +350,68 @@ def _set_missing_values(source, target):
 		target.contact_person = contact[0].parent
 
 @frappe.whitelist()
+def make_quotation(source_name, target_doc=None):
+
+	def set_missing_values(source, target):
+		_set_missing_values(source, target)
+
+	target_doc = get_mapped_doc("Customer", source_name,
+		{"Customer": {
+			"doctype": "Quotation",
+			"field_map": {
+				"name":"party_name"
+			}
+		}}, target_doc, set_missing_values)
+
+	target_doc.quotation_to = "Customer"
+	target_doc.run_method("set_missing_values")
+	target_doc.run_method("set_other_charges")
+	target_doc.run_method("calculate_taxes_and_totals")
+
+	price_list, currency = frappe.db.get_value("Customer", source_name, ['default_price_list', 'default_currency'])
+	if price_list:
+		target_doc.selling_price_list = price_list
+	if currency:
+		target_doc.currency = currency
+
+	return target_doc
+
+@frappe.whitelist()
+def make_opportunity(source_name, target_doc=None):
+	def set_missing_values(source, target):
+		_set_missing_values(source, target)
+
+	target_doc = get_mapped_doc("Customer", source_name,
+		{"Customer": {
+			"doctype": "Opportunity",
+			"field_map": {
+				"name": "party_name",
+				"doctype": "opportunity_from",
+			}
+		}}, target_doc, set_missing_values)
+
+	return target_doc
+
+def _set_missing_values(source, target):
+	address = frappe.get_all('Dynamic Link', {
+			'link_doctype': source.doctype,
+			'link_name': source.name,
+			'parenttype': 'Address',
+		}, ['parent'], limit=1)
+
+	contact = frappe.get_all('Dynamic Link', {
+			'link_doctype': source.doctype,
+			'link_name': source.name,
+			'parenttype': 'Contact',
+		}, ['parent'], limit=1)
+
+	if address:
+		target.customer_address = address[0].parent
+
+	if contact:
+		target.contact_person = contact[0].parent
+
+@frappe.whitelist()
 def get_loyalty_programs(doc):
 	''' returns applicable loyalty programs for a customer '''
 	from frappe.desk.treeview import get_children
@@ -357,10 +436,15 @@ def get_loyalty_programs(doc):
 @frappe.validate_and_sanitize_search_inputs
 def get_customer_list(doctype, txt, searchfield, start, page_len, filters=None):
 	from erpnext.controllers.queries import get_fields
+<<<<<<< HEAD
 	fields = ["name", "customer_name", "customer_group", "territory"]
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	if frappe.db.get_default("cust_master_name") == "Customer Name":
 		fields = ["name", "customer_group", "territory"]
+
+	fields = get_fields("Customer", fields)
 
 	fields = get_fields("Customer", fields)
 
@@ -372,6 +456,7 @@ def get_customer_list(doctype, txt, searchfield, start, page_len, filters=None):
 		match_conditions += "{}".format(filter_conditions)
 
 	return frappe.db.sql("""
+<<<<<<< HEAD
 		select %s
 		from `tabCustomer`
 		where docstatus < 2
@@ -383,6 +468,19 @@ def get_customer_list(doctype, txt, searchfield, start, page_len, filters=None):
 			name, customer_name limit %s, %s
 		""".format(match_conditions=match_conditions) % (", ".join(fields), searchfield, "%s", "%s", "%s", "%s", "%s", "%s"),
 		("%%%s%%" % txt, "%%%s%%" % txt, "%%%s%%" % txt, "%%%s%%" % txt, start, page_len))
+=======
+			select %s
+			from `tabCustomer`
+			where docstatus < 2
+				and (%s like %s or customer_name like %s)
+					{match_conditions}
+			order by
+				case when name like %s then 0 else 1 end,
+				case when customer_name like %s then 0 else 1 end,
+				name, customer_name limit %s, %s
+		""".format(match_conditions=match_conditions) % (", ".join(fields), searchfield, "%s", "%s", "%s", "%s", "%s", "%s"),
+			("%%%s%%" % txt, "%%%s%%" % txt, "%%%s%%" % txt, "%%%s%%" % txt, start, page_len))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 
 def check_credit_limit(customer, company, ignore_outstanding_sales_order=False, extra_amount=0):

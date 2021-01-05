@@ -68,6 +68,7 @@
    "oldfieldname": "employee_name",
    "oldfieldtype": "Data",
    "read_only": 1
+<<<<<<< HEAD
   },
   {
    "depends_on": "working_hours",
@@ -76,6 +77,8 @@
    "label": "Working Hours",
    "precision": "1",
    "read_only": 1
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "default": "Present",
@@ -204,8 +207,12 @@
  "icon": "fa fa-ok",
  "idx": 1,
  "is_submittable": 1,
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-09-18 17:26:09.703215",
+=======
+ "modified": "2020-02-19 14:25:32.945842",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Attendance",

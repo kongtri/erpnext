@@ -7,11 +7,19 @@ import unittest
 import erpnext
 from frappe.utils.make_random import get_random
 from frappe.utils import nowdate, add_days, add_years, getdate, add_months
+<<<<<<< HEAD:erpnext/payroll/doctype/salary_structure/test_salary_structure.py
 from erpnext.payroll.doctype.salary_structure.salary_structure import make_salary_slip
 from erpnext.payroll.doctype.salary_slip.test_salary_slip import make_earning_salary_component,\
 	make_deduction_salary_component, make_employee_salary_slip, create_tax_slab
 from erpnext.hr.doctype.employee.test_employee import make_employee
 from erpnext.payroll.doctype.employee_tax_exemption_declaration.test_employee_tax_exemption_declaration import create_payroll_period
+=======
+from erpnext.hr.doctype.salary_structure.salary_structure import make_salary_slip
+from erpnext.hr.doctype.salary_slip.test_salary_slip import make_earning_salary_component,\
+	make_deduction_salary_component, make_employee_salary_slip, create_tax_slab
+from erpnext.hr.doctype.employee.test_employee import make_employee
+from erpnext.hr.doctype.employee_tax_exemption_declaration.test_employee_tax_exemption_declaration import create_payroll_period
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/salary_structure/test_salary_structure.py
 
 
 test_dependencies = ["Fiscal Year"]
@@ -152,6 +160,7 @@ def create_salary_structure_assignment(employee, salary_structure, from_date=Non
 	if frappe.db.exists("Salary Structure Assignment", {"employee": employee}):
 		frappe.db.sql("""delete from `tabSalary Structure Assignment` where employee=%s""",(employee))
 
+<<<<<<< HEAD:erpnext/payroll/doctype/salary_structure/test_salary_structure.py
 	if not payroll_period:
 		payroll_period = create_payroll_period()
 
@@ -159,6 +168,10 @@ def create_salary_structure_assignment(employee, salary_structure, from_date=Non
 
 	if not income_tax_slab:
 		income_tax_slab = create_tax_slab(payroll_period, allow_tax_exemption=True, currency=currency)
+=======
+	payroll_period = create_payroll_period()
+	create_tax_slab(payroll_period, allow_tax_exemption=True)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/salary_structure/test_salary_structure.py
 
 	salary_structure_assignment = frappe.new_doc("Salary Structure Assignment")
 	salary_structure_assignment.employee = employee
@@ -170,7 +183,11 @@ def create_salary_structure_assignment(employee, salary_structure, from_date=Non
 	salary_structure_assignment.payroll_payable_account = get_payable_account(company)
 	salary_structure_assignment.company = company or erpnext.get_default_company()
 	salary_structure_assignment.save(ignore_permissions=True)
+<<<<<<< HEAD:erpnext/payroll/doctype/salary_structure/test_salary_structure.py
 	salary_structure_assignment.income_tax_slab = income_tax_slab
+=======
+	salary_structure_assignment.income_tax_slab = "Tax Slab: _Test Payroll Period"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70:erpnext/hr/doctype/salary_structure/test_salary_structure.py
 	salary_structure_assignment.submit()
 	return salary_structure_assignment
 

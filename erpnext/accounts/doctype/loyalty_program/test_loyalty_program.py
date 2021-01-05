@@ -66,6 +66,7 @@ class TestLoyaltyProgram(unittest.TestCase):
 
 		lpe = frappe.get_doc('Loyalty Point Entry', {'invoice_type': 'Sales Invoice', 'invoice': si_original.name, 'customer': si_original.customer})
 
+		customer.load_from_db()
 		self.assertEqual(si_original.get('loyalty_program'), customer.loyalty_program)
 		self.assertEqual(lpe.get('loyalty_program_tier'), customer.loyalty_program_tier)
 		self.assertEqual(lpe.loyalty_points, earned_points)

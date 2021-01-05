@@ -15,6 +15,10 @@ def execute(filters=None):
 
 def _execute(filters=None, additional_table_columns=None, additional_query_columns=None):
 	if not filters: filters = {}
+<<<<<<< HEAD
+=======
+	filters.update({"from_date": filters.get("date_range") and filters.get("date_range")[0], "to_date": filters.get("date_range") and filters.get("date_range")[1]})
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	columns = get_columns(additional_table_columns, filters)
 
 	company_currency = frappe.get_cached_value('Company',  filters.get('company'),  'default_currency')
@@ -34,9 +38,12 @@ def _execute(filters=None, additional_table_columns=None, additional_query_colum
 	if filters.get('group_by'):
 		grand_total = get_grand_total(filters, 'Sales Invoice')
 
+<<<<<<< HEAD
 	customer_details = get_customer_details()
 	item_details = get_item_details()
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	for d in item_list:
 		customer_record = customer_details.get(d.customer)
 		item_record = item_details.get(d.item_code)
@@ -52,14 +59,24 @@ def _execute(filters=None, additional_table_columns=None, additional_query_colum
 
 		row = {
 			'item_code': d.item_code,
+<<<<<<< HEAD
 			'item_name': item_record.item_name,
 			'item_group': item_record.item_group,
+=======
+			'item_name': d.item_name,
+			'item_group': d.item_group,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			'description': d.description,
 			'invoice': d.parent,
 			'posting_date': d.posting_date,
 			'customer': d.customer,
+<<<<<<< HEAD
 			'customer_name': customer_record.customer_name,
 			'customer_group': customer_record.customer_group,
+=======
+			'customer_name': d.customer_name,
+			'customer_group': d.customer_group,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		}
 
 		if additional_query_columns:
@@ -97,16 +114,33 @@ def _execute(filters=None, additional_table_columns=None, additional_query_colum
 		for tax in tax_columns:
 			item_tax = itemised_tax.get(d.name, {}).get(tax, {})
 			row.update({
+<<<<<<< HEAD
 				frappe.scrub(tax + ' Rate'): item_tax.get('tax_rate', 0),
 				frappe.scrub(tax + ' Amount'): item_tax.get('tax_amount', 0),
 			})
 			total_tax += flt(item_tax.get('tax_amount'))
+=======
+				frappe.scrub(tax + ' Rate'): item_tax.get("tax_rate", 0),
+				frappe.scrub(tax + ' Amount'): item_tax.get("tax_amount", 0),
+			})
+			total_tax += flt(item_tax.get("tax_amount"))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		row.update({
 			'total_tax': total_tax,
 			'total': d.base_net_amount + total_tax,
 			'currency': company_currency
 		})
+<<<<<<< HEAD
+
+		if filters.get('group_by'):
+			row.update({'percent_gt': flt(row['total']/grand_total) * 100})
+			group_by_field, subtotal_display_field = get_group_by_and_display_fields(filters)
+			data, prev_group_by_value = add_total_row(data, filters, prev_group_by_value, d, total_row_map,
+				group_by_field, subtotal_display_field, grand_total, tax_columns)
+			add_sub_total_row(row, total_row_map, d.get(group_by_field, ''), tax_columns)
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		if filters.get('group_by'):
 			row.update({'percent_gt': flt(row['total']/grand_total) * 100})
@@ -115,8 +149,11 @@ def _execute(filters=None, additional_table_columns=None, additional_query_colum
 				group_by_field, subtotal_display_field, grand_total, tax_columns)
 			add_sub_total_row(row, total_row_map, d.get(group_by_field, ''), tax_columns)
 
+<<<<<<< HEAD
+=======
 		data.append(row)
 
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	if filters.get('group_by') and item_list:
 		total_row = total_row_map.get(prev_group_by_value or d.get('item_name'))
 		total_row['percent_gt'] = flt(total_row['total']/grand_total * 100)
@@ -230,10 +267,17 @@ def get_columns(additional_table_columns, filters):
 		}
 	]
 
+<<<<<<< HEAD
 	if filters.get('group_by') != 'Territory':
 		columns.extend([
 			{
 				'label': _('Territory'),
+=======
+	if filters.get('group_by') != 'Terriotory':
+		columns.extend([
+			{
+				'label': _("Territory"),
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				'fieldname': 'territory',
 				'fieldtype': 'Link',
 				'options': 'Territory',
@@ -311,6 +355,16 @@ def get_columns(additional_table_columns, filters):
 			'fieldtype': 'Currency',
 			'options': 'currency',
 			'width': 100
+<<<<<<< HEAD
+=======
+		},
+		{
+			'fieldname': 'currency',
+			'label': _('Currency'),
+			'fieldtype': 'Currency',
+			'width': 80,
+			'hidden': 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		}
 	]
 
@@ -535,6 +589,7 @@ def get_tax_accounts(item_list, columns, company_currency,
 			'fieldtype': 'Currency',
 			'options': 'currency',
 			'width': 100
+<<<<<<< HEAD
 		},
 		{
 			'fieldname': 'currency',
@@ -542,6 +597,8 @@ def get_tax_accounts(item_list, columns, company_currency,
 			'fieldtype': 'Currency',
 			'width': 80,
 			'hidden': 1
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		}
 	]
 
@@ -569,7 +626,11 @@ def add_total_row(data, filters, prev_group_by_value, item, total_row_map,
 		})
 
 		total_row_map.setdefault('total_row', {
+<<<<<<< HEAD
 			subtotal_display_field: 'Total',
+=======
+			subtotal_display_field: "Total",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			'stock_qty': 0.0,
 			'amount': 0.0,
 			'bold': 1,

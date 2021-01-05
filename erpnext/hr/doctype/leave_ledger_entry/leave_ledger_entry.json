@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "creation": "2019-05-09 15:47:39.760406",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -111,7 +112,12 @@
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
+<<<<<<< HEAD
  "modified": "2020-09-04 12:16:36.569066",
+=======
+ "links": [],
+ "modified": "2020-02-27 14:40:10.502605",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Ledger Entry",

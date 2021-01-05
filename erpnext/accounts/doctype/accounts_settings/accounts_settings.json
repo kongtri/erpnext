@@ -1,5 +1,8 @@
 {
+<<<<<<< HEAD
  "actions": [],
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "creation": "2013-06-24 15:49:57",
  "description": "Settings for Accounts",
  "doctype": "DocType",
@@ -21,12 +24,15 @@
   "book_asset_depreciation_entry_automatically",
   "add_taxes_from_item_tax_template",
   "automatically_fetch_payment_terms",
+<<<<<<< HEAD
   "deferred_accounting_settings_section",
   "automatically_process_deferred_accounting_entry",
   "book_deferred_entries_based_on",
   "column_break_18",
   "book_deferred_entries_via_journal_entry",
   "submit_journal_entries",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "print_settings",
   "show_inclusive_tax_in_print",
   "column_break_12",
@@ -40,7 +46,11 @@
  "fields": [
   {
    "default": "1",
+<<<<<<< HEAD
    "description": "If enabled, the system will post accounting entries for inventory automatically",
+=======
+   "description": "If enabled, the system will post accounting entries for inventory automatically.",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "auto_accounting_for_stock",
    "fieldtype": "Check",
    "hidden": 1,
@@ -48,23 +58,39 @@
    "label": "Make Accounting Entry For Every Stock Movement"
   },
   {
+<<<<<<< HEAD
    "description": "Accounting entries are frozen up to this date. Nobody can create or modify entries except users with the role specified below",
    "fieldname": "acc_frozen_upto",
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Accounts Frozen Till Date"
+=======
+   "description": "Accounting entry frozen up to this date, nobody can do / modify entry except role specified below.",
+   "fieldname": "acc_frozen_upto",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Accounts Frozen Upto"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "description": "Users with this role are allowed to set frozen accounts and create / modify accounting entries against frozen accounts",
    "fieldname": "frozen_accounts_modifier",
    "fieldtype": "Link",
    "in_list_view": 1,
+<<<<<<< HEAD
    "label": "Role Allowed to Set Frozen Accounts and Edit Frozen Entries",
+=======
+   "label": "Role Allowed to Set Frozen Accounts & Edit Frozen Entries",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "options": "Role"
   },
   {
    "default": "Billing Address",
+<<<<<<< HEAD
    "description": "Address used to determine Tax Category in transactions",
+=======
+   "description": "Address used to determine Tax Category in transactions.",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "determine_address_tax_category_from",
    "fieldtype": "Select",
    "label": "Determine Address Tax Category From",
@@ -75,7 +101,11 @@
    "fieldtype": "Column Break"
   },
   {
+<<<<<<< HEAD
    "description": "This role is allowed to submit transactions that exceed credit limits",
+=======
+   "description": "Role that is allowed to submit transactions that exceed credit limits set.",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "credit_controller",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -127,7 +157,11 @@
    "default": "0",
    "fieldname": "show_inclusive_tax_in_print",
    "fieldtype": "Check",
+<<<<<<< HEAD
    "label": "Show Inclusive Tax in Print"
+=======
+   "label": "Show Inclusive Tax In Print"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "column_break_12",
@@ -165,7 +199,11 @@
   },
   {
    "default": "0",
+<<<<<<< HEAD
    "description": "Only select this if you have set up the Cash Flow Mapper documents",
+=======
+   "description": "Only select if you have setup Cash Flow Mapper documents",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "use_custom_cash_flow",
    "fieldtype": "Check",
    "label": "Use Custom Cash Flow Format"
@@ -177,6 +215,7 @@
    "label": "Automatically Fetch Payment Terms"
   },
   {
+<<<<<<< HEAD
    "description": "The percentage you are allowed to bill more against the amount ordered. For example, if the order value is $100 for an item and tolerance is set as 10%, then you are allowed to bill up to $110 ",
    "fieldname": "over_billing_allowance",
    "fieldtype": "Currency",
@@ -219,14 +258,25 @@
    "fieldtype": "Select",
    "label": "Book Deferred Entries Based On",
    "options": "Days\nMonths"
+=======
+   "description": "Percentage you are allowed to bill more against the amount ordered. For example: If the order value is $100 for an item and tolerance is set as 10% then you are allowed to bill for $110.",
+   "fieldname": "over_billing_allowance",
+   "fieldtype": "Currency",
+   "label": "Over Billing Allowance (%)"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "icon": "icon-cog",
  "idx": 1,
+<<<<<<< HEAD
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
  "modified": "2020-10-13 11:32:52.268826",
+=======
+ "issingle": 1,
+ "modified": "2020-10-08 09:40:12.121145",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Accounts Settings",
@@ -254,4 +304,8 @@
  "sort_field": "modified",
  "sort_order": "ASC",
  "track_changes": 1
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

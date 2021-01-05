@@ -430,6 +430,7 @@ class TestPricingRule(unittest.TestCase):
 
 		self.assertTrue(details)
 
+<<<<<<< HEAD
 	def test_pricing_rule_for_condition(self):
 		frappe.delete_doc_if_exists("Pricing Rule", "_Test Pricing Rule")
 
@@ -484,6 +485,8 @@ class TestPricingRule(unittest.TestCase):
 		frappe.delete_doc_if_exists("Pricing Rule", "_Test Pricing Rule 1")
 		frappe.delete_doc_if_exists("Pricing Rule", "_Test Pricing Rule 2")
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	def test_item_price_with_pricing_rule(self):
 		item = make_item("Water Flask")
 		make_item_price("Water Flask", "_Test Price List", 100)

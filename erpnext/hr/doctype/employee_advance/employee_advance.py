@@ -48,7 +48,11 @@ class EmployeeAdvance(Document):
 		""", (self.name, self.employee), as_dict=1)[0].paid_amount
 
 		return_amount = frappe.db.sql("""
+<<<<<<< HEAD
 			select ifnull(sum(credit), 0) as return_amount
+=======
+			select name, ifnull(sum(credit_in_account_currency), 0) as return_amount
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			from `tabGL Entry`
 			where against_voucher_type = 'Employee Advance'
 				and voucher_type != 'Expense Claim'
@@ -57,11 +61,14 @@ class EmployeeAdvance(Document):
 				and party = %s
 		""", (self.name, self.employee), as_dict=1)[0].return_amount
 
+<<<<<<< HEAD
 		if paid_amount != 0:
 			paid_amount = flt(paid_amount) / flt(self.exchange_rate)
 		if return_amount != 0:
 			return_amount = flt(return_amount) / flt(self.exchange_rate)
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		if flt(paid_amount) > self.advance_amount:
 			frappe.throw(_("Row {0}# Paid Amount cannot be greater than requested advance amount"),
 				EmployeeAdvanceOverPayment)
@@ -136,7 +143,11 @@ def make_bank_entry(dt, dn):
 	je.append("accounts", {
 		"account": payment_account.account,
 		"cost_center": erpnext.get_default_cost_center(doc.company),
+<<<<<<< HEAD
 		"credit_in_account_currency": flt(paying_amount),
+=======
+		"credit_in_account_currency": flt(doc.advance_amount),
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		"account_currency": payment_account.account_currency,
 		"account_type": payment_account.account_type,
 		"exchange_rate": flt(paying_exchange_rate)
@@ -221,6 +232,7 @@ def make_return_entry(employee, company, employee_advance_name, return_amount,  
 
 	return je.as_dict()
 
+<<<<<<< HEAD
 def get_voucher_type(mode_of_payment=None):
 	voucher_type = "Cash Entry"
 
@@ -230,3 +242,44 @@ def get_voucher_type(mode_of_payment=None):
 			voucher_type = "Bank Entry"
 
 	return voucher_type
+=======
+@frappe.whitelist()
+def make_return_entry(employee, company, employee_advance_name,
+		return_amount, advance_account, mode_of_payment=None):
+	return_account = get_default_bank_cash_account(company, account_type='Cash', mode_of_payment = mode_of_payment)
+
+	mode_of_payment_type = ''
+	if mode_of_payment:
+		mode_of_payment_type = frappe.get_cached_value('Mode of Payment', mode_of_payment, 'type')
+		if mode_of_payment_type not in ["Cash", "Bank"]:
+			# if mode of payment is General then it unset the type
+			mode_of_payment_type = None
+
+	je = frappe.new_doc('Journal Entry')
+	je.posting_date = nowdate()
+	# if mode of payment is Bank then voucher type is Bank Entry
+	je.voucher_type = '{} Entry'.format(mode_of_payment_type) if mode_of_payment_type else 'Cash Entry'
+	je.company = company
+	je.remark = 'Return against Employee Advance: ' + employee_advance_name
+
+	je.append('accounts', {
+		'account': advance_account,
+		'credit_in_account_currency': return_amount,
+		'reference_type': 'Employee Advance',
+		'reference_name': employee_advance_name,
+		'party_type': 'Employee',
+		'party': employee,
+		'is_advance': 'Yes'
+	})
+
+	je.append("accounts", {
+		"account": return_account.account,
+		"debit_in_account_currency": return_amount,
+		"account_currency": return_account.account_currency,
+		"account_type": return_account.account_type
+	})
+
+	return je.as_dict()
+
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

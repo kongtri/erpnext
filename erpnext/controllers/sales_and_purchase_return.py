@@ -342,11 +342,16 @@ def make_return_doc(doctype, source_name, target_doc=None):
 			target_doc.dn_detail = source_doc.name
 			if default_warehouse_for_sales_return:
 				target_doc.warehouse = default_warehouse_for_sales_return
+<<<<<<< HEAD
 		elif doctype == "Sales Invoice" or doctype == "POS Invoice":
 			returned_qty_map = get_returned_qty_map_for_row(source_doc.name, doctype)
 			target_doc.qty = -1 * flt(source_doc.qty - (returned_qty_map.get('qty') or 0))
 			target_doc.stock_qty = -1 * flt(source_doc.stock_qty - (returned_qty_map.get('stock_qty') or 0))
 
+=======
+
+		elif doctype == "Sales Invoice":
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			target_doc.sales_order = source_doc.sales_order
 			target_doc.delivery_note = source_doc.delivery_note
 			target_doc.so_detail = source_doc.so_detail

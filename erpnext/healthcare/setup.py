@@ -212,4 +212,8 @@ def get_company():
 		company = frappe.get_list("Company", limit=1)
 		if company:
 			return company[0].name
+<<<<<<< HEAD
 	return None
+=======
+	return None
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

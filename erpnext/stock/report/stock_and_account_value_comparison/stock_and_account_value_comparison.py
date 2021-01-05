@@ -57,7 +57,12 @@ def get_gl_data(report_filters, filters):
 	if report_filters.account:
 		stock_accounts = [report_filters.account]
 	else:
+<<<<<<< HEAD
 		stock_accounts = get_stock_accounts(report_filters.company)
+=======
+		stock_accounts = [k.name
+			for k in get_stock_accounts(report_filters.company)]
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	filters.update({
 		"account": ("in", stock_accounts)

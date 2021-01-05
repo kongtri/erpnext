@@ -241,7 +241,11 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-06-11 15:15:54.338622",
+=======
+ "modified": "2020-03-18 18:26:03.992861",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Account",

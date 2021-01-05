@@ -29,6 +29,7 @@ frappe.ui.form.on("Task", {
 				filters: filters
 			};
 		})
+<<<<<<< HEAD
 
 		frm.set_query("parent_task", function () {
 			let filters = {
@@ -39,6 +40,12 @@ frappe.ui.form.on("Task", {
 				filters: filters
 			}
 		});
+=======
+	},
+
+	refresh: function (frm) {
+		frm.set_query("parent_task", { "is_group": 1 });
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	},
 
 	is_group: function (frm) {

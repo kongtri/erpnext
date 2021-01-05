@@ -14,6 +14,13 @@ frappe.ui.form.on('Job Card', {
 	},
 
 	refresh: function(frm) {
+<<<<<<< HEAD
+=======
+
+		if(frm.doc.docstatus == 0) {
+			frm.set_df_property("operation", "read_only", frm.doc.operation_id ? 1 : 0);
+		}
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		frappe.flags.pause_job = 0;
 		frappe.flags.resume_job = 0;
 
@@ -31,6 +38,7 @@ frappe.ui.form.on('Job Card', {
 			}
 		}
 
+<<<<<<< HEAD
 		frm.set_query("quality_inspection", function() {
 			return {
 				query: "erpnext.stock.doctype.quality_inspection.quality_inspection.quality_inspection_query",
@@ -43,6 +51,10 @@ frappe.ui.form.on('Job Card', {
 
 		frm.trigger("toggle_operation_number");
 
+=======
+		frm.trigger("toggle_operation_number");
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		if (frm.doc.docstatus == 0 && (frm.doc.for_quantity > frm.doc.total_completed_qty || !frm.doc.for_quantity)
 			&& (frm.doc.items || !frm.doc.items.length || frm.doc.for_quantity == frm.doc.transferred_qty)) {
 			frm.trigger("prepare_timer_buttons");

@@ -110,7 +110,11 @@ frappe.ui.form.on("Stock Reconciliation", {
 					frappe.model.set_value(cdt, cdn, "amount", r.message.rate * r.message.qty);
 					frappe.model.set_value(cdt, cdn, "current_serial_no", r.message.serial_nos);
 
+<<<<<<< HEAD
 					if (frm.doc.purpose == "Stock Reconciliation") {
+=======
+					if (frm.doc.purpose == "Stock Reconciliation" && !d.serial_no) {
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 						frappe.model.set_value(cdt, cdn, "serial_no", r.message.serial_nos);
 					}
 				}
@@ -185,6 +189,11 @@ frappe.ui.form.on("Stock Reconciliation Item", {
 		var child = locals[cdt][cdn];
 		if (child.batch_no) {
 			frappe.model.set_value(cdt, cdn, "batch_no", "");
+		}
+
+		if (child.serial_no) {
+			frappe.model.set_value(cdt, cdn, "serial_no", "");
+			frappe.model.set_value(cdt, cdn, "current_serial_no", "");
 		}
 
 		frm.events.set_valuation_rate_and_qty(frm, cdt, cdn);

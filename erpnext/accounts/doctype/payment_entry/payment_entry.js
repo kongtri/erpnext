@@ -47,8 +47,12 @@ frappe.ui.form.on('Payment Entry', {
 		frm.set_query("bank_account", function() {
 			return {
 				filters: {
+<<<<<<< HEAD
 					is_company_account: 1,
 					company: frm.doc.company
+=======
+					is_company_account: 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				}
 			}
 		});
@@ -187,8 +191,13 @@ frappe.ui.form.on('Payment Entry', {
 		frm.toggle_display("base_paid_amount", frm.doc.paid_from_account_currency != company_currency);
 
 		frm.toggle_display("base_received_amount", (
+<<<<<<< HEAD
 			frm.doc.paid_to_account_currency != company_currency
 			&& frm.doc.paid_from_account_currency != frm.doc.paid_to_account_currency
+=======
+			frm.doc.paid_to_account_currency != company_currency &&
+			frm.doc.paid_from_account_currency != frm.doc.paid_to_account_currency 
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			&& frm.doc.base_paid_amount != frm.doc.base_received_amount
 		));
 

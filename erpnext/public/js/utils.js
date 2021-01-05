@@ -470,6 +470,7 @@ erpnext.utils.update_child_items = function(opts) {
 		disabled: 0,
 		label: __('Item Code')
 	}, {
+<<<<<<< HEAD
 		fieldtype:'Link',
 		fieldname:'uom',
 		options: 'UOM',
@@ -497,6 +498,8 @@ erpnext.utils.update_child_items = function(opts) {
 			});
 		}
 	}, {
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		fieldtype:'Float',
 		fieldname:"qty",
 		default: 0,
@@ -539,7 +542,11 @@ erpnext.utils.update_child_items = function(opts) {
 				fieldtype: "Table",
 				label: "Items",
 				cannot_add_rows: cannot_add_row,
+<<<<<<< HEAD
 				in_place_edit: false,
+=======
+				in_place_edit: true,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				reqd: 1,
 				data: this.data,
 				get_data: () => {

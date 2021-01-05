@@ -13,7 +13,11 @@ from erpnext.controllers.item_variant import (ItemVariantExistsError,
 from erpnext.setup.doctype.item_group.item_group import (get_parent_item_groups, invalidate_cache_for)
 from frappe import _, msgprint
 from frappe.utils import (cint, cstr, flt, formatdate, get_timestamp, getdate,
+<<<<<<< HEAD
 		now_datetime, random_string, strip, get_link_to_form, nowtime)
+=======
+						  now_datetime, random_string, strip, get_link_to_form)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 from frappe.utils.html_utils import clean_html
 from frappe.website.doctype.website_slideshow.website_slideshow import \
 	get_slideshow
@@ -195,7 +199,11 @@ class Item(WebsiteGenerator):
 
 			if default_warehouse:
 				stock_entry = make_stock_entry(item_code=self.name, target=default_warehouse, qty=self.opening_stock,
+<<<<<<< HEAD
 					rate=self.valuation_rate, company=default.company, posting_date=getdate(), posting_time=nowtime())
+=======
+					rate=self.valuation_rate, company=default.company)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 				stock_entry.add_comment("Comment", _("Opening Stock"))
 
@@ -577,9 +585,14 @@ class Item(WebsiteGenerator):
 						# if barcode is getting updated , the row name has to reset.
 						# Delete previous old row doc and re-enter row as if new to reset name in db.
 						item_barcode.set("__islocal", True)
+<<<<<<< HEAD
 						item_barcode_entry_name = item_barcode.name
 						item_barcode.name = None
 						frappe.delete_doc("Item Barcode", item_barcode_entry_name)
+=======
+						item_barcode.name = None
+						frappe.delete_doc("Item Barcode", item_barcode.name)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def validate_warehouse_for_reorder(self):
 		'''Validate Reorder level table for duplicate and conditional mandatory'''
@@ -876,8 +889,12 @@ class Item(WebsiteGenerator):
 			</table>
 		""".format(error_description, _('Variant Items'), _('Attributes'), rows)
 
+<<<<<<< HEAD
 		frappe.throw(message, title=_("Variant Attribute Error"), is_minimizable=True, wide=True)
 
+=======
+		frappe.throw(message, title=_("Variant Attribute Error"), is_minimizable=True)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def validate_stock_exists_for_template_item(self):
 		if self.stock_ledger_created() and self._doc_before_save:
@@ -980,17 +997,24 @@ class Item(WebsiteGenerator):
 			linked_doctypes += ["Sales Order Item", "Purchase Order Item", "Material Request Item", "Product Bundle"]
 
 		for doctype in linked_doctypes:
+<<<<<<< HEAD
 			filters={"item_code": self.name, "docstatus": 1}
 
 			if doctype == "Product Bundle":
 				filters={"new_item_code": self.name}
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			if doctype in ("Purchase Invoice Item", "Sales Invoice Item",):
 				# If Invoice has Stock impact, only then consider it.
 				if self.stock_ledger_created():
 					return True
 
+<<<<<<< HEAD
 			elif frappe.db.get_value(doctype, filters):
+=======
+			elif frappe.db.get_value(doctype, filters={"item_code": self.name, "docstatus": 1}):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				return True
 
 	def validate_auto_reorder_enabled_in_stock_settings(self):
@@ -1126,6 +1150,8 @@ def get_last_purchase_details(item_code, doc_name=None, conversion_rate=1.0):
 			pr.name = pr_item.parent
 		order by pr.posting_date desc, pr.posting_time desc, pr.name desc
 		limit 1""", (item_code, cstr(doc_name)), as_dict=1)
+
+
 
 	purchase_order_date = getdate(last_purchase_order and last_purchase_order[0].transaction_date
 							   or "1900-01-01")

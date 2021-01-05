@@ -1,6 +1,9 @@
 {
  "actions": [],
+<<<<<<< HEAD
  "allow_auto_repeat": 1,
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "allow_import": 1,
  "autoname": "naming_series:",
  "creation": "2013-05-24 19:29:09",
@@ -1267,7 +1270,11 @@
  "idx": 146,
  "is_submittable": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-11-30 12:54:45.407289",
+=======
+ "modified": "2020-05-19 17:03:45.880106",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Delivery Note",

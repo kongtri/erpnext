@@ -5,15 +5,25 @@
 from __future__ import unicode_literals
 import unittest
 import frappe
+<<<<<<< HEAD
 from frappe.utils import flt, now, add_months, cint, today, add_to_date
 from erpnext.manufacturing.doctype.work_order.work_order import (make_stock_entry,
 	ItemHasVariantError, stop_unstop, StockOverProductionError, OverProductionError, CapacityError)
+=======
+from frappe.utils import flt, now, cint, add_to_date
+from erpnext.stock.doctype.purchase_receipt.test_purchase_receipt import set_perpetual_inventory
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 from erpnext.stock.doctype.stock_entry import test_stock_entry
 from erpnext.stock.utils import get_bin
 from erpnext.selling.doctype.sales_order.test_sales_order import make_sales_order
 from erpnext.stock.doctype.item.test_item import make_item
 from erpnext.manufacturing.doctype.production_plan.test_production_plan import make_bom
 from erpnext.stock.doctype.warehouse.test_warehouse import create_warehouse
+<<<<<<< HEAD
+=======
+from erpnext.manufacturing.doctype.work_order.work_order import (make_stock_entry,
+	ItemHasVariantError, stop_unstop, StockOverProductionError, OverProductionError)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 from erpnext.manufacturing.doctype.job_card.job_card import JobCardCancelError
 
 class TestWorkOrder(unittest.TestCase):
@@ -318,6 +328,29 @@ class TestWorkOrder(unittest.TestCase):
 
 		allow_overproduction("overproduction_percentage_for_work_order", 0)
 
+	def test_finished_good_valuation_rate(self):
+		allow_overproduction("overproduction_percentage_for_work_order", 0)
+		wo_order = make_wo_order_test_record(planned_start_date=now(), qty=2)
+		test_stock_entry.make_stock_entry(item_code="_Test Item",
+			target="_Test Warehouse - _TC", qty=10, basic_rate=5000.0)
+		test_stock_entry.make_stock_entry(item_code="_Test Item Home Desktop 100",
+			target="_Test Warehouse - _TC", qty=10, basic_rate=1000.0)
+
+		ste_doc = frappe.get_doc(make_stock_entry(wo_order.name, "Material Transfer for Manufacture", 2))
+		ste_doc.submit()
+
+		ste_doc = frappe.get_doc(make_stock_entry(wo_order.name, "Manufacture", 2))
+		ste_doc.save()
+
+		self.assertEquals(ste_doc.total_incoming_value, ste_doc.total_outgoing_value)
+
+		for row in ste_doc.items:
+			if row.t_warehouse and not row.s_warehouse:
+				row.valuation_rate = 120
+		ste_doc.save()
+
+		self.assertEquals(ste_doc.total_incoming_value, ste_doc.total_outgoing_value)
+
 	def test_over_production_for_sales_order(self):
 		so = make_sales_order(item_code="_Test FG Item", qty=2)
 
@@ -381,6 +414,7 @@ class TestWorkOrder(unittest.TestCase):
 			bom_no=bom, source_warehouse="_Test Warehouse - _TC")
 
 		for row in work_order.required_items:
+<<<<<<< HEAD
 			stock_entry_doc = test_stock_entry.make_stock_entry(item_code=row.item_code,
 				target="_Test Warehouse - _TC", qty=row.required_qty, basic_rate=100)
 			stock_entries.append(stock_entry_doc)
@@ -388,6 +422,13 @@ class TestWorkOrder(unittest.TestCase):
 		ste = frappe.get_doc(make_stock_entry(work_order.name, "Material Transfer for Manufacture", 1))
 		ste.submit()
 		stock_entries.append(ste)
+=======
+			test_stock_entry.make_stock_entry(item_code=row.item_code,
+				target="_Test Warehouse - _TC", qty=row.required_qty, basic_rate=100)
+
+		ste = frappe.get_doc(make_stock_entry(work_order.name, "Material Transfer for Manufacture", 1))
+		ste.submit()
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		job_cards = frappe.get_all('Job Card', filters = {'work_order': work_order.name})
 		self.assertEqual(len(job_cards), len(bom_doc.operations))
@@ -404,6 +445,7 @@ class TestWorkOrder(unittest.TestCase):
 
 		ste1 = frappe.get_doc(make_stock_entry(work_order.name, "Manufacture", 1))
 		ste1.submit()
+<<<<<<< HEAD
 		stock_entries.append(ste1)
 
 		for job_card in job_cards:
@@ -445,6 +487,15 @@ class TestWorkOrder(unittest.TestCase):
 
 			work_order1.cancel()
 			work_order.cancel()
+=======
+
+		for job_card in job_cards:
+			doc = frappe.get_doc("Job Card", job_card)
+			self.assertRaises(JobCardCancelError, doc.cancel)
+
+		ste1.cancel()
+		ste.cancel()
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def test_work_order_with_non_transfer_item(self):
 		items = {'Finished Good Transfer Item': 1, '_Test FG Item': 1, '_Test FG Item 1': 0}
@@ -538,6 +589,10 @@ class TestWorkOrder(unittest.TestCase):
 		ste1.submit()
 		ste_cancel_list.append(ste1)
 
+<<<<<<< HEAD
+=======
+		print(wo_order.name)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		ste3 = frappe.get_doc(make_stock_entry(wo_order.name, "Material Consumption for Manufacture", 2))
 		self.assertEquals(ste3.fg_completed_qty, 2)
 

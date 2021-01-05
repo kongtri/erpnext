@@ -418,6 +418,20 @@ def get_default_supplier_query(doctype, txt, searchfield, start, page_len, filte
 		""".format(', '.join(['%s']*len(item_list))),tuple(item_list))
 
 @frappe.whitelist()
+@frappe.validate_and_sanitize_search_inputs
+def get_default_supplier_query(doctype, txt, searchfield, start, page_len, filters):
+	doc = frappe.get_doc("Material Request", filters.get("doc"))
+	item_list = []
+	for d in doc.items:
+		item_list.append(d.item_code)
+
+	return frappe.db.sql("""select default_supplier
+		from `tabItem Default`
+		where parent in ({0}) and
+		default_supplier IS NOT NULL
+		""".format(', '.join(['%s']*len(item_list))),tuple(item_list))
+
+@frappe.whitelist()
 def make_supplier_quotation(source_name, target_doc=None):
 	def postprocess(source, target_doc):
 		set_missing_values(source, target_doc)
@@ -459,9 +473,12 @@ def make_stock_entry(source_name, target_doc=None):
 		if source_parent.material_request_type == "Customer Provided":
 			target.allow_zero_valuation_rate = 1
 
+<<<<<<< HEAD
 		if source_parent.material_request_type == "Material Transfer":
 			target.s_warehouse = obj.from_warehouse
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	def set_missing_values(source, target):
 		target.purpose = source.material_request_type
 		if source.job_card:
@@ -542,8 +559,12 @@ def raise_work_orders(material_request):
 				.format(frappe.bold(_("Work Order")), work_orders_list[0]))
 
 	if errors:
+<<<<<<< HEAD
 		frappe.throw(_("Work Order cannot be created for following reason: <br> {0}")
 			.format(new_line_sep(errors)))
+=======
+		frappe.throw(_("Work Order cannot be created for following reason:") + '\n' + new_line_sep(errors))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	return work_orders
 

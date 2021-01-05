@@ -233,8 +233,14 @@
  "idx": 1,
  "index_web_pages_for_search": 1,
  "issingle": 1,
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-12-29 12:53:31.162247",
+=======
+ "istable": 0,
+ "max_attachments": 0,
+ "modified": "2020-12-18 19:56:06.343314",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock Settings",
@@ -253,5 +259,11 @@
  "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "ASC",
+<<<<<<< HEAD
  "track_changes": 1
+=======
+ "track_changes": 1,
+ "track_seen": 0,
+ "track_views": 0
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 }

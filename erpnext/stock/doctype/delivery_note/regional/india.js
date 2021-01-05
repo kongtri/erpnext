@@ -2,6 +2,7 @@
 
 erpnext.setup_auto_gst_taxation('Delivery Note');
 
+<<<<<<< HEAD
 frappe.ui.form.on('Delivery Note', {
 	refresh: function(frm) {
 		if(frm.doc.docstatus == 1 && !frm.is_dirty() && !frm.doc.ewaybill) {
@@ -28,3 +29,5 @@ frappe.ui.form.on('Delivery Note', {
 	}
 })
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

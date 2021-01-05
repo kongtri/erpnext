@@ -4,8 +4,13 @@
 
 from __future__ import unicode_literals
 import frappe
+<<<<<<< HEAD
 import datetime
 from frappe import _, bold
+=======
+from frappe import _
+from frappe.utils import flt, time_diff_in_hours, get_datetime, time_diff, get_link_to_form
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 from frappe.model.mapper import get_mapped_doc
 from frappe.model.document import Document
 from frappe.utils import (flt, cint, time_diff_in_hours, get_datetime, getdate,
@@ -19,12 +24,18 @@ class OperationMismatchError(frappe.ValidationError): pass
 class OperationSequenceError(frappe.ValidationError): pass
 class JobCardCancelError(frappe.ValidationError): pass
 
+class OperationMismatchError(frappe.ValidationError): pass
+class JobCardCancelError(frappe.ValidationError): pass
+
 class JobCard(Document):
 	def validate(self):
 		self.validate_time_logs()
 		self.set_status()
 		self.validate_operation_id()
+<<<<<<< HEAD
 		self.validate_sequence_id()
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def validate_time_logs(self):
 		self.total_completed_qty = 0.0
@@ -199,6 +210,7 @@ class JobCard(Document):
 	def validate_job_card(self):
 		if not self.time_logs:
 			frappe.throw(_("Time logs are required for {0} {1}")
+<<<<<<< HEAD
 				.format(bold("Job Card"), get_link_to_form("Job Card", self.name)))
 
 		if self.for_quantity and self.total_completed_qty != self.for_quantity:
@@ -207,6 +219,16 @@ class JobCard(Document):
 
 			frappe.throw(_("The {0} ({1}) must be equal to {2} ({3})")
 				.format(total_completed_qty, bold(self.total_completed_qty), qty_to_manufacture,bold(self.for_quantity)))
+=======
+				.format(frappe.bold("Job Card"), get_link_to_form("Job Card", self.name)))
+
+		if self.for_quantity and self.total_completed_qty != self.for_quantity:
+			total_completed_qty = frappe.bold(_("Total Completed Qty"))
+			qty_to_manufacture = frappe.bold(_("Qty to Manufacture"))
+
+			frappe.throw(_("The {0} ({1}) must be equal to {2} ({3})"
+				.format(total_completed_qty, frappe.bold(self.total_completed_qty), qty_to_manufacture,frappe.bold(self.for_quantity))))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def update_work_order(self):
 		if not self.work_order:
@@ -215,8 +237,15 @@ class JobCard(Document):
 		for_quantity, time_in_mins = 0, 0
 		from_time_list, to_time_list = [], []
 
+<<<<<<< HEAD
 		field = "operation_id"
 		data = self.get_current_operation_data()
+=======
+		data = frappe.get_all('Job Card',
+			fields = ["sum(total_time_in_mins) as time_in_mins", "sum(total_completed_qty) as completed_qty"],
+			filters = {"docstatus": 1, "work_order": self.work_order, "operation_id": self.operation_id})
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		if data and len(data) > 0:
 			for_quantity = flt(data[0].completed_qty)
 			time_in_mins = flt(data[0].time_in_mins)
@@ -261,11 +290,14 @@ class JobCard(Document):
 		wo.calculate_operating_cost()
 		wo.set_actual_dates()
 		wo.save()
+<<<<<<< HEAD
 
 	def get_current_operation_data(self):
 		return frappe.get_all('Job Card',
 			fields = ["sum(total_time_in_mins) as time_in_mins", "sum(total_completed_qty) as completed_qty"],
 			filters = {"docstatus": 1, "work_order": self.work_order, "operation_id": self.operation_id})
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def set_transferred_qty(self, update_status=False):
 		if not self.items:
@@ -331,6 +363,7 @@ class JobCard(Document):
 	def validate_operation_id(self):
 		if (self.get("operation_id") and self.get("operation_row_number") and self.operation and self.work_order and
 			frappe.get_cached_value("Work Order Operation", self.operation_row_number, "name") != self.operation_id):
+<<<<<<< HEAD
 			work_order = bold(get_link_to_form("Work Order", self.work_order))
 			frappe.throw(_("Operation {0} does not belong to the work order {1}")
 				.format(bold(self.operation), work_order), OperationMismatchError)
@@ -357,6 +390,11 @@ class JobCard(Document):
 			if row.status != "Completed" and row.completed_qty < current_operation_qty:
 				frappe.throw(_("{0}, complete the operation {1} before the operation {2}.")
 					.format(message, bold(row.operation), bold(self.operation)), OperationSequenceError)
+=======
+			work_order = frappe.bold(get_link_to_form("Work Order", self.work_order))
+			frappe.throw(_("Operation {0} does not belong to the work order {1}")
+				.format(frappe.bold(self.operation), work_order), OperationMismatchError)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 @frappe.whitelist()
 def get_operation_details(work_order, operation):

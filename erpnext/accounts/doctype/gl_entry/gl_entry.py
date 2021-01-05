@@ -39,6 +39,10 @@ class GLEntry(Document):
 		if not from_repost:
 			self.validate_account_details(adv_adj)
 			self.validate_dimensions_for_pl_and_bs()
+<<<<<<< HEAD
+=======
+			check_freezing_date(self.posting_date, adv_adj)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		validate_frozen_account(self.account, adv_adj)
 		validate_balance_type(self.account, adv_adj)
@@ -108,8 +112,13 @@ class GLEntry(Document):
 			from tabAccount where name=%s""", self.account, as_dict=1)[0]
 
 		if ret.is_group==1:
+<<<<<<< HEAD
 			frappe.throw(_('''{0} {1}: Account {2} is a Group Account and group accounts cannot be used in transactions''')
 				.format(self.voucher_type, self.voucher_no, self.account))
+=======
+			frappe.throw(_('''{0} {1}: Account {2} is a Group Account and group accounts cannot be used in
+				transactions''').format(self.voucher_type, self.voucher_no, self.account))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		if ret.docstatus==2:
 			frappe.throw(_("{0} {1}: Account {2} is inactive")
@@ -137,9 +146,15 @@ class GLEntry(Document):
 			frappe.throw(_("{0} {1}: Cost Center {2} does not belong to Company {3}")
 				.format(self.voucher_type, self.voucher_no, self.cost_center, self.company))
 
+<<<<<<< HEAD
 		if self.cost_center and _check_is_group():
 			frappe.throw(_("""{0} {1}: Cost Center {2} is a group cost center and group cost centers cannot be used in transactions""")
 				.format(self.voucher_type, self.voucher_no, frappe.bold(self.cost_center)))
+=======
+		if not self.flags.from_repost and self.cost_center and _check_is_group():
+			frappe.throw(_("""{0} {1}: Cost Center {2} is a group cost center and group cost centers cannot
+				be used in transactions""").format(self.voucher_type, self.voucher_no, frappe.bold(self.cost_center)))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def validate_party(self):
 		validate_party_frozen_disabled(self.party_type, self.party)

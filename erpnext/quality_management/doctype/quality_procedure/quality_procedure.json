@@ -1,7 +1,11 @@
 {
  "actions": [],
  "allow_rename": 1,
+<<<<<<< HEAD
  "autoname": "field:quality_procedure_name",
+=======
+ "autoname": "format:PRC-{quality_procedure_name}",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "creation": "2018-10-06 00:06:29.756804",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -115,7 +119,13 @@
    "link_fieldname": "procedure"
   }
  ],
+<<<<<<< HEAD
  "modified": "2020-10-26 15:25:39.316088",
+=======
+ "is_tree": 1,
+ "links": [],
+ "modified": "2020-10-12 16:14:11.167537",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Quality Management",
  "name": "Quality Procedure",

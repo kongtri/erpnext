@@ -17,12 +17,12 @@ class TestPOSProfile(unittest.TestCase):
 		pos_profile = get_pos_profile("_Test Company") or {}
 		if pos_profile:
 			doc = frappe.get_doc("POS Profile", pos_profile.get("name"))
-			doc.append('item_groups', {'item_group': '_Test Item Group'})
-			doc.append('customer_groups', {'customer_group': '_Test Customer Group'})
+			doc.set('item_groups', [{'item_group': '_Test Item Group'}])
+			doc.set('customer_groups', [{'customer_group': '_Test Customer Group'}])
 			doc.save()
 			items = get_items_list(doc, doc.company)
 			customers = get_customers_list(doc)
-
+			
 			products_count = frappe.db.sql(""" select count(name) from tabItem where item_group = '_Test Item Group'""", as_list=1)
 			customers_count = frappe.db.sql(""" select count(name) from tabCustomer where customer_group = '_Test Customer Group'""")
 
@@ -31,6 +31,7 @@ class TestPOSProfile(unittest.TestCase):
 
 		frappe.db.sql("delete from `tabPOS Profile`")
 
+<<<<<<< HEAD
 def get_customers_list(pos_profile={}):
 	cond = "1=1"
 	customer_groups = []
@@ -71,6 +72,9 @@ def get_items_list(pos_profile, company):
 
 def make_pos_profile(**args):
 	frappe.db.sql("delete from `tabPOS Payment Method`")
+=======
+def make_pos_profile(**args):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	frappe.db.sql("delete from `tabPOS Profile`")
 
 	args = frappe._dict(args)
@@ -92,12 +96,15 @@ def make_pos_profile(**args):
 		"write_off_cost_center":  args.write_off_cost_center or "_Test Write Off Cost Center - _TC"
 	})
 
+<<<<<<< HEAD
 	payments = [{
 		'mode_of_payment': 'Cash',
 		'default': 1
 	}]
 	pos_profile.set("payments", payments)
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	if not frappe.db.exists("POS Profile", args.name or "_Test POS Profile"):
 		pos_profile.insert()
 

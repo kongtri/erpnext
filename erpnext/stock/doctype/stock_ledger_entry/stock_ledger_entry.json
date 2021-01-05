@@ -8,6 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "item_code",
+<<<<<<< HEAD
   "warehouse",
   "posting_date",
   "posting_time",
@@ -23,10 +24,26 @@
   "incoming_rate",
   "outgoing_rate",
   "column_break_17",
+=======
+  "serial_no",
+  "batch_no",
+  "warehouse",
+  "posting_date",
+  "posting_time",
+  "voucher_type",
+  "voucher_no",
+  "voucher_detail_no",
+  "actual_qty",
+  "incoming_rate",
+  "outgoing_rate",
+  "stock_uom",
+  "qty_after_transaction",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "valuation_rate",
   "stock_value",
   "stock_value_difference",
   "stock_queue",
+<<<<<<< HEAD
   "section_break_21",
   "company",
   "stock_uom",
@@ -35,6 +52,11 @@
   "column_break_26",
   "fiscal_year",
   "serial_no",
+=======
+  "project",
+  "company",
+  "fiscal_year",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "is_cancelled",
   "to_rename"
  ],
@@ -57,6 +79,10 @@
   {
    "fieldname": "serial_no",
    "fieldtype": "Long Text",
+<<<<<<< HEAD
+=======
+   "in_list_view": 1,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "label": "Serial No",
    "print_width": "100px",
    "read_only": 1,
@@ -65,6 +91,10 @@
   {
    "fieldname": "batch_no",
    "fieldtype": "Data",
+<<<<<<< HEAD
+=======
+   "in_list_view": 1,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "label": "Batch No",
    "oldfieldname": "batch_no",
    "oldfieldtype": "Data",
@@ -124,7 +154,10 @@
    "fieldname": "voucher_no",
    "fieldtype": "Dynamic Link",
    "in_filter": 1,
+<<<<<<< HEAD
    "in_list_view": 1,
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "in_standard_filter": 1,
    "label": "Voucher No",
    "oldfieldname": "voucher_no",
@@ -148,7 +181,10 @@
    "fieldname": "actual_qty",
    "fieldtype": "Float",
    "in_filter": 1,
+<<<<<<< HEAD
    "in_list_view": 1,
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "label": "Actual Quantity",
    "oldfieldname": "actual_qty",
    "oldfieldtype": "Currency",
@@ -159,7 +195,10 @@
   {
    "fieldname": "incoming_rate",
    "fieldtype": "Currency",
+<<<<<<< HEAD
    "in_list_view": 1,
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "label": "Incoming Rate",
    "oldfieldname": "incoming_rate",
    "oldfieldtype": "Currency",
@@ -225,11 +264,20 @@
   {
    "fieldname": "stock_queue",
    "fieldtype": "Text",
+<<<<<<< HEAD
+=======
+   "hidden": 1,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "label": "Stock Queue (FIFO)",
    "oldfieldname": "fcfs_stack",
    "oldfieldtype": "Text",
    "print_hide": 1,
+<<<<<<< HEAD
    "read_only": 1
+=======
+   "read_only": 1,
+   "report_hide": 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "project",
@@ -262,10 +310,18 @@
    "width": "150px"
   },
   {
+<<<<<<< HEAD
    "default": "0",
    "fieldname": "is_cancelled",
    "fieldtype": "Check",
    "label": "Is Cancelled",
+=======
+   "fieldname": "is_cancelled",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Is Cancelled",
+   "options": "\nNo\nYes",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "report_hide": 1
   },
   {
@@ -275,6 +331,7 @@
    "hidden": 1,
    "label": "To Rename",
    "search_index": 1
+<<<<<<< HEAD
   },
   {
    "fieldname": "dependant_sle_voucher_detail_no",
@@ -308,15 +365,21 @@
    "label": "Recalculate Incoming/Outgoing Rate",
    "no_copy": 1,
    "read_only": 1
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "hide_toolbar": 1,
  "icon": "fa fa-list",
  "idx": 1,
  "in_create": 1,
+<<<<<<< HEAD
  "index_web_pages_for_search": 1,
  "links": [],
  "modified": "2020-09-07 11:10:35.318872",
+=======
+ "modified": "2020-02-25 22:53:33.504681",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock Ledger Entry",

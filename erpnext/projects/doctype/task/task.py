@@ -9,7 +9,11 @@ import frappe
 from frappe import _, throw
 from frappe.desk.form.assign_to import clear, close_all_assignments
 from frappe.model.mapper import get_mapped_doc
+<<<<<<< HEAD
 from frappe.utils import add_days, cstr, date_diff, get_link_to_form, getdate, today, flt
+=======
+from frappe.utils import add_days, cstr, date_diff, get_link_to_form, getdate, today
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 from frappe.utils.nestedset import NestedSet
 
 
@@ -58,7 +62,11 @@ class Task(NestedSet):
 		if self.status!=self.get_db_value("status") and self.status == "Completed":
 			for d in self.depends_on:
 				if frappe.db.get_value("Task", d.task, "status") not in ("Completed", "Cancelled"):
+<<<<<<< HEAD
 					frappe.throw(_("Cannot complete task {0} as its dependant task {1} are not ccompleted / cancelled.").format(frappe.bold(self.name), frappe.bold(d.task)))
+=======
+					frappe.throw(_("Cannot complete task {0} as its dependant tasks {1} are not completed / cancelled.").format(frappe.bold(self.name), frappe.bold(d.task)))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 			close_all_assignments(self.doctype, self.name)
 

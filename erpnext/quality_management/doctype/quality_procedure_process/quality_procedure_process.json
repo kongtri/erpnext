@@ -21,14 +21,22 @@
    "fieldname": "procedure",
    "fieldtype": "Link",
    "in_list_view": 1,
+<<<<<<< HEAD
    "label": "Sub Procedure",
+=======
+   "label": "Child Procedure",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "options": "Quality Procedure"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-10-27 13:55:11.252945",
+=======
+ "modified": "2020-06-17 15:44:38.937915",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Quality Management",
  "name": "Quality Procedure Process",

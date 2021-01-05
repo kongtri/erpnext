@@ -6,9 +6,12 @@ erpnext.setup_auto_gst_taxation = (doctype) => {
 		shipping_address: function(frm) {
 			frm.trigger('get_tax_template');
 		},
+<<<<<<< HEAD
 		supplier_address: function(frm) {
 			frm.trigger('get_tax_template');
 		},
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		tax_category: function(frm) {
 			frm.trigger('get_tax_template');
 		},

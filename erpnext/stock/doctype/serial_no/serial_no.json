@@ -427,7 +427,11 @@
  "icon": "fa fa-barcode",
  "idx": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-07-20 20:50:16.660433",
+=======
+ "modified": "2020-07-22 15:53:50.900855",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Serial No",

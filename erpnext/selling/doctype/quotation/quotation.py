@@ -63,7 +63,6 @@ class Quotation(SellingController):
 			opportunity = self.opportunity
 
 		opp = frappe.get_doc("Opportunity", opportunity)
-		opp.status = None
 		opp.set_status(update=True)
 
 	def declare_enquiry_lost(self, lost_reasons_list, detailed_reason=None):
@@ -195,6 +194,7 @@ def _make_sales_order(source_name, target_doc=None, ignore_permissions=False):
 	return doclist
 
 def set_expired_status():
+<<<<<<< HEAD
 	# filter out submitted non expired quotations whose validity has been ended
 	cond = "qo.docstatus = 1 and qo.status != 'Expired' and qo.valid_till < %s"
 	# check if those QUO have SO against it
@@ -212,6 +212,14 @@ def set_expired_status():
 			.format(cond=cond, so_against_quo=so_against_quo),
 			(nowdate())
 		)
+=======
+	frappe.db.sql("""
+		UPDATE
+			`tabQuotation` SET `status` = 'Expired'
+		WHERE
+			`status` not in ('Ordered', 'Expired', 'Lost', 'Cancelled') AND `valid_till` < %s
+		""", (nowdate()))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 @frappe.whitelist()
 def make_sales_invoice(source_name, target_doc=None):

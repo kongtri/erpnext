@@ -14,8 +14,12 @@ erpnext.patches.v4_0.apply_user_permissions
 erpnext.patches.v4_0.move_warehouse_user_to_restrictions
 erpnext.patches.v4_0.global_defaults_to_system_settings
 erpnext.patches.v4_0.update_incharge_name_to_sales_person_in_maintenance_schedule
+<<<<<<< HEAD
 execute:frappe.reload_doc("accounts", "doctype", "POS Payment Method") #2020-05-28
 execute:frappe.reload_doc("HR", "doctype", "HR Settings") #2020-01-16 #2020-07-24
+=======
+execute:frappe.reload_doc("HR", "doctype", "HR Settings") #2020-01-16
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 execute:frappe.reload_doc('stock', 'doctype', 'warehouse') # 2017-04-24
 execute:frappe.reload_doc('accounts', 'doctype', 'sales_invoice') # 2016-08-31
 execute:frappe.reload_doc('selling', 'doctype', 'sales_order') # 2014-01-29
@@ -630,9 +634,15 @@ execute:frappe.reload_doc('desk', 'doctype', 'dashboard')
 execute:frappe.reload_doc('desk', 'doctype', 'dashboard_chart_source')
 execute:frappe.reload_doc('desk', 'doctype', 'dashboard_chart')
 execute:frappe.reload_doc('desk', 'doctype', 'dashboard_chart_field')
+<<<<<<< HEAD
 erpnext.patches.v12_0.remove_bank_remittance_custom_fields
 erpnext.patches.v12_0.generate_leave_ledger_entries #04-11-2020
 execute:frappe.delete_doc_if_exists("Report", "Loan Repayment")
+=======
+erpnext.patches.v12_0.add_default_dashboards
+erpnext.patches.v12_0.remove_bank_remittance_custom_fields
+erpnext.patches.v12_0.generate_leave_ledger_entries #04-11-2020
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 erpnext.patches.v12_0.move_credit_limit_to_customer_credit_limit
 erpnext.patches.v12_0.add_variant_of_in_item_attribute_table
 erpnext.patches.v12_0.rename_bank_account_field_in_journal_entry_account
@@ -645,6 +655,7 @@ erpnext.patches.v12_0.replace_accounting_with_accounts_in_home_settings
 erpnext.patches.v12_0.set_automatically_process_deferred_accounting_in_accounts_settings
 erpnext.patches.v12_0.set_payment_entry_status
 erpnext.patches.v12_0.update_owner_fields_in_acc_dimension_custom_fields
+<<<<<<< HEAD
 erpnext.patches.v12_0.add_export_type_field_in_party_master
 erpnext.patches.v12_0.remove_denied_leaves_from_leave_ledger
 erpnext.patches.v12_0.update_price_or_product_discount
@@ -742,3 +753,37 @@ erpnext.patches.v13_0.updates_for_multi_currency_payroll
 erpnext.patches.v13_0.create_leave_policy_assignment_based_on_employee_current_leave_policy
 erpnext.patches.v13_0.add_po_to_global_search
 erpnext.patches.v13_0.update_returned_qty_in_pr_dn
+=======
+erpnext.patches.v12_0.remove_denied_leaves_from_leave_ledger
+erpnext.patches.v12_0.update_price_or_product_discount
+erpnext.patches.v12_0.add_export_type_field_in_party_master
+erpnext.patches.v12_0.rename_bank_reconciliation_fields # 2020-01-22
+erpnext.patches.v12_0.create_irs_1099_field_united_states
+erpnext.patches.v12_0.set_purchase_receipt_delivery_note_detail
+erpnext.patches.v12_0.add_permission_in_lower_deduction
+erpnext.patches.v12_0.set_permission_einvoicing
+erpnext.patches.v12_0.set_received_qty_in_material_request_as_per_stock_uom
+erpnext.patches.v12_0.recalculate_requested_qty_in_bin
+erpnext.patches.v12_0.rename_mws_settings_fields
+erpnext.patches.v12_0.set_correct_status_for_expense_claim
+erpnext.patches.v12_0.set_updated_purpose_in_pick_list
+erpnext.patches.v12_0.repost_stock_ledger_entries_for_target_warehouse
+erpnext.patches.v12_0.update_end_date_and_status_in_email_campaign
+erpnext.patches.v13_0.move_tax_slabs_from_payroll_period_to_income_tax_slab #123
+erpnext.patches.v12_0.remove_duplicate_leave_ledger_entries #2020-05-22
+execute:frappe.delete_doc_if_exists("Page", "appointment-analytic")
+erpnext.patches.v12_0.unset_customer_supplier_based_on_type_of_item_price
+erpnext.patches.v12_0.set_serial_no_status #2020-05-21
+erpnext.patches.v12_0.update_price_list_currency_in_bom
+erpnext.patches.v12_0.update_uom_conversion_factor
+erpnext.patches.v12_0.set_italian_import_supplier_invoice_permissions
+erpnext.patches.v12_0.unhide_cost_center_field
+execute:frappe.reload_doc("HR", "doctype", "Employee Advance")
+erpnext.patches.v12_0.move_due_advance_amount_to_pending_amount
+erpnext.patches.v12_0.set_multi_uom_in_rfq
+erpnext.patches.v12_0.update_state_code_for_daman_and_diu
+erpnext.patches.v12_0.rename_lost_reason_detail
+erpnext.patches.v12_0.update_leave_application_status
+erpnext.patches.v12_0.update_payment_entry_status
+erpnext.patches.v12_0.setup_einvoice_fields #2020-12-02
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

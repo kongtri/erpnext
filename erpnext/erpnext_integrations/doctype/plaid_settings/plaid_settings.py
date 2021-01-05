@@ -134,6 +134,10 @@ def add_account_subtype(account_subtype):
 def sync_transactions(bank, bank_account):
 	"""Sync transactions based on the last integration date as the start date, after sync is completed
 	add the transaction date of the oldest transaction as the last integration date."""
+<<<<<<< HEAD
+=======
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	last_transaction_date = frappe.db.get_value("Bank Account", bank_account, "last_integration_date")
 	if last_transaction_date:
 		start_date = formatdate(last_transaction_date, "YYYY-MM-dd")
@@ -147,6 +151,7 @@ def sync_transactions(bank, bank_account):
 		result = []
 		for transaction in reversed(transactions):
 			result += new_bank_transaction(transaction)
+<<<<<<< HEAD
 
 		if result:
 			last_transaction_date = frappe.db.get_value('Bank Transaction', result.pop(), 'date')
@@ -154,6 +159,15 @@ def sync_transactions(bank, bank_account):
 			frappe.logger().info("Plaid added {} new Bank Transactions from '{}' between {} and {}".format(
 				len(result), bank_account, start_date, end_date))
 
+=======
+
+		if result:
+			last_transaction_date = frappe.db.get_value('Bank Transaction', result.pop(), 'date')
+
+			frappe.logger().info("Plaid added {} new Bank Transactions from '{}' between {} and {}".format(
+				len(result), bank_account, start_date, end_date))
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			frappe.db.set_value("Bank Account", bank_account, "last_integration_date", last_transaction_date)
 	except Exception:
 		frappe.log_error(frappe.get_traceback(), _("Plaid transactions sync error"))
@@ -238,3 +252,11 @@ def automatic_synchronization():
 				bank=plaid_account.bank,
 				bank_account=plaid_account.name
 			)
+<<<<<<< HEAD
+=======
+
+@frappe.whitelist()
+def get_link_token_for_update(access_token):
+	plaid = PlaidConnector(access_token)
+	return plaid.get_link_token(update_mode=True)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

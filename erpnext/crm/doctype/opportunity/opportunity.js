@@ -54,9 +54,15 @@ frappe.ui.form.on("Opportunity", {
 	contact_person: erpnext.utils.get_contact_details,
 
 	opportunity_from: function(frm) {
+<<<<<<< HEAD
 		frm.trigger('setup_opportunity_from');
 
 		frm.set_value("party_name", "");
+=======
+		frm.toggle_reqd("party_name", frm.doc.opportunity_from);
+		frm.trigger("setup_opportunity_from");
+		frm.set_value("party_name","");
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	},
 
 	setup_opportunity_from: function(frm) {
@@ -66,7 +72,12 @@ frappe.ui.form.on("Opportunity", {
 
 	refresh: function(frm) {
 		var doc = frm.doc;
+<<<<<<< HEAD
 		frm.trigger('setup_opportunity_from');
+=======
+		frm.trigger("setup_opportunity_from");
+		frm.trigger('toggle_mandatory');
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		erpnext.toggle_naming_series();
 
 		if(!doc.__islocal && doc.status!=="Lost") {

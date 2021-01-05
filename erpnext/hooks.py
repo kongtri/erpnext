@@ -253,6 +253,7 @@ doc_events = {
 		"on_trash": "erpnext.regional.check_deletion_permission"
 	},
 	"Purchase Invoice": {
+<<<<<<< HEAD
 		"validate": [
 			"erpnext.regional.india.utils.update_grand_total_for_rcm",
 			"erpnext.regional.united_arab_emirates.utils.update_grand_total_for_rcm",
@@ -261,6 +262,12 @@ doc_events = {
 	},
 	"Payment Entry": {
 		"on_submit": ["erpnext.regional.create_transaction_log", "erpnext.accounts.doctype.payment_request.payment_request.update_payment_req_status", "erpnext.accounts.doctype.dunning.dunning.resolve_dunning"],
+=======
+		"validate": "erpnext.regional.india.utils.update_grand_total_for_rcm"
+	},
+	"Payment Entry": {
+		"on_submit": ["erpnext.regional.create_transaction_log", "erpnext.accounts.doctype.payment_request.payment_request.update_payment_req_status"],
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		"on_trash": "erpnext.regional.check_deletion_permission"
 	},
 	'Address': {
@@ -271,7 +278,11 @@ doc_events = {
 	},
 	"Contact": {
 		"on_trash": "erpnext.support.doctype.issue.issue.update_issue",
+<<<<<<< HEAD
 		"after_insert": "erpnext.telephony.doctype.call_log.call_log.set_caller_information",
+=======
+		"after_insert": "erpnext.communication.doctype.call_log.call_log.set_caller_information",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		"validate": "erpnext.crm.utils.update_lead_phone_numbers"
 	},
 	"Lead": {
@@ -301,8 +312,12 @@ scheduler_events = {
 	},
 	"all": [
 		"erpnext.projects.doctype.project.project.project_status_update_reminder",
+<<<<<<< HEAD
 		"erpnext.healthcare.doctype.patient_appointment.patient_appointment.send_appointment_reminder",
 		"erpnext.crm.doctype.social_media_post.social_media_post.process_scheduled_social_media_posts"
+=======
+		"erpnext.healthcare.doctype.patient_appointment.patient_appointment.set_appointment_reminder"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	],
 	"hourly": [
 		'erpnext.hr.doctype.daily_work_summary_group.daily_work_summary_group.trigger_emails',
@@ -338,10 +353,14 @@ scheduler_events = {
 		"erpnext.support.doctype.service_level_agreement.service_level_agreement.check_agreement_status",
 		"erpnext.crm.doctype.email_campaign.email_campaign.send_email_to_leads_or_contacts",
 		"erpnext.crm.doctype.email_campaign.email_campaign.set_email_campaign_status",
+<<<<<<< HEAD
 		"erpnext.selling.doctype.quotation.quotation.set_expired_status",
 		"erpnext.healthcare.doctype.patient_appointment.patient_appointment.update_appointment_status",
 		"erpnext.buying.doctype.supplier_quotation.supplier_quotation.set_expired_status",
 		"erpnext.accounts.doctype.process_statement_of_accounts.process_statement_of_accounts.send_auto_email"
+=======
+		"erpnext.selling.doctype.quotation.quotation.set_expired_status"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	],
 	"daily_long": [
 		"erpnext.setup.doctype.email_digest.email_digest.send",

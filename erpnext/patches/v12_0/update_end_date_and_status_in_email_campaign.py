@@ -21,4 +21,8 @@ def execute():
             elif end_date >= today_date:
                 doc.db_set("status", "In Progress")
             elif end_date < today_date:
+<<<<<<< HEAD
                 doc.db_set("status", "Completed") 
+=======
+                doc.db_set("status", "Completed")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70

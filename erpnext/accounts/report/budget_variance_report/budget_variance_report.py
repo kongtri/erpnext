@@ -29,6 +29,7 @@ def execute(filters=None):
 	for dimension in dimensions:
 		dimension_items = cam_map.get(dimension)
 		if dimension_items:
+<<<<<<< HEAD
 			data = get_final_data(dimension, dimension_items, filters, period_month_ranges, data, 0)
 		else:
 			DCC_allocation = frappe.db.sql('''SELECT parent, sum(percentage_allocation) as percentage_allocation
@@ -81,10 +82,41 @@ def get_final_data(dimension, dimension_items, filters, period_month_ranges, dat
 		data.append(row)
 		
 	return data
+=======
+			for account, monthwise_data in iteritems(dimension_items):
+				row = [dimension, account]
+				totals = [0, 0, 0]
+				for year in get_fiscal_years(filters):
+					last_total = 0
+					for relevant_months in period_month_ranges:
+						period_data = [0, 0, 0]
+						for month in relevant_months:
+							if monthwise_data.get(year[0]):
+								month_data = monthwise_data.get(year[0]).get(month, {})
+								for i, fieldname in enumerate(["target", "actual", "variance"]):
+									value = flt(month_data.get(fieldname))
+									period_data[i] += value
+									totals[i] += value
+
+						period_data[0] += last_total
+
+						if filters.get("show_cumulative"):
+							last_total = period_data[0] - period_data[1]
+
+						period_data[2] = period_data[0] - period_data[1]
+						row += period_data
+				totals[2] = totals[0] - totals[1]
+				if filters["period"] != "Yearly":
+					row += totals
+				data.append(row)
+
+	return columns, data
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 
 def get_columns(filters):
 	columns = [
+<<<<<<< HEAD
 		{
 			'label': _(filters.get("budget_against")),
 			'fieldtype': 'Link',
@@ -99,6 +131,11 @@ def get_columns(filters):
 			'options': 'Account',
 			'width': 150
 		}
+=======
+		_(filters.get("budget_against"))
+		+ ":Link/%s:150" % (filters.get("budget_against")),
+		_("Account") + ":Link/Account:150"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	]
 
 	group_months = False if filters["period"] == "Monthly" else True
@@ -114,12 +151,16 @@ def get_columns(filters):
 					_("Variance ") + " " + str(year[0])
 				]
 				for label in labels:
+<<<<<<< HEAD
 					columns.append({
 						'label': label,
 						'fieldtype': 'Float',
 						'fieldname': frappe.scrub(label),
 						'width': 150
 					})
+=======
+					columns.append(label + ":Float:150")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 			else:
 				for label in [
 					_("Budget") + " (%s)" + " " + str(year[0]),
@@ -135,6 +176,7 @@ def get_columns(filters):
 					else:
 						label = label % formatdate(from_date, format_string="MMM")
 
+<<<<<<< HEAD
 					columns.append({
 						'label': label,
 						'fieldtype': 'Float',
@@ -152,6 +194,16 @@ def get_columns(filters):
 			})
 
 		return columns
+=======
+					columns.append(label + ":Float:150")
+
+	if filters["period"] != "Yearly":
+		return columns + [
+			_("Total Budget") + ":Float:150",
+			_("Total Actual") + ":Float:150",
+			_("Total Variance") + ":Float:150"
+		]
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	else:
 		return columns
 
@@ -222,7 +274,11 @@ def get_dimension_target_details(filters):
 				filters.budget_against,
 				filters.company,
 			]
+<<<<<<< HEAD
 			+ (filters.get("budget_against_filter") or [])
+=======
+			+ filters.get("budget_against_filter")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		), as_dict=True)
 
 

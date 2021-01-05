@@ -49,7 +49,10 @@ class SellingController(StockController):
 		self.set_customer_address()
 		self.validate_for_duplicate_items()
 		self.validate_target_warehouse()
+<<<<<<< HEAD
 		self.set_incoming_rate()
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 	def set_missing_values(self, for_validate=False):
 
@@ -175,6 +178,7 @@ class SellingController(StockController):
 
 	def validate_selling_price(self):
 		def throw_message(idx, item_name, rate, ref_rate_field):
+<<<<<<< HEAD
 			bold_net_rate = frappe.bold("net rate")
 			msg = (_("""Row #{}: Selling rate for item {} is lower than its {}. Selling {} should be atleast {}""")
 						.format(idx, frappe.bold(item_name), frappe.bold(ref_rate_field), bold_net_rate, frappe.bold(rate)))
@@ -182,6 +186,10 @@ class SellingController(StockController):
 			msg += (_("""You can alternatively disable selling price validation in {} to bypass this validation.""")
 						.format(get_link_to_form("Selling Settings", "Selling Settings")))
 			frappe.throw(msg, title=_("Invalid Selling Price"))
+=======
+			frappe.throw(_("""Row #{}: Selling rate for item {} is lower than its {}. Selling rate should be atleast {}""")
+				.format(idx, item_name, ref_rate_field, rate))
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 		if not frappe.db.get_single_value("Selling Settings", "validate_selling_price"):
 			return
@@ -193,8 +201,13 @@ class SellingController(StockController):
 				continue
 			
 			last_purchase_rate, is_stock_item = frappe.get_cached_value("Item", it.item_code, ["last_purchase_rate", "is_stock_item"])
+<<<<<<< HEAD
 			last_purchase_rate_in_sales_uom = last_purchase_rate * (it.conversion_factor or 1)
 			if flt(it.base_net_rate) < flt(last_purchase_rate_in_sales_uom):
+=======
+			last_purchase_rate_in_sales_uom = last_purchase_rate / (it.conversion_factor or 1)
+			if flt(it.base_rate) < flt(last_purchase_rate_in_sales_uom):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				throw_message(it.idx, frappe.bold(it.item_name), last_purchase_rate_in_sales_uom, "last purchase rate")
 
 			last_valuation_rate = frappe.db.sql("""
@@ -203,9 +216,14 @@ class SellingController(StockController):
 				ORDER BY posting_date DESC, posting_time DESC, creation DESC LIMIT 1
 				""", (it.item_code, it.warehouse))
 			if last_valuation_rate:
+<<<<<<< HEAD
 				last_valuation_rate_in_sales_uom = last_valuation_rate[0][0] * (it.conversion_factor or 1)
 				if is_stock_item and flt(it.base_net_rate) < flt(last_valuation_rate_in_sales_uom) \
 					and not self.get('is_internal_customer'):
+=======
+				last_valuation_rate_in_sales_uom = last_valuation_rate[0][0] / (it.conversion_factor or 1)
+				if is_stock_item and flt(it.base_rate) < flt(last_valuation_rate_in_sales_uom):
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 					throw_message(it.idx, frappe.bold(it.item_name), last_valuation_rate_in_sales_uom, "valuation rate")
 
 
@@ -232,8 +250,12 @@ class SellingController(StockController):
 							'voucher_type': self.doctype,
 							'allow_zero_valuation': d.allow_zero_valuation_rate,
 							'sales_invoice_item': d.get("sales_invoice_item"),
+<<<<<<< HEAD
 							'dn_detail': d.get("dn_detail"),
 							'incoming_rate': p.get("incoming_rate")
+=======
+							'delivery_note_item': d.get("dn_detail")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 						}))
 			else:
 				il.append(frappe._dict({
@@ -251,8 +273,12 @@ class SellingController(StockController):
 					'voucher_type': self.doctype,
 					'allow_zero_valuation': d.allow_zero_valuation_rate,
 					'sales_invoice_item': d.get("sales_invoice_item"),
+<<<<<<< HEAD
 					'dn_detail': d.get("dn_detail"),
 					'incoming_rate': d.get("incoming_rate")
+=======
+					'delivery_note_item': d.get("dn_detail")
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 				}))
 		return il
 
@@ -345,6 +371,16 @@ class SellingController(StockController):
 			if frappe.get_cached_value("Item", d.item_code, "is_stock_item") == 1 and flt(d.qty):
 				if flt(d.conversion_factor)==0.0:
 					d.conversion_factor = get_conversion_factor(d.item_code, d.uom).get("conversion_factor") or 1.0
+<<<<<<< HEAD
+=======
+				return_rate = 0
+				if cint(self.is_return) and self.return_against and self.docstatus==1:
+					against_document_no = (d.get("sales_invoice_item")
+						if self.doctype == "Sales Invoice" else d.get("delivery_note_item"))
+
+					return_rate = self.get_incoming_rate_for_sales_return(d.item_code,
+						self.return_against, against_document_no)
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 
 				# On cancellation or return entry submission, make stock ledger entry for
 				# target warehouse first, to update serial no values properly
@@ -362,6 +398,7 @@ class SellingController(StockController):
 
 		self.make_sl_entries(sl_entries)
 
+<<<<<<< HEAD
 	def get_sle_for_source_warehouse(self, item_row):
 		sle = self.get_sl_entries(item_row, {
 			"actual_qty": -1*flt(item_row.qty),
@@ -394,6 +431,8 @@ class SellingController(StockController):
 			
 		return sle
 
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 	def set_po_nos(self, for_validate=False):
 		if self.doctype == 'Sales Invoice' and hasattr(self, "items"):
 			if for_validate and self.po_no:
@@ -472,6 +511,12 @@ class SellingController(StockController):
 	def validate_target_warehouse(self):
 		items = self.get("items") + (self.get("packed_items") or [])
 
+<<<<<<< HEAD
+=======
+	def validate_target_warehouse(self):
+		items = self.get("items") + (self.get("packed_items") or [])
+
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 		for d in items:
 			if d.get("target_warehouse") and d.get("warehouse") == d.get("target_warehouse"):
 				warehouse = frappe.bold(d.get("target_warehouse"))

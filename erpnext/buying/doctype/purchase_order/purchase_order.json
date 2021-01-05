@@ -59,6 +59,14 @@
   "set_warehouse",
   "items_section",
   "items",
+<<<<<<< HEAD
+=======
+  "section_break_48",
+  "pricing_rules",
+  "raw_material_details",
+  "set_reserve_warehouse",
+  "supplied_items",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "sb_last_purchase",
   "total_qty",
   "base_total",
@@ -67,11 +75,14 @@
   "total_net_weight",
   "total",
   "net_total",
+<<<<<<< HEAD
   "section_break_48",
   "pricing_rules",
   "raw_material_details",
   "set_reserve_warehouse",
   "supplied_items",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   "taxes_section",
   "tax_category",
   "column_break_50",
@@ -1071,6 +1082,7 @@
    "fieldtype": "Link",
    "label": "Set Reserve Warehouse",
    "options": "Warehouse"
+<<<<<<< HEAD
   },
   {
    "collapsible": 1,
@@ -1101,13 +1113,19 @@
   {
    "fieldname": "items_col_break",
    "fieldtype": "Column Break"
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   }
  ],
  "icon": "fa fa-file-text",
  "idx": 105,
  "is_submittable": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2020-12-03 16:46:44.229351",
+=======
+ "modified": "2020-09-14 14:36:12.418690",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",
@@ -1151,6 +1169,12 @@
    "read": 1,
    "role": "Purchase Manager",
    "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Accounts User"
   }
  ],
  "search_fields": "status, transaction_date, supplier, grand_total",
@@ -1158,6 +1182,10 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "timeline_field": "supplier",
+<<<<<<< HEAD
  "title_field": "supplier_name",
+=======
+ "title_field": "supplier",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "track_changes": 1
 }

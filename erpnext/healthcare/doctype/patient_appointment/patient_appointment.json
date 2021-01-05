@@ -2,13 +2,18 @@
  "actions": [],
  "allow_copy": 1,
  "allow_import": 1,
+<<<<<<< HEAD
  "autoname": "naming_series:",
+=======
+ "autoname": "OP-.######",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "beta": 1,
  "creation": "2017-05-04 11:52:40.941507",
  "doctype": "DocType",
  "document_type": "Document",
  "engine": "InnoDB",
  "field_order": [
+<<<<<<< HEAD
   "naming_series",
   "title",
   "status",
@@ -48,6 +53,41 @@
   "reminded",
   "column_break_36",
   "notes"
+=======
+  "inpatient_record",
+  "patient",
+  "appointment_type",
+  "duration",
+  "column_break_1",
+  "status",
+  "procedure_template",
+  "get_procedure_from_encounter",
+  "procedure_prescription",
+  "service_unit",
+  "check_availability",
+  "section_break_12",
+  "practitioner",
+  "department",
+  "column_break_17",
+  "appointment_date",
+  "appointment_time",
+  "section_break_16",
+  "patient_name",
+  "patient_sex",
+  "column_break_21",
+  "patient_age",
+  "section_break_1",
+  "appointment_datetime",
+  "mode_of_payment",
+  "paid_amount",
+  "column_break_2",
+  "invoiced",
+  "company",
+  "section_break_3",
+  "notes",
+  "referring_practitioner",
+  "reminded"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  ],
  "fields": [
   {
@@ -59,6 +99,10 @@
    "read_only": 1
   },
   {
+<<<<<<< HEAD
+=======
+   "fetch_from": "inpatient_record.patient",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "patient",
    "fieldtype": "Link",
    "ignore_user_permissions": 1,
@@ -79,11 +123,19 @@
    "set_only_once": 1
   },
   {
+<<<<<<< HEAD
    "fieldname": "duration",
    "fieldtype": "Int",
    "in_filter": 1,
    "label": "Duration (In Minutes)",
    "set_only_once": 1
+=======
+   "description": "In Minutes",
+   "fieldname": "duration",
+   "fieldtype": "Int",
+   "in_filter": 1,
+   "label": "Duration"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "column_break_1",
@@ -91,29 +143,50 @@
    "read_only": 1
   },
   {
+<<<<<<< HEAD
+=======
+   "default": "Scheduled",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "depends_on": "eval:!doc.__islocal",
    "fieldname": "status",
    "fieldtype": "Select",
    "in_filter": 1,
+<<<<<<< HEAD
    "in_list_view": 1,
    "label": "Status",
    "options": "\nScheduled\nOpen\nClosed\nCancelled",
+=======
+   "label": "Status",
+   "options": "\nScheduled\nOpen\nClosed\nPending\nCancelled",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "read_only": 1,
    "search_index": 1
   },
   {
+<<<<<<< HEAD
    "depends_on": "eval:doc.patient;",
    "fieldname": "procedure_template",
    "fieldtype": "Link",
    "label": "Clinical Procedure Template",
+=======
+   "fieldname": "procedure_template",
+   "fieldtype": "Link",
+   "label": "Procedure",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "options": "Clinical Procedure Template",
    "set_only_once": 1
   },
   {
+<<<<<<< HEAD
    "depends_on": "eval:doc.__islocal && doc.patient",
    "fieldname": "get_procedure_from_encounter",
    "fieldtype": "Button",
    "label": "Get Prescribed Clinical Procedures"
+=======
+   "fieldname": "get_procedure_from_encounter",
+   "fieldtype": "Button",
+   "label": "Get prescribed procedures"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "procedure_prescription",
@@ -122,8 +195,12 @@
    "label": "Procedure Prescription",
    "no_copy": 1,
    "options": "Procedure Prescription",
+<<<<<<< HEAD
    "print_hide": 1,
    "read_only": 1
+=======
+   "print_hide": 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "service_unit",
@@ -131,11 +208,24 @@
    "label": "Service Unit",
    "options": "Healthcare Service Unit",
    "set_only_once": 1
+<<<<<<< HEAD
   },
   {
    "fieldname": "section_break_12",
    "fieldtype": "Section Break",
    "label": "Appointment Details"
+=======
+  },
+  {
+   "depends_on": "eval:doc.__islocal",
+   "fieldname": "check_availability",
+   "fieldtype": "Button",
+   "label": "Check availability"
+  },
+  {
+   "fieldname": "section_break_12",
+   "fieldtype": "Section Break"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "practitioner",
@@ -150,7 +240,10 @@
    "set_only_once": 1
   },
   {
+<<<<<<< HEAD
    "fetch_from": "practitioner.department",
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "department",
    "fieldtype": "Link",
    "ignore_user_permissions": 1,
@@ -181,6 +274,7 @@
    "fieldtype": "Time",
    "in_list_view": 1,
    "label": "Time",
+<<<<<<< HEAD
    "read_only": 1,
    "reqd": 1
   },
@@ -188,6 +282,13 @@
    "fieldname": "section_break_16",
    "fieldtype": "Section Break",
    "label": "Payments"
+=======
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_16",
+   "fieldtype": "Section Break"
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fetch_from": "patient.patient_name",
@@ -199,28 +300,55 @@
   {
    "fetch_from": "patient.sex",
    "fieldname": "patient_sex",
+<<<<<<< HEAD
    "fieldtype": "Link",
    "label": "Gender",
    "no_copy": 1,
    "options": "Gender",
+=======
+   "fieldtype": "Data",
+   "label": "Gender",
+   "no_copy": 1,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "print_hide": 1,
    "read_only": 1,
    "report_hide": 1
   },
   {
+<<<<<<< HEAD
+=======
+   "fieldname": "column_break_21",
+   "fieldtype": "Column Break"
+  },
+  {
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "fieldname": "patient_age",
    "fieldtype": "Data",
    "label": "Patient Age",
    "read_only": 1
+<<<<<<< HEAD
+=======
+  },
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "set_only_once": 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "appointment_datetime",
    "fieldtype": "Datetime",
+<<<<<<< HEAD
    "hidden": 1,
    "label": "Appointment Datetime",
    "print_hide": 1,
    "read_only": 1,
    "report_hide": 1,
+=======
+   "label": "Appointment Datetime",
+   "print_hide": 1,
+   "read_only": 1,
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
    "search_index": 1
   },
   {
@@ -243,17 +371,31 @@
    "fieldname": "invoiced",
    "fieldtype": "Check",
    "label": "Invoiced",
+<<<<<<< HEAD
    "read_only": 1
+=======
+   "read_only": 1,
+   "search_index": 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "fieldname": "company",
    "fieldtype": "Link",
+<<<<<<< HEAD
    "in_standard_filter": 1,
    "label": "Company",
    "no_copy": 1,
    "options": "Company",
    "reqd": 1,
    "set_only_once": 1
+=======
+   "hidden": 1,
+   "label": "Company",
+   "no_copy": 1,
+   "options": "Company",
+   "print_hide": 1,
+   "report_hide": 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "collapsible": 1,
@@ -272,7 +414,12 @@
    "fieldtype": "Link",
    "ignore_user_permissions": 1,
    "label": "Referring Practitioner",
+<<<<<<< HEAD
    "options": "Healthcare Practitioner"
+=======
+   "options": "Healthcare Practitioner",
+   "set_only_once": 1
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
   },
   {
    "default": "0",
@@ -282,6 +429,7 @@
    "label": "Reminded",
    "print_hide": 1,
    "report_hide": 1
+<<<<<<< HEAD
   },
   {
    "depends_on": "eval:doc.patient && doc.therapy_plan;",
@@ -349,6 +497,12 @@
  "links": [],
  "modified": "2020-12-16 13:16:58.578503",
  "modified_by": "Administrator",
+=======
+  }
+ ],
+ "modified": "2020-03-27 15:55:24.344945",
+ "modified_by": "ruchamahabal2@gmail.com",
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
  "module": "Healthcare",
  "name": "Patient Appointment",
  "owner": "Administrator",

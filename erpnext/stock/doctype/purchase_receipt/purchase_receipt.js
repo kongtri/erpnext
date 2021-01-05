@@ -128,7 +128,10 @@ erpnext.stock.PurchaseReceiptController = erpnext.buying.BuyingController.extend
 							target: me.frm,
 							setters: {
 								supplier: me.frm.doc.supplier,
+<<<<<<< HEAD
 								schedule_date: undefined
+=======
+>>>>>>> 03933f846114cd3cb5da8676693a75b277ae8f70
 							},
 							get_query_filters: {
 								docstatus: 1,
